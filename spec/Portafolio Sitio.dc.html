@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/rankeo-design-system-6651b27a-8e29-4bef-babe-e5eb41d63b8b/_ds_bundle.css">
+<link rel="stylesheet" href="_ds/rankeo-design-system-6651b27a-8e29-4bef-babe-e5eb41d63b8b/styles.css">
+<script src="./image-slot.js"></script>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #FBFAF8; overflow-x: clip; }
+  a { color: #1F1B16; text-decoration: none; }
+  a:hover { color: #1F6FEB; }
+  html { scroll-behavior: smooth; overflow-x: clip; }
+  @keyframes rk-marquee { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+  @keyframes rk-pulse { 0%,100% { opacity: .35; transform: scale(1); } 50% { opacity: 1; transform: scale(1.35); } }
+  @keyframes rk-float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+  @keyframes rk-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes rk-open { from { opacity: 0; transform: translateY(26px) scale(.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
+</style>
+</helmet>
+
+<div style="width: 100%; background: #FBFAF8; font-family: 'Archivo', sans-serif; color: #1F1B16">
+
+  <div style="position: fixed; top: 0; left: 0; right: 0; z-index: 40; pointer-events: none">
+    <div style="display: flex; align-items: center; gap: 24px; padding: clamp(14px, 2.4vh, 24px) clamp(20px, 3.4vw, 46px); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; transition: opacity 420ms ease, transform 480ms cubic-bezier(.2,.7,.2,1), color 380ms ease; color: {{ inkSoft }}; opacity: {{ hdrO }}; transform: translateY({{ hdrY }}); pointer-events: {{ hdrPE }}">
+      <a href="#top" style="display: flex; align-items: center; gap: 9px; flex: 0 0 auto; color: {{ ink }}">
+        <img src="uploads/1C51CC23-53CB-479B-A8DA-59A8EB47295B_1_105_c.jpeg" alt="" style="display: block; width: 24px; height: 24px; flex: 0 0 auto; border-radius: 999px; object-fit: cover; object-position: 36% 30%">
+        <span>TIAGOGOCO</span>
+      </a>
+      <nav style="display: flex; gap: clamp(22px, 3.4vw, 56px); align-items: center; margin: 0 auto">
+        <a href="#proyectos" style="color: {{ ink }}">Proyectos</a>
+        <a href="#sobre-mi" style="color: {{ inkSoft }}">Sobre mí</a>
+      </nav>
+      <div style="display: flex; align-items: center; gap: 14px; flex: 0 0 auto">
+        <a href="#contacto" style="color: {{ inkSoft }}" style-hover="color: {{ ink }}">Contacto</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="top" style="position: relative; max-width: 1320px; margin: 0 auto; padding: clamp(80px, 15vh, 190px) 56px clamp(60px, 12vh, 130px); min-height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between; gap: clamp(40px, 6vh, 80px)">
+
+    <span style="position: absolute; top: 0; left: calc(-50vw + 50%); right: calc(-50vw + 50%); height: 50%; background: {{ heroGradient }}; pointer-events: none"></span>
+
+    <h1 style="position: relative; margin: 0; max-width: 20em; font-weight: 800; font-size: clamp(38px, 6.4vw, 96px); line-height: 0.94; letter-spacing: -0.045em; text-wrap: pretty">Creando productos digitales desde la idea, hasta producción</h1>
+
+    <div style="position: relative; display: flex; justify-content: center">
+      <div style="position: relative; width: min(816px, 100%); height: clamp(220px, 34vh, 320px)">
+
+        <a href="#contacto" style="position: absolute; top: 0; left: 62.75%; width: 36.76%; height: 100%; z-index: 1; filter: blur(2.6px); transition: transform 240ms cubic-bezier(.2,.7,.2,1), filter 260ms ease" style-hover="transform: translateY(-16px); filter: blur(0px); z-index: 9">
+          <span style="position: absolute; top: 0; left: 0; width: 40%; height: 26px; background: #C6DDFD; border-radius: 10px 16px 0 0"></span>
+          <span style="position: absolute; top: 21px; left: 0; right: 0; bottom: 0; background: #C6DDFD; border-radius: 12px"></span>
+          <span style="position: absolute; bottom: 20px; right: 14px; writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #2c5fa8">Contacto</span>
+        </a>
+
+        <a href="#stack" style="position: absolute; top: 0; left: 47.06%; width: 36.76%; height: 100%; z-index: 2; filter: blur(1.4px); transition: transform 240ms cubic-bezier(.2,.7,.2,1), filter 260ms ease" style-hover="transform: translateY(-16px); filter: blur(0px); z-index: 9">
+          <span style="position: absolute; top: 0; left: 0; width: 40%; height: 26px; background: #85B8FA; border-radius: 10px 16px 0 0"></span>
+          <span style="position: absolute; top: 21px; left: 0; right: 0; bottom: 0; background: #85B8FA; border-radius: 12px"></span>
+          <span style="position: absolute; bottom: 20px; right: 14px; writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #164b96">Stack</span>
+        </a>
+
+        <a href="#sobre-mi" style="position: absolute; top: 0; left: 31.37%; width: 36.76%; height: 100%; z-index: 3; transition: transform 240ms cubic-bezier(.2,.7,.2,1)" style-hover="transform: translateY(-16px); z-index: 9">
+          <span style="position: absolute; top: 0; left: 0; width: 40%; height: 26px; background: #4C8FF5; border-radius: 10px 16px 0 0"></span>
+          <span style="position: absolute; top: 21px; left: 0; right: 0; bottom: 0; background: #4C8FF5; border-radius: 12px"></span>
+          <span style="position: absolute; bottom: 20px; right: 14px; writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #ffffff">Experiencia</span>
+        </a>
+
+        <a href="#sobre-mi" style="position: absolute; top: 0; left: 15.68%; width: 36.76%; height: 100%; z-index: 4; transition: transform 240ms cubic-bezier(.2,.7,.2,1)" style-hover="transform: translateY(-16px); z-index: 9">
+          <span style="position: absolute; top: 0; left: 0; width: 40%; height: 26px; background: #1F6FEB; border-radius: 10px 16px 0 0"></span>
+          <span style="position: absolute; top: 21px; left: 0; right: 0; bottom: 0; background: #1F6FEB; border-radius: 12px; box-shadow: -18px 0 40px rgba(31,111,235,0.18)"></span>
+          <span style="position: absolute; bottom: 20px; right: 14px; writing-mode: vertical-rl; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: #ffffff">Sobre mí</span>
+        </a>
+
+        <a href="#proyectos" style="position: absolute; top: 0; left: 0; width: 36.76%; height: 100%; z-index: 5; transition: transform 240ms cubic-bezier(.2,.7,.2,1)" style-hover="transform: translateY(-16px); z-index: 9">
+          <span style="position: absolute; top: 0; left: 0; width: 43%; height: 28px; background: #4A4A48; border-radius: 10px 16px 0 0"></span>
+          <span style="position: absolute; top: 23px; left: 0; right: 0; bottom: 0; background: #4A4A48; border-radius: 12px; box-shadow: -20px 0 46px rgba(31,27,22,0.16)"></span>
+          <span style="position: absolute; top: 44px; left: 24px; font-weight: 700; font-size: clamp(20px, 2.8vw, 30px); letter-spacing: -0.03em; color: #FBFAF8">Proyectos</span>
+          <span style="position: absolute; bottom: 20px; left: 24px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(251,250,248,0.7)">3 sitios · abrir</span>
+        </a>
+
+      </div>
+    </div>
+
+  </section>
+
+  <section id="intro" ref="{{ introRef }}" style="position: relative; height: 380vh; background: {{ introBg }}">
+    <div style="position: sticky; top: 0; min-height: 100vh; display: flex; align-items: center; padding: clamp(96px, 13vh, 132px) 0 56px; box-sizing: border-box">
+      <span style="position: absolute; inset: 0; background: {{ introGlow }}; pointer-events: none"></span>
+      <div style="position: relative; max-width: 1180px; margin: 0 auto; padding: 0 56px; width: 100%; box-sizing: border-box">
+        <div style="display: flex; gap: 28px; align-items: flex-start">
+          <div style="flex: 0 0 auto; padding-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: {{ introEyebrow }}">( intro )</div>
+          <div style="flex: 1 1 auto">
+            <sc-for list="{{ lines }}" as="line" hint-placeholder-count="3">
+              <p style="margin: 0 0 clamp(18px, 2.4vh, 34px); font-weight: 600; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.14; letter-spacing: -0.028em; text-wrap: pretty; display: flex; flex-wrap: wrap; column-gap: 0.28em; row-gap: 0.06em">
+                <sc-for list="{{ line.words }}" as="w" hint-placeholder-count="8">
+                  <span style="display: inline-block; will-change: opacity, transform; opacity: {{ w.o }}; transform: translateY({{ w.y }}); filter: blur({{ w.b }}); color: {{ w.c }}">{{ w.t }}</span>
+                </sc-for>
+              </p>
+            </sc-for>
+            <div style="margin-top: clamp(24px, 4vh, 46px); display: flex; align-items: center; gap: 18px; opacity: {{ tailOpacity }}">
+              <span style="height: 1px; width: 64px; background: {{ introRule }}"></span>
+              <a href="#proyectos" style="font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: {{ introLink }}">Últimos proyectos ↓</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="proyectos" style="position: relative; background: #FBFAF8; padding-bottom: 12vh">
+
+    <div style="position: sticky; top: 0; height: 145vh; display: flex; align-items: flex-start; justify-content: center; z-index: 1; padding: 8vh 40px 0; box-sizing: border-box">
+      <div style="position: relative; width: 100%; max-width: 1100px">
+        <div style="width: 268px; height: 46px; background: #EFE9DE; border-radius: 14px 26px 0 0; box-shadow: 0 -1px 0 rgba(0,0,0,0.03)"></div>
+        <div style="margin-top: -1px; background: #EFE9DE; border-radius: 0 22px 22px 22px; padding: 34px 40px 40px; box-shadow: 0 -18px 60px rgba(31,27,22,0.10), 0 40px 90px rgba(31,27,22,0.14)">
+          <div style="position: absolute; top: 12px; left: 32px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6d675e">proyecto 01</div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px">
+            <h2 style="margin: 0; font-weight: 800; font-size: 44px; letter-spacing: -0.03em">SAINT PADEL</h2>
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex: 0 0 auto">
+              <a href="https://saintpadel.com.mx" target="_blank" rel="noopener" aria-label="Ver sitio de Saint Padel" title="ver sitio" style="display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 999px; background: #14664A; color: #fff; transition: transform 200ms cubic-bezier(.2,.7,.2,1), background 200ms ease" style-hover="background: #0e5039; color: #fff; transform: scale(1.06)">
+                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><ellipse cx="12" cy="12" rx="4" ry="9"></ellipse><line x1="3" y1="12" x2="21" y2="12"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 300px 1fr; gap: 40px; margin-top: 30px; align-items: start">
+            <div>
+              <p style="margin: 0; font-size: 20px; line-height: 1.35; color: #3a342c; text-wrap: pretty">Ecommerce en producción para una nueva marca de palas de padel</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px">
+                <span style="border: 1px solid #CFC6B6; border-radius: 10px; padding: 10px 18px; background: rgba(255,255,255,0.35); font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6d675e">Next.js</span>
+                <span style="border: 1px solid #CFC6B6; border-radius: 10px; padding: 10px 18px; background: rgba(255,255,255,0.35); font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6d675e">Supabase</span>
+                <span style="border: 1px solid #CFC6B6; border-radius: 10px; padding: 10px 18px; background: rgba(255,255,255,0.35); font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6d675e">Stripe</span>
+              </div>
+              <button onClick="{{ openSaint }}" style="align-self: flex-start; margin-top: 26px; border: 0; background: transparent; padding: 0; color: #14664A; font-family: 'Archivo', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.03em; cursor: pointer; border-bottom: 3px solid #14664A; transition: opacity 200ms ease" style-hover="opacity: .6">abrir caso →</button>
+            </div>
+            <div style="aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #14664A">
+              <image-slot id="proy-saint" shape="rect" placeholder="Captura del sitio Saint Padel" style="width: 100%; height: 100%"></image-slot>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position: sticky; top: 0; height: 145vh; display: flex; align-items: flex-start; justify-content: center; z-index: 2; padding: 12vh 40px 0; box-sizing: border-box">
+      <div style="position: relative; width: 100%; max-width: 1100px">
+        <div style="width: 268px; height: 46px; background: #C9DCAF; border-radius: 14px 26px 0 0"></div>
+        <div style="margin-top: -1px; background: #C9DCAF; border-radius: 0 22px 22px 22px; padding: 34px 40px 40px; box-shadow: 0 -18px 60px rgba(31,27,22,0.10), 0 40px 90px rgba(31,27,22,0.16)">
+          <div style="position: absolute; top: 12px; left: 32px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #4c5a3d">proyecto 02</div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px">
+            <h2 style="margin: 0; font-weight: 800; font-size: 44px; letter-spacing: -0.03em">RANKEO</h2>
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex: 0 0 auto">
+              <a href="#contacto" aria-label="Ver sitio de Rankeo" title="ver sitio" style="display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 999px; background: #0F0F0F; color: #D8F24A; transition: transform 200ms cubic-bezier(.2,.7,.2,1), background 200ms ease" style-hover="background: #000; color: #D8F24A; transform: scale(1.06)">
+                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><ellipse cx="12" cy="12" rx="4" ry="9"></ellipse><line x1="3" y1="12" x2="21" y2="12"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 300px 1fr; gap: 40px; margin-top: 30px; align-items: start">
+            <div>
+              <p style="margin: 0; font-size: 20px; line-height: 1.35; color: #33402a; text-wrap: pretty">Rankeo soluciona la gestión de torneos y ligas, un SAAS completo para clubs y organizadores de eventos de padel</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px">
+                <span style="border: 1px solid #A9C088; border-radius: 10px; padding: 10px 18px; background: rgba(255,255,255,0.35); font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4c5a3d">Next.js</span>
+                <span style="border: 1px solid #A9C088; border-radius: 10px; padding: 10px 18px; background: rgba(255,255,255,0.35); font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4c5a3d">PostgreSQL</span>
+                <span style="border: 1px solid #A9C088; border-radius: 10px; padding: 10px 18px; background: rgba(255,255,255,0.35); font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #4c5a3d">Tailwind</span>
+              </div>
+              <button onClick="{{ openRankeo }}" style="align-self: flex-start; margin-top: 26px; border: 0; background: transparent; padding: 0; color: #2f3b23; font-family: 'Archivo', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.03em; cursor: pointer; border-bottom: 3px solid #2f3b23; transition: opacity 200ms ease" style-hover="opacity: .6">abrir caso →</button>
+            </div>
+            <div style="aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #0F0F0F">
+              <image-slot id="proy-rankeo" shape="rect" placeholder="Captura de Rankeo" style="width: 100%; height: 100%"></image-slot>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="position: sticky; top: 0; height: 145vh; display: flex; align-items: flex-start; justify-content: center; z-index: 3; padding: 16vh 40px 0; box-sizing: border-box">
+      <div style="position: relative; width: 100%; max-width: 1100px">
+        <div style="width: 268px; height: 46px; background: #EFE9DE; border-radius: 14px 26px 0 0"></div>
+        <div style="margin-top: -1px; background: #EFE9DE; border-radius: 0 22px 22px 22px; padding: 34px 40px 40px; box-shadow: 0 -18px 60px rgba(31,27,22,0.10), 0 40px 90px rgba(31,27,22,0.18)">
+          <div style="position: absolute; top: 12px; left: 32px; font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #6d675e">proyecto 03</div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px">
+            <h2 style="margin: 0; font-weight: 800; font-size: 44px; letter-spacing: -0.03em">PIRI</h2>
+            <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 12px; flex: 0 0 auto">
+              <a href="#contacto" aria-label="Ver sitio de Piri" title="ver sitio" style="display: inline-flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 999px; background: #3A2317; color: #F6E9D8; transition: transform 200ms cubic-bezier(.2,.7,.2,1), background 200ms ease" style-hover="background: #2a1810; color: #F6E9D8; transform: scale(1.06)">
+                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><ellipse cx="12" cy="12" rx="4" ry="9"></ellipse><line x1="3" y1="12" x2="21" y2="12"></line></svg>
+              </a>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: 300px 1fr; gap: 40px; margin-top: 30px; align-items: start">
+            <div>
+              <p style="margin: 0; font-size: 20px; line-height: 1.35; color: #3a342c; text-wrap: pretty">Ecommerce para una tienda de antigüedades, con sincronización de articulos diarios, pixel, cupones, admin, envíos, pagos.</p>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 34px">
+                <span style="border: 1px solid #CFC6B6; border-radius: 10px; padding: 10px 18px; background: rgba(255,255,255,0.35); font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6d675e">Next.js</span>
+                <span style="border: 1px solid #CFC6B6; border-radius: 10px; padding: 10px 18px; background: rgba(255,255,255,0.35); font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6d675e">Stripe</span>
+                <span style="border: 1px solid #CFC6B6; border-radius: 10px; padding: 10px 18px; background: rgba(255,255,255,0.35); font-family: 'Archivo', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: #6d675e">Admin propio</span>
+              </div>
+              <button onClick="{{ openPiri }}" style="align-self: flex-start; margin-top: 26px; border: 0; background: transparent; padding: 0; color: #3A2317; font-family: 'Archivo', sans-serif; font-size: 26px; font-weight: 700; letter-spacing: -0.03em; cursor: pointer; border-bottom: 3px solid #3A2317; transition: opacity 200ms ease" style-hover="opacity: .6">abrir caso →</button>
+            </div>
+            <div style="aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; background: #3A2317">
+              <image-slot id="proy-piri" shape="rect" placeholder="Captura del sitio Piri" style="width: 100%; height: 100%"></image-slot>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="sobre-mi" ref="{{ sobreRef }}" style="position: relative; height: 350vh; background: #1F6FEB">
+    <div style="position: sticky; top: 0; min-height: 100vh; display: flex; align-items: center; padding: 8vh 0; box-sizing: border-box; color: #fff">
+      <div style="width: 100%; max-width: 1180px; margin: 0 auto; padding: 0 56px; box-sizing: border-box">
+        <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.6); opacity: {{ s0.o }}; transform: translateY({{ s0.y }})">( proceso creativo )</div>
+        <h2 style="margin: 18px 0 0; font-weight: 800; font-size: clamp(34px, 4.4vw, 66px); letter-spacing: -0.035em; line-height: 0.98; opacity: {{ s1.o }}; transform: translateY({{ s1.y }})">QUÉ HAGO Y CÓMO</h2>
+        <p style="margin: 16px 0 0; max-width: 560px; font-size: clamp(16px, 1.6vw, 22px); line-height: 1.34; color: rgba(255,255,255,0.74); text-wrap: pretty; opacity: {{ s2.o }}; transform: translateY({{ s2.y }})">Siempre me gustó crear cosas, convierto  una idea en un producto completo, desde el diseño hasta el despliegue.</p>
+
+        <div style="display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(200px, 0.65fr); gap: 56px; margin-top: clamp(26px, 5vh, 62px); align-items: start">
+          <div style="display: flex; flex-direction: column">
+            <sc-for list="{{ fases }}" as="f" hint-placeholder-count="5">
+              <div onMouseEnter="{{ f.enter }}" onClick="{{ f.enter }}" style="display: flex; align-items: baseline; gap: 20px; padding: clamp(10px, 1.6vh, 18px) 2px; border-top: 1px solid rgba(255,255,255,0.22); cursor: default; opacity: {{ f.o }}; transform: translateY({{ f.y }}); transition: opacity 260ms ease">
+                <span style="font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: 0.14em; color: rgba(255,255,255,0.7)">{{ f.n }}</span>
+                <span style="font-weight: 700; font-size: clamp(18px, 2.1vw, 30px); letter-spacing: -0.025em">{{ f.label }}</span>
+              </div>
+            </sc-for>
+            <div style="border-top: 1px solid rgba(255,255,255,0.22)"></div>
+          </div>
+          <div style="padding-top: 6px; opacity: {{ s3.o }}; transform: translateY({{ s3.y }})">
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.55)">( {{ activeNum }} )</div>
+            <p style="margin: 14px 0 0; font-size: clamp(15px, 1.4vw, 19px); line-height: 1.42; color: #fff; text-wrap: pretty">{{ activeDesc }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stack" ref="{{ stackRef }}" style="position: relative; height: 460vh; background: {{ stackBg }}">
+    <div style="position: sticky; top: 0; height: 100vh; overflow: hidden; box-sizing: border-box">
+      <div style="position: absolute; top: 26px; left: 40px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: {{ stackEyebrow }}; z-index: 3">( herramientas )</div>
+
+      <div style="position: absolute; top: 0; left: 0; width: 46%; height: 100%; display: flex; align-items: center; padding: 0 0 0 clamp(40px, 5vw, 96px); box-sizing: border-box; z-index: 2">
+        <h2 style="margin: 0; font-weight: 800; font-size: clamp(30px, 4.6vw, 68px); line-height: 0.94; letter-spacing: -0.04em; color: {{ stackHeading }}">LAS HERRAMIENTAS<br>QUE USO <span style="font-family: 'Instrument Serif', serif; font-style: italic; font-weight: 400; letter-spacing: -0.02em">(stack)</span></h2>
+      </div>
+
+      <div style="position: absolute; top: 0; right: 0; width: 54%; height: 100%; overflow: hidden">
+        <sc-for list="{{ stackRows }}" as="row" hint-placeholder-count="6">
+          <div style="position: absolute; left: 0; right: clamp(40px, 6vw, 120px); top: 0; padding-left: clamp(20px, 3vw, 56px); box-sizing: border-box; will-change: transform, opacity; transform: translateY({{ row.y }}); opacity: {{ row.o }}">
+            <div style="border-bottom: 1px solid {{ stackRule }}; padding-bottom: clamp(10px, 1.4vh, 18px)">
+              <div style="font-family: {{ row.family }}; font-weight: {{ row.weight }}; font-size: {{ row.size }}; letter-spacing: {{ row.tracking }}; text-transform: {{ row.transform }}; line-height: 1.16; color: {{ row.color }}; text-wrap: pretty">{{ row.t }}</div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </section>
+
+  <section id="whoami" ref="{{ whoRef }}" style="position: relative; height: 460vh; background: #FBFAF8">
+    <div style="position: sticky; top: 0; height: 100vh; background: #fff">
+      <div style="position: absolute; inset: 0">
+        <div style="position: absolute; top: 26px; left: 40px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: #a09889; z-index: 2">( sobre mí )</div>
+        <div style="position: relative; height: 100%; overflow: hidden">
+
+          <div style="position: absolute; top: 8%; left: 50%; transform: translate(-50%, {{ centerY }}); font-family: 'JetBrains Mono', monospace; font-weight: 500; font-size: clamp(22px, 2.6vw, 40px); letter-spacing: -0.02em; color: #1F1B16; white-space: nowrap">~whoami</div>
+
+          <div style="position: absolute; top: 50%; left: 50%; width: min(26vw, 360px); transform: translate(-50%, calc(-46% + {{ centerY }})); overflow: hidden">
+            <img src="uploads/pasted-1788504742367-0.png" alt="Retrato de Tiago" style="display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 18%">
+          </div>
+
+          <div style="position: absolute; top: 0; left: 5%; width: clamp(96px, 11vw, 148px); opacity: {{ a1.o }}; transform: translateY({{ a1.y }})">
+            <div style="aspect-ratio: 1 / 1; border-radius: 14px; background: #EFEBE4"><image-slot id="who-lot-1" shape="rounded" placeholder="Lottie 1" style="width: 100%; height: 100%"></image-slot></div>
+          </div>
+
+          <div style="position: absolute; top: 0; left: 11%; width: clamp(120px, 14vw, 190px); opacity: {{ a2.o }}; transform: translateY({{ a2.y }})">
+            <div style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(20px, 2.1vw, 32px); line-height: 1.1; color: #1F1B16">Puebla,<br>México</div>
+            <div style="margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #a09889">base</div>
+          </div>
+
+          <div style="position: absolute; top: 0; left: 5%; width: clamp(100px, 12vw, 158px); opacity: {{ a3.o }}; transform: translateY({{ a3.y }})">
+            <div style="aspect-ratio: 1 / 1; border-radius: 14px; background: #EFEBE4"><image-slot id="who-lot-2" shape="rounded" placeholder="Lottie 2" style="width: 100%; height: 100%"></image-slot></div>
+          </div>
+
+          <div style="position: absolute; top: 0; left: 11%; width: clamp(130px, 15vw, 200px); opacity: {{ a4.o }}; transform: translateY({{ a4.y }})">
+            <div style="font-weight: 700; font-size: clamp(15px, 1.5vw, 21px); line-height: 1.2; letter-spacing: -0.02em; color: #1F1B16">Autodidacta<br>desde 2022</div>
+          </div>
+
+          <div style="position: absolute; top: 0; right: 5%; width: clamp(96px, 11vw, 148px); opacity: {{ a5.o }}; transform: translateY({{ a5.y }})">
+            <div style="aspect-ratio: 1 / 1; border-radius: 14px; background: #EFEBE4"><image-slot id="who-lot-3" shape="rounded" placeholder="Lottie 3" style="width: 100%; height: 100%"></image-slot></div>
+          </div>
+
+          <div style="position: absolute; top: 0; right: 11%; width: clamp(110px, 13vw, 170px); opacity: {{ a6.o }}; transform: translateY({{ a6.y }})">
+            <div style="font-family: 'Instrument Serif', serif; font-style: italic; font-size: clamp(19px, 2vw, 30px); line-height: 1.1; color: #1F1B16">padel casi<br>diario</div>
+          </div>
+
+          <div style="position: absolute; top: 0; right: 5%; width: clamp(100px, 12vw, 158px); opacity: {{ a7.o }}; transform: translateY({{ a7.y }})">
+            <div style="aspect-ratio: 1 / 1; border-radius: 14px; background: #EFEBE4"><image-slot id="who-lot-4" shape="rounded" placeholder="Lottie 4" style="width: 100%; height: 100%"></image-slot></div>
+          </div>
+
+          <div style="position: absolute; top: 0; right: 11%; width: clamp(130px, 15vw, 205px); opacity: {{ a8.o }}; transform: translateY({{ a8.y }})">
+            <div style="font-weight: 700; font-size: clamp(15px, 1.5vw, 21px); line-height: 1.2; letter-spacing: -0.02em; color: #1F1B16">Buceo cuando<br>el mar deja</div>
+            <div style="margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: #a09889">off · screen</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contacto" ref="{{ footRef }}" style="position: relative; background: #000; color: #F2EFE7; overflow: hidden">
+    <div style="display: flex; width: max-content; animation: rk-marquee 26s linear infinite; padding: 26px 0; border-bottom: 1px solid rgba(242,239,231,0.14)">
+      <sc-for list="{{ ticker }}" as="t" hint-placeholder-count="12">
+        <span style="display: flex; align-items: center; gap: 40px; padding-right: 40px; font-family: 'JetBrains Mono', monospace; font-size: 13px; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(242,239,231,0.55); white-space: nowrap">{{ t.label }}<span style="color: #1F6FEB">✦</span></span>
+      </sc-for>
+    </div>
+
+    <div style="max-width: 1180px; margin: 0 auto; padding: clamp(70px, 14vh, 150px) 40px clamp(70px, 12vh, 130px); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, auto); gap: 48px; align-items: center">
+      <div style="display: flex; flex-direction: column; align-items: flex-start; gap: clamp(6px, 1.4vh, 16px)">
+        <sc-for list="{{ socials }}" as="s" hint-placeholder-count="3">
+          <a href="{{ s.href }}" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 18px; font-weight: 800; font-size: clamp(30px, 5vw, 76px); line-height: 1; letter-spacing: -0.04em; color: #F2EFE7; transition: transform 320ms cubic-bezier(.2,.7,.2,1), color 240ms ease" style-hover="color: #1F6FEB; transform: translateX(26px)">
+            <span style="font-family: 'JetBrains Mono', monospace; font-weight: 400; font-size: clamp(10px, 1vw, 13px); letter-spacing: 0.18em; color: rgba(242,239,231,0.4)">{{ s.n }}</span>
+            {{ s.label }}
+          </a>
+        </sc-for>
+      </div>
+      <div style="justify-self: end; text-align: right">
+        <div style="font-weight: 800; font-size: clamp(34px, 6.6vw, 104px); line-height: 0.86; letter-spacing: -0.05em; transform: translateX({{ markX }})">TIAGOGOCO</div>
+        <div style="margin-top: 18px; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(242,239,231,0.45)">© 2026 · portafolio</div>
+      </div>
+    </div>
+
+    <div style="background: #D9D9D9; color: #1F1B16">
+      <div style="max-width: 1180px; margin: 0 auto; padding: 34px 40px 46px; display: flex; flex-direction: column; gap: 42px">
+        <div style="font-weight: 700; font-size: clamp(18px, 2.2vw, 30px); letter-spacing: -0.02em; color: #6b6b6b">hecho con figma, next.js, tailwind y mucho &lt;3</div>
+        <a href="mailto:tiagogocor@gmail.com" style="align-self: flex-start; font-weight: 700; font-size: clamp(18px, 2.2vw, 30px); letter-spacing: -0.02em; color: #0d0d0d; transition: transform 260ms cubic-bezier(.2,.7,.2,1), color 240ms ease" style-hover="color: #1F6FEB; transform: translateX(10px)">tiagogocor@gmail.com</a>
+      </div>
+    </div>
+  </footer>
+
+  <sc-if value="{{ casoOpen }}" hint-placeholder-val="{{ false }}">
+    <div style="position: fixed; inset: 0; z-index: 90; display: flex; align-items: center; justify-content: center; padding: clamp(12px, 3vh, 40px)">
+      <div onClick="{{ closeCaso }}" style="position: absolute; inset: 0; background: rgba(31,27,22,0.62); backdrop-filter: blur(6px); animation: rk-fade 260ms ease both"></div>
+
+      <div style="position: relative; width: min(1240px, 100%); height: min(92vh, 940px); display: flex; flex-direction: column; animation: rk-open 380ms cubic-bezier(.2,.8,.2,1) both">
+
+        <div style="display: flex; align-items: flex-end; gap: 2px; padding-left: 2px">
+          <sc-for list="{{ casos }}" as="c" hint-placeholder-count="3">
+            <button onClick="{{ c.open }}" style="border: 0; cursor: pointer; font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; padding: {{ c.tabPad }}; border-radius: 12px 20px 0 0; background: {{ c.tabBg }}; color: {{ c.tabInk }}; transition: padding 200ms ease">{{ c.tab }}</button>
+          </sc-for>
+          <button onClick="{{ closeCaso }}" style="margin-left: auto; margin-bottom: 10px; border: 0; background: transparent; color: rgba(251,250,248,0.75); padding: 0; font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; cursor: pointer; transition: color 200ms ease" style-hover="color: #FBFAF8">esc · cerrar</button>
+        </div>
+
+        <div style="flex: 1 1 auto; min-height: 0; display: flex; background: #FBFAF8; border-radius: 0 22px 22px 22px; box-shadow: 0 40px 120px rgba(0,0,0,0.42); overflow: hidden">
+
+          <div ref="{{ scrollRef }}" style="flex: 1 1 auto; min-width: 0; overflow-y: auto; overflow-x: hidden; padding: clamp(30px, 4.4vh, 54px) clamp(28px, 5vw, 76px) 80px">
+
+            <div style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(28px, 5vw, 72px); align-items: start">
+
+              <div>
+                <div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 20px">
+                  <div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: {{ caso.accent }}">caso {{ caso.n }} · {{ caso.kind }}</div>
+                    <h2 style="margin: 12px 0 0; font-weight: 800; font-size: clamp(38px, 5vw, 66px); line-height: 0.94; letter-spacing: -0.04em">{{ caso.title }}</h2>
+                  </div>
+                  <a href="{{ caso.href }}" target="_blank" rel="noopener" aria-label="Ver sitio en vivo" title="ver sitio en vivo" style="flex: 0 0 auto; margin-top: 4px; display: inline-flex; align-items: center; justify-content: center; width: 52px; height: 52px; border-radius: 999px; background: {{ caso.accent }}; color: {{ caso.accentInk }}; transition: transform 200ms cubic-bezier(.2,.7,.2,1), opacity 200ms ease" style-hover="opacity: .88; color: {{ caso.accentInk }}; transform: scale(1.06)">
+                    <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"></circle><ellipse cx="12" cy="12" rx="4" ry="9"></ellipse><line x1="3" y1="12" x2="21" y2="12"></line></svg>
+                  </a>
+                </div>
+
+                <p style="margin: 22px 0 0; max-width: 34em; font-size: clamp(17px, 1.8vw, 23px); line-height: 1.4; letter-spacing: -0.01em; color: #2c2823; text-wrap: pretty">{{ caso.lede }}</p>
+
+                <div style="margin-top: clamp(32px, 4.6vh, 52px)">
+                  <div style="font-weight: 800; font-size: clamp(26px, 3vw, 38px); letter-spacing: -0.035em">STACK</div>
+                  <div style="display: flex; flex-direction: column; max-width: 340px; margin-top: 14px">
+                    <sc-for list="{{ caso.stack }}" as="s" hint-placeholder-count="5">
+                      <div style="display: flex; align-items: baseline; justify-content: space-between; gap: 14px; padding: 11px 2px; border-bottom: 2px solid #1F1B16; font-weight: 700; font-size: clamp(17px, 1.7vw, 22px); letter-spacing: -0.01em; text-transform: uppercase">
+                        {{ s.t }}
+                        <span style="font-family: 'JetBrains Mono', monospace; font-weight: 400; font-size: 10px; letter-spacing: 0.14em; color: #a09889">{{ s.n }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+
+              <div style="flex: 0 0 auto; width: 100%; max-width: 300px; border: 10px solid #1F1B16; border-radius: 38px; overflow: hidden; background: #1F1B16; box-shadow: 0 30px 70px rgba(31,27,22,0.22)">
+                  <div style="position: relative; aspect-ratio: 9 / 19.5; overflow: hidden; background: #fff">
+                    <sc-if value="{{ caso.shotA.hasSrc }}" hint-placeholder-val="{{ false }}">
+                      <div role="img" aria-label="{{ caso.shotA.alt }}" style="position: absolute; inset: 0; background-image: {{ caso.shotA.bg }}; background-size: cover; background-position: 50% 0"></div>
+                    </sc-if>
+                    <sc-if value="{{ caso.shotA.noSrc }}" hint-placeholder-val="{{ false }}">
+                      <image-slot id="{{ caso.shotA.id }}" shape="rect" placeholder="{{ caso.shotA.alt }}" style="position: absolute; inset: 0; width: 100%; height: 100%"></image-slot>
+                    </sc-if>
+                  </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(20px, 3vw, 48px); margin-top: clamp(44px, 6vh, 74px); padding-top: 32px; border-top: 2px solid #1F1B16">
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #a09889">( problema )</div>
+                <p style="margin: 14px 0 0; font-size: clamp(15px, 1.5vw, 19px); line-height: 1.5; color: #1F1B16; text-wrap: pretty">{{ caso.problema }}</p>
+              </div>
+              <div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: {{ caso.accent }}">( solución )</div>
+                <p style="margin: 14px 0 0; font-size: clamp(15px, 1.5vw, 19px); line-height: 1.5; color: #1F1B16; text-wrap: pretty">{{ caso.solucion }}</p>
+              </div>
+            </div>
+
+            <div style="margin-top: clamp(40px, 5.4vh, 64px)">
+              <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #a09889">( decisiones técnicas )</div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(18px, 2.6vw, 40px); margin-top: 18px">
+                <sc-for list="{{ caso.decisiones }}" as="d" hint-placeholder-count="3">
+                  <p style="margin: 0; font-size: clamp(14px, 1.35vw, 17px); line-height: 1.55; color: #5a5449; text-wrap: pretty">
+                    <span style="font-weight: 700; color: #1F1B16">{{ d.title }}.</span>
+                    {{ d.note }}
+                  </p>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr); gap: clamp(28px, 5vw, 72px); align-items: center; margin-top: clamp(44px, 6vh, 74px)">
+              <div style="padding: clamp(28px, 4vh, 44px) clamp(26px, 3.4vw, 42px); border-radius: 26px; background: {{ caso.accent }}; color: {{ caso.accentInk }}">
+                <div style="font-weight: 800; font-size: clamp(24px, 2.8vw, 34px); letter-spacing: -0.035em; text-transform: uppercase">Aprendizaje</div>
+                <div style="display: flex; flex-direction: column; gap: 14px; margin-top: 16px">
+                  <sc-for list="{{ caso.aprendizajes }}" as="a" hint-placeholder-count="2">
+                    <p style="margin: 0; max-width: 34em; font-size: clamp(15px, 1.6vw, 20px); line-height: 1.42; text-wrap: pretty">{{ a.t }}</p>
+                  </sc-for>
+                </div>
+              </div>
+
+              <div style="flex: 0 0 auto; width: 100%; max-width: 300px; border: 10px solid #1F1B16; border-radius: 38px; overflow: hidden; background: #1F1B16; box-shadow: 0 30px 70px rgba(31,27,22,0.22)">
+                  <div style="position: relative; aspect-ratio: 9 / 19.5; overflow: hidden; background: #fff">
+                    <sc-if value="{{ caso.shotB.hasSrc }}" hint-placeholder-val="{{ false }}">
+                      <div role="img" aria-label="{{ caso.shotB.alt }}" style="position: absolute; inset: 0; background-image: {{ caso.shotB.bg }}; background-size: cover; background-position: 50% 0"></div>
+                    </sc-if>
+                    <sc-if value="{{ caso.shotB.noSrc }}" hint-placeholder-val="{{ false }}">
+                      <image-slot id="{{ caso.shotB.id }}" shape="rect" placeholder="{{ caso.shotB.alt }}" style="position: absolute; inset: 0; width: 100%; height: 100%"></image-slot>
+                    </sc-if>
+                  </div>
+                </div>
+            </div>
+
+            <sc-if value="{{ caso.hasResenas }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top: clamp(44px, 6vh, 74px)">
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #a09889">( reseñas )</div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 20px">
+                  <sc-for list="{{ caso.resenas }}" as="r" hint-placeholder-count="2">
+                    <div style="padding: clamp(22px, 3vh, 30px) clamp(22px, 2.6vw, 30px); border-radius: 20px; border: 1px solid #ddd6ca; background: #F4F1EA">
+                      <div style="display: flex; align-items: center; gap: 12px">
+                        <span style="font-size: 14px; letter-spacing: 0.12em; color: #C79A3A">★★★★★</span>
+                        <span style="font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #a09889">verificada</span>
+                      </div>
+                      <p style="margin: 16px 0 0; font-size: clamp(15px, 1.5vw, 19px); line-height: 1.45; color: #1F1B16; text-wrap: pretty">{{ r.q }}</p>
+                      <div style="margin-top: 18px; padding-top: 16px; border-top: 1px solid #ddd6ca">
+                        <div style="font-weight: 700; font-size: clamp(16px, 1.6vw, 20px); letter-spacing: -0.02em">{{ r.by }}</div>
+                        <div style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10px; line-height: 1.6; letter-spacing: 0.16em; text-transform: uppercase; color: #a09889">{{ r.item }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 16px; margin-top: 34px">
+              <button onClick="{{ nextCaso }}" style="display: inline-flex; align-items: center; gap: 12px; border: 0; background: transparent; cursor: pointer; font-family: 'Archivo', sans-serif; font-weight: 700; font-size: clamp(18px, 2vw, 26px); letter-spacing: -0.025em; color: #1F1B16; transition: transform 240ms cubic-bezier(.2,.7,.2,1)" style-hover="transform: translateX(8px); color: #1F6FEB">{{ nextLabel }} →</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroGradient&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;off&quot;,&quot;sutil&quot;,&quot;marcado&quot;],&quot;default&quot;:&quot;marcado&quot;,&quot;tsType&quot;:&quot;'off' | 'sutil' | 'marcado'&quot;,&quot;section&quot;:&quot;Hero&quot;},&quot;introTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;claro&quot;,&quot;azul&quot;],&quot;default&quot;:&quot;claro&quot;,&quot;tsType&quot;:&quot;'claro' | 'azul'&quot;,&quot;section&quot;:&quot;Intro&quot;},&quot;stackTheme&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;claro&quot;,&quot;azul&quot;],&quot;default&quot;:&quot;claro&quot;,&quot;tsType&quot;:&quot;'claro' | 'azul'&quot;,&quot;section&quot;:&quot;Stack&quot;}}">
+const LINES = [
+  "Soy Tiago, desarrollador en Puebla.",
+  "Construyo productos digitales desde el diseño hasta los cobros en producción.",
+  "Tres en línea desde 2025, con usuarios usándolos hoy."
+];
+
+const FASES = [
+  { n: '1', label: 'SPEC ANTES QUE CÓDIGO', desc: 'Fijo por escrito el modelo de negocio, los pagos y las reglas duras antes de la primera línea. Si no está decidido, no se programa.' },
+  { n: '2', label: 'DISEÑO DEL SISTEMA VISUAL', desc: 'Paleta, tipografía y modos claro y oscuro se deciden en el spec, no al final, con sus consecuencias técnicas anotadas.' },
+  { n: '3', label: 'DATOS Y PERMISOS PRIMERO', desc: 'Migraciones numeradas, una por propósito, y las políticas de acceso antes que cualquier pantalla.' },
+  { n: '4', label: 'IMPLEMENTACIÓN POR FASES, CON CIERRE', desc: 'Una tarea a la vez con criterios de aceptación. Al cerrar: build limpio, commit atómico y entrada en la bitácora.' },
+  { n: '5', label: 'DESPLIEGUE Y OPERACIÓN', desc: 'El despliegue tiene su propio plan, con checklist funcional y de seguridad. Después, mantener: auditorías y decisiones que cambian con el negocio.' }
+];
+
+const STACK = [
+  { k: 'h', t: 'En producción (avanzado)' },
+  { k: 'i', t: 'Next.js' },
+  { k: 'i', t: 'TypeScript' },
+  { k: 'i', t: 'PostgreSQL' },
+  { k: 'i', t: 'Supabase' },
+  { k: 'i', t: 'Stripe' },
+  { k: 'i', t: 'Vercel' },
+  { k: 'i', t: 'Tailwind' },
+  { k: 'n', t: 'Agentes de IA como Claude Code, especializados (skills, mcps) para optimizar el flujo de trabajo.' },
+  { k: 'h', t: 'He construido con esto' },
+  { k: 'i', t: 'Python' },
+  { k: 'i', t: 'Docker' },
+  { k: 'i', t: 'Prisma' },
+  { k: 'h', t: 'Explorando' },
+  { k: 'i', t: 'React Framer' },
+  { k: 'h', t: 'Lenguajes' },
+  { k: 'n', t: 'TypeScript / JavaScript — mi eje, en producción.' },
+  { k: 'n', t: 'Python — FastAPI, pandas, el lado de datos.' },
+  { k: 'n', t: 'SQL (PostgreSQL)' }
+];
+
+const ROW_STYLE = {
+  h: { family: "'JetBrains Mono', monospace", weight: '500', size: 'clamp(11px, 1vw, 14px)', tracking: '0.22em', transform: 'uppercase', color: '#1F6FEB' },
+  i: { family: "'Archivo', sans-serif", weight: '800', size: 'clamp(24px, 3.2vw, 50px)', tracking: '-0.035em', transform: 'uppercase', color: '#1F1B16' },
+  n: { family: "'Archivo', sans-serif", weight: '600', size: 'clamp(14px, 1.5vw, 21px)', tracking: '-0.01em', transform: 'none', color: '#5a5449' }
+};
+
+const SOCIALS = [
+  { n: '01', label: 'GITHUB', href: 'https://github.com/' },
+  { n: '02', label: 'LINKEDIN', href: 'https://linkedin.com/' },
+  { n: '03', label: 'INSTAGRAM', href: 'https://instagram.com/' }
+];
+
+const TICKER = ['disponible para proyectos', 'puebla · méxico', 'producto · diseño · código', 'tiagogocor@gmail.com', 'saint padel', 'rankeo', 'piri'];
+
+const CASOS = [
+  {
+    id: 'saint', n: '01', short: 'SAINT PADEL', tab: 'saint padel', title: 'SAINT PADEL',
+    kind: 'ecommerce de drops', href: 'https://saintpadel.com.mx',
+    accent: '#14664A', accentInk: '#ffffff', shotBg: '#14664A',
+    lede: 'Ecommerce en producción para una nueva marca de palas de padel, construido alrededor de lanzamientos y no de un catálogo fijo.',
+    problema: 'Vender por lanzamientos, donde cada drop mezcla palas con stock físico y palas bajo pedido. Un catálogo normal, con stock y precio pegados al producto, no representa eso.',
+    solucion: 'La publicación manda, no el producto — precio, disponibilidad, modalidad y plazo pertenecen al drop, así que un mismo lanzamiento combina envío en 24/48 h y preventa a 7 días.',
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Stripe', 'Tailwind', 'Vercel'],
+    decisiones: [
+      { n: '01', title: 'El drop es la entidad de venta', note: 'Precio, modalidad, plazo y disponibilidad viven en la publicación. El producto queda como ficha técnica reutilizable entre lanzamientos.' },
+      { n: '02', title: 'Dos modalidades en un mismo carrito', note: 'Stock físico y bajo pedido conviven en la misma orden; el plazo de entrega se calcula por línea y se comunica antes del pago.' },
+      { n: '03', title: 'Catálogo vivo', note: 'La colección se recalcula con cada cambio de drop, sin publicar productos huérfanos ni precios desactualizados.' }
+    ],
+    shots: [
+      { src: 'uploads/fotos-1788637622451-xxin.png', alt: 'Home de Saint Padel en mobile' },
+      { src: 'uploads/fotos-1788637622457-5ag5.png', alt: 'Catálogo filtrado por tipo de juego' }
+    ],
+    aprendizajes: [
+      'Modelar el negocio antes que la pantalla ahorra el rediseño completo del catálogo tres semanas después.',
+      'Cuando el plazo de entrega es parte de la promesa, tiene que aparecer antes del pago, no en el correo de confirmación.'
+    ]
+  },
+  {
+    id: 'rankeo', n: '02', short: 'RANKEO', tab: 'rankeo', title: 'RANKEO',
+    kind: 'saas de torneos y ligas', href: '#contacto',
+    accent: '#2f3b23', accentInk: '#E8F3D8', shotBg: '#0F0F0F',
+    lede: 'Rankeo soluciona la gestión de torneos y ligas: un SaaS completo para clubes y organizadores de eventos de padel.',
+    problema: 'Pendiente: describe cómo se gestionaban los torneos antes (hojas de cálculo, grupos de WhatsApp) y qué se rompía al escalar.',
+    solucion: 'Pendiente: qué sustituye Rankeo y cuál es la pieza que ningún otro sistema resolvía.',
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind', 'Vercel'],
+    decisiones: [
+      { n: '01', title: 'Pendiente: decisión de datos', note: 'Modelo de ligas, niveles y jornadas.' },
+      { n: '02', title: 'Pendiente: permisos por rol', note: 'Club, organizador, jugador.' },
+      { n: '03', title: 'Pendiente: brackets y ranking', note: 'Cómo se calculan y se exportan.' }
+    ],
+    shots: [
+      { id: 'shot-rankeo-1', alt: 'Ranking en mobile' },
+      { id: 'shot-rankeo-2', alt: 'Partido o bracket en mobile' }
+    ],
+    aprendizajes: [
+      'Pendiente: qué aprendiste construyendo para clubes reales.',
+      'Pendiente: la decisión que cambiarías hoy.'
+    ]
+  },
+  {
+    id: 'piri', n: '03', short: 'PIRI', tab: 'piri', title: 'PIRI',
+    kind: 'ecommerce de antigüedades', href: '#contacto',
+    accent: '#3A2317', accentInk: '#F6E9D8', shotBg: '#3A2317',
+    lede: 'Ecommerce para una tienda de antigüedades, con sincronización de artículos diarios, pixel, cupones, admin, envíos y pagos.',
+    problema: 'Pendiente: por qué un catálogo de piezas únicas rompe el modelo de ecommerce estándar.',
+    solucion: 'Pendiente: cómo resolviste la sincronización diaria y el inventario de una sola unidad.',
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Stripe', 'Tailwind', 'Vercel'],
+    decisiones: [
+      { n: '01', title: 'Pendiente: piezas únicas', note: 'Inventario de una unidad y reserva en checkout.' },
+      { n: '02', title: 'Pendiente: sincronización diaria', note: 'De dónde llegan los artículos y qué pasa cuando fallan.' },
+      { n: '03', title: 'Pendiente: envíos y cupones', note: 'Reglas por peso, zona y campaña.' }
+    ],
+    shots: [
+      { id: 'shot-piri-1', alt: 'Home de Piri en mobile' },
+      { id: 'shot-piri-2', alt: 'Ficha de pieza en mobile' }
+    ],
+    resenas: [
+      { q: '“Hola, la mejor tienda de antigüedades online, excelente atención y servicio. Recomendados al 10000”', by: 'marisol fernandez', item: 'Cafetera vintage Kockums Sweden peltre esmaltado blanco' },
+      { q: '“Me encantaron las piezas que recibi. Llegaron pronto, en perfecto estado y cumplieron mls...”', by: 'Guillermo López Varela', item: 'Antiguo lote coleccionables Club Puebla FC revistas cuadro' }
+    ],
+    aprendizajes: [
+      'Pendiente: aprendizaje sobre catálogos de piezas únicas.',
+      'Pendiente: lo que el cliente necesitaba y no estaba en el brief.'
+    ]
+  }
+];
+
+class Component extends DCLogic {
+  state = { p: 0, q: 0, r: 0, w: 0, c: 0, f: 0, fase: 0, hdr: 0, dark: 0, caso: -1 };
+  scrollRef = React.createRef();
+  contactRef = React.createRef();
+  footRef = React.createRef();
+  introRef = React.createRef();
+  sobreRef = React.createRef();
+  stackRef = React.createRef();
+  whoRef = React.createRef();
+
+  progress(ref) {
+    const el = ref.current;
+    if (!el) return 0;
+    const r = el.getBoundingClientRect();
+    const span = Math.max(1, r.height - window.innerHeight);
+    return Math.min(1, Math.max(0, -r.top / span));
+  }
+
+  enter(ref) {
+    const el = ref.current;
+    if (!el) return 0;
+    const r = el.getBoundingClientRect();
+    const h = window.innerHeight;
+    return Math.min(1, Math.max(0, (h * 0.92 - r.top) / (h * 0.75)));
+  }
+
+  componentDidMount() {
+    // rAF en vez de listener de scroll: funciona sin importar qué elemento scrollea
+    const tick = () => {
+      this.raf = requestAnimationFrame(tick);
+      const p = this.progress(this.introRef);
+      const q = this.progress(this.sobreRef);
+      const r = this.progress(this.stackRef);
+      const w = this.progress(this.whoRef);
+      const c = this.enter(this.contactRef);
+      const f = this.enter(this.footRef);
+      const ir = this.introRef.current && this.introRef.current.getBoundingClientRect();
+      const hdr = ir && ir.top <= window.innerHeight * 0.35 ? 1 : 0;
+      if (hdr !== this.state.hdr) this.setState({ hdr });
+      const sr = this.sobreRef.current && this.sobreRef.current.getBoundingClientRect();
+      const dark = sr && sr.top <= 46 && sr.bottom > 46 ? 1 : 0;
+      if (dark !== this.state.dark) this.setState({ dark });
+      const d = (a, b) => Math.abs(a - b) > 0.002;
+      if (d(p, this.state.p) || d(q, this.state.q) || d(r, this.state.r) || d(w, this.state.w) || d(c, this.state.c) || d(f, this.state.f)) this.setState({ p, q, r, w, c, f });
+    };
+    tick();
+    this.onKey = e => { if (e.key === 'Escape') this.setState({ caso: -1 }); };
+    window.addEventListener('keydown', this.onKey);
+  }
+  componentDidUpdate(prev) {
+    if (prev.caso !== this.state.caso) {
+      document.body.style.overflow = this.state.caso >= 0 ? 'hidden' : '';
+      const el = this.scrollRef.current;
+      if (el) el.scrollTop = 0;
+    }
+  }
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    window.removeEventListener('keydown', this.onKey);
+    document.body.style.overflow = '';
+  }
+  openCaso(i) { this.setState({ caso: i }); }
+
+  renderVals() {
+    const g = this.props.heroGradient ?? 'marcado';
+    const gTop = g === 'off' ? 0 : g === 'sutil' ? 0.14 : 0.28;
+    const heroGradient = gTop === 0 ? 'none'
+      : `linear-gradient(to bottom, rgba(31,111,235,${gTop}) 0%, rgba(31,111,235,${(gTop * 0.57).toFixed(3)}) 34%, rgba(31,111,235,${(gTop * 0.21).toFixed(3)}) 64%, rgba(31,111,235,0) 100%)`;
+    const introAzul = (this.props.introTheme ?? 'claro') === 'azul';
+    const introBg = introAzul ? '#1F6FEB' : '#FBFAF8';
+    const introGlow = introAzul
+      ? 'radial-gradient(120% 90% at 50% 50%, rgba(255,255,255,0.10) 0%, rgba(31,111,235,0) 62%)'
+      : 'radial-gradient(120% 90% at 50% 50%, rgba(31,111,235,0.05) 0%, rgba(251,250,248,0) 62%)';
+    const introEyebrow = introAzul ? 'rgba(255,255,255,0.65)' : '#a09889';
+    const introRule = introAzul ? 'rgba(255,255,255,0.35)' : '#d8d2c7';
+    const introLink = introAzul ? '#ffffff' : '#1F1B16';
+    const hdrOn = this.state.hdr === 1;
+    const tokens = LINES.map(l => l.split(' '));
+    const total = tokens.reduce((a, w) => a + w.length, 0);
+    // reveal finishes at 82% of the scroll span, leaving a beat for the tail
+    const head = this.state.p / 0.82;
+    let i = 0;
+    const lines = tokens.map(words => ({
+      words: words.map(t => {
+        const start = (i++) / total;
+        const k = Math.min(1, Math.max(0, (head - start) / (1.35 / total + 0.06)));
+        const e = 1 - Math.pow(1 - k, 3);
+        return {
+          t,
+          o: (0.10 + 0.90 * e).toFixed(3),
+          y: (14 * (1 - e)).toFixed(2) + 'px',
+          b: (5 * (1 - e)).toFixed(2) + 'px',
+          c: introAzul
+            ? (e > 0.55 ? '#ffffff' : 'rgba(255,255,255,0.45)')
+            : (e > 0.55 ? '#1F1B16' : '#8d8578')
+        };
+      })
+    }));
+    const tail = Math.min(1, Math.max(0, (this.state.p - 0.84) / 0.12));
+    // reveal escalonado de arriba a abajo en la sección de proceso
+    const q = this.state.q / 0.7;
+    const step = i => {
+      const k = Math.min(1, Math.max(0, (q - i * 0.10) / 0.22));
+      const e = 1 - Math.pow(1 - k, 3);
+      return { o: e.toFixed(3), y: (26 * (1 - e)).toFixed(2) + 'px', e };
+    };
+    const fases = FASES.map((f, idx) => {
+      const st = step(3 + idx);
+      const on = idx === this.state.fase;
+      return {
+        n: f.n,
+        label: f.label,
+        o: (st.e * (on ? 1 : 0.44)).toFixed(3),
+        y: st.y,
+        enter: () => this.setState({ fase: idx })
+      };
+    });
+    const act = FASES[this.state.fase];
+
+
+    // whoami: flujo continuo — los satélites entran por abajo, cruzan y salen por arriba;
+    // el centro sólo deriva lentamente (parallax)
+    const w = this.state.w;
+    const flow = phase => {
+      const t = (phase + w * 1.25) % 1;
+      const y = 104 - t * 130;                     // 104vh (fuera abajo) → -26vh (fuera arriba)
+      const fin = Math.min(1, t / 0.12);
+      const fout = Math.min(1, (1 - t) / 0.14);
+      return { y: y.toFixed(2) + 'vh', o: (Math.max(0, Math.min(fin, fout))).toFixed(3) };
+    };
+    const sat = {
+      a1: flow(0.03), a2: flow(0.17), a3: flow(0.30), a4: flow(0.44),
+      a5: flow(0.11), a6: flow(0.25), a7: flow(0.38), a8: flow(0.52)
+    };
+    const centerY = (-7 * w).toFixed(2) + 'vh';
+
+    const stackAzul = (this.props.stackTheme ?? 'claro') === 'azul';
+    const stackBg = stackAzul ? '#1F6FEB' : '#fff';
+    const stackEyebrow = stackAzul ? 'rgba(255,255,255,0.65)' : '#a09889';
+    const stackHeading = stackAzul ? '#ffffff' : '#1F6FEB';
+    const stackRule = stackAzul ? 'rgba(255,255,255,0.28)' : '#e2ddd3';
+    // stack: lista en loop — sube con el scroll, sale por arriba y reaparece por abajo
+    const SP = 13, TOTAL = STACK.length * SP, shift = this.state.r * TOTAL;
+    const stackRows = STACK.map((row, idx) => {
+      const pos = (((idx * SP - shift) % TOTAL) + TOTAL) % TOTAL;
+      const y = pos - SP;
+      const fade = Math.max(0, Math.min(1, Math.min((100 - y) / 14, (y + SP) / 14)));
+      const base = ROW_STYLE[row.k];
+      const color = stackAzul
+        ? (row.k === 'h' ? '#C6DDFD' : '#ffffff')
+        : base.color;
+      return { ...base, color, t: row.t, y: y.toFixed(2) + 'vh', o: fade.toFixed(3) };
+    });
+
+    const cStep = i => {
+      const k = Math.min(1, Math.max(0, (this.state.c - i * 0.09) / 0.34));
+      const e = 1 - Math.pow(1 - k, 3);
+      return { o: e.toFixed(3), y: (30 * (1 - e)).toFixed(2) + 'px' };
+    };
+    const cVals = { c0: cStep(0), c1: cStep(1), c2: cStep(2), c3: cStep(3), c4: cStep(4) };
+
+    const shot = s => ({ ...s, hasSrc: !!(s && s.src), noSrc: !(s && s.src), bg: s && s.src ? 'url("' + s.src + '")' : 'none' });
+    const ci = this.state.caso;
+    const casoOpen = ci >= 0;
+    const active = CASOS[Math.max(0, ci)];
+    const caso = {
+      ...active,
+      stack: active.stack.map((t, i) => ({ t, n: String(i + 1).padStart(2, '0') })),
+      hasResenas: !!active.resenas,
+      resenas: active.resenas || [],
+      shotA: shot(active.shots[0]),
+      shotB: shot(active.shots[1] || active.shots[0]),
+      aprendizajes: active.aprendizajes.map(t => ({ t }))
+    };
+    const casos = CASOS.map((c, idx) => ({
+      n: c.n, short: c.short, tab: c.tab,
+      ink: '#1F1B16',
+      op: idx === ci ? '1' : '0.42',
+      tabBg: idx === ci ? '#FBFAF8' : '#E7E1D6',
+      tabInk: idx === ci ? '#1F1B16' : '#8d8578',
+      tabPad: idx === ci ? '14px 26px 13px' : '11px 22px 10px',
+      open: () => this.openCaso(idx)
+    }));
+    const nextIdx = (Math.max(0, ci) + 1) % CASOS.length;
+
+    return {
+      casoOpen, caso, casos, scrollRef: this.scrollRef,
+      closeCaso: () => this.setState({ caso: -1 }),
+      nextCaso: () => this.openCaso(nextIdx),
+      nextLabel: 'Siguiente: ' + CASOS[nextIdx].short,
+      openSaint: () => this.openCaso(0),
+      openRankeo: () => this.openCaso(1),
+      openPiri: () => this.openCaso(2),
+      lines, introRef: this.introRef, sobreRef: this.sobreRef, stackRef: this.stackRef,
+      whoRef: this.whoRef, centerY, ...sat,
+      tailOpacity: tail.toFixed(3),
+      introBg, introGlow, introEyebrow, introRule, introLink,
+      stackBg, stackEyebrow, stackHeading, stackRule,
+      s0: step(0), s1: step(1), s2: step(2), s3: step(3 + FASES.length),
+      fases, activeNum: act.n.padStart(2, '0'), activeDesc: act.desc,
+      stackRows,
+      hdrO: hdrOn ? 1 : 0,
+      hdrY: hdrOn ? '0px' : '-24px',
+      hdrPE: hdrOn ? 'auto' : 'none',
+      ink: this.state.dark ? '#ffffff' : '#1F1B16',
+      inkSoft: this.state.dark ? 'rgba(255,255,255,0.78)' : '#6d675e',
+      pillBg: this.state.dark ? '#ffffff' : '#1F1B16',
+      pillInk: this.state.dark ? '#1F6FEB' : '#FBFAF8',
+      heroGradient,
+      contactRef: this.contactRef, footRef: this.footRef,
+      socials: SOCIALS, ticker: TICKER.concat(TICKER).map(label => ({ label })),
+      markX: (46 * (1 - Math.min(1, this.state.f))).toFixed(1) + 'px',
+      ...cVals
+    };
+  }
+}
+
+</script>
+</body>
+</html>

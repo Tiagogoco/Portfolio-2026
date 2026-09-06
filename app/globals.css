@@ -1,26 +1,92 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Tokens del sitio — §2 de la spec. */
+@theme {
+  --color-ink: #1F1B16;
+  --color-ink-soft: #6d675e;
+  --color-ink-mute: #a09889;
+  --color-body: #5a5449;
+  --color-page: #FBFAF8;
+
+  --color-blue: #1F6FEB;
+  --color-blue-500: #4C8FF5;
+  --color-blue-300: #85B8FA;
+  --color-blue-100: #C6DDFD;
+
+  --color-gray-card: #4A4A48;
+  --color-cream-card: #EFE9DE;
+  --color-green-card: #C9DCAF;
+  --color-chip-border: #CFC6B6;
+  --color-chip-border-green: #A9C088;
+
+  --color-saint: #14664A;
+  --color-rankeo: #2f3b23;
+  --color-piri: #3A2317;
+
+  --color-footer-ink: #F2EFE7;
+  --color-footer-bar: #D9D9D9;
+  --color-rule: #e2ddd3;
+  --color-rule-soft: #ddd6ca;
+  --color-star: #C79A3A;
+  --color-lottie-slot: #EFEBE4;
+
+  --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
+  --font-serif: var(--font-instrument), ui-serif, Georgia, serif;
+
+  --ease-ui: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-modal: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  overflow-x: clip;
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+@keyframes overlay-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes overlay-open {
+  from { opacity: 0; transform: translateY(26px) scale(0.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* §9 — bajo reduced motion nada depende del scroll para ser legible. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+
+  .marquee { animation: none !important; }
+
+  [data-motion="scroll"] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&amp;family=Instrument+Serif:ital@0;1&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<script src="./doc-page.js"></script>
+<style>
+  doc-page:not(:defined) { visibility: hidden; }
+  a { color: #1F6FEB; text-decoration: none; }
+  a:hover { color: #14664A; }
+</style>
+</helmet>
+
+<doc-page margin="0.7in">
+
+<div style="font-family: 'Archivo', sans-serif; color: #2c2823; font-size: 10.5pt; line-height: 1.55">
+
+  <div style="font-family: 'JetBrains Mono', monospace; font-size: 8pt; letter-spacing: 0.2em; text-transform: uppercase; color: #a09889">spec de implementación · v1 · sep 2026</div>
+  <h1 style="margin: 10px 0 0; font-weight: 800; font-size: 30pt; line-height: 0.98; letter-spacing: -0.035em; color: #1F1B16">Portafolio tiagogoco</h1>
+  <p style="margin: 12px 0 0; font-size: 12pt; line-height: 1.4; color: #5a5449; max-width: 34em">Especificación del sitio tal como está hoy en el prototipo, para reimplementarlo en Next.js con Tailwind y Framer Motion. Todos los valores son los del prototipo, no aproximaciones.</p>
+
+  <div style="display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 22px; padding: 16px 0; border-top: 2px solid #1F1B16; border-bottom: 1px solid #ddd6ca">
+    <div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: #a09889">objetivo</div>
+      <div style="margin-top: 5px; font-weight: 700; font-size: 10pt; color: #1F1B16">Next.js (App Router) · Tailwind · Framer Motion</div>
+    </div>
+    <div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: #a09889">alcance</div>
+      <div style="margin-top: 5px; font-weight: 700; font-size: 10pt; color: #1F1B16">1 página + 3 casos en overlay</div>
+    </div>
+    <div>
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: #a09889">viewport de referencia</div>
+      <div style="margin-top: 5px; font-weight: 700; font-size: 10pt; color: #1F1B16">Desktop 1440×900 (diseño fluido con clamp)</div>
+    </div>
+  </div>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">1 · Arquitectura</h2>
+
+  <p style="margin: 12px 0 0">Todo el sitio es una sola ruta. Las secciones son anclas (<code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#top</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#intro</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#proyectos</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#sobre-mi</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#stack</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#whoami</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#contacto</code>) y el detalle de cada proyecto abre en un overlay modal, no en una ruta nueva. Si se quiere URL compartible por caso, la vía mínima es un query param (<code style="font-family:'JetBrains Mono',monospace; font-size:9pt">?caso=saint</code>) leído con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">useSearchParams</code>, manteniendo el overlay.</p>
+
+<pre style="margin: 14px 0 0; padding: 14px 16px; background: #F4F1EA; border: 1px solid #ddd6ca; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; line-height: 1.6; overflow-x: auto; break-inside: avoid; white-space: pre">app/
+  layout.tsx            fuentes, metadata, &lt;html lang="es"&gt;
+  page.tsx              compone las 7 secciones en orden
+components/
+  site-header.tsx       header fijo, aparece/invierte por scroll
+  hero.tsx              titular + abanico de 5 tarjetas
+  intro-reveal.tsx      revelado palabra por palabra (sticky 380vh)
+  projects-stack.tsx    3 tarjetas sticky apiladas
+  process.tsx           5 fases + panel de descripción
+  stack-loop.tsx        lista en loop vertical (sticky 460vh)
+  whoami.tsx            satélites en flujo continuo (sticky 460vh)
+  site-footer.tsx       ticker + redes + wordmark
+  case-overlay.tsx      modal de caso con tabs
+content/
+  projects.ts           datos de los 3 casos (fuente única)
+  process.ts            las 5 fases
+  stack.ts              filas del stack
+  socials.ts, ticker.ts
+lib/
+  use-section-progress.ts   hook de progreso (ver §4)</pre>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">2 · Tokens</h2>
+
+  <h3 style="margin: 18px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #a09889">Color</h3>
+
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 9pt">
+    <thead>
+      <tr style="border-bottom: 1.5px solid #1F1B16; text-align: left">
+        <th style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">token</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">hex</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">uso</th>
+      </tr>
+    </thead>
+    <tbody>
+      <sc-for list="{{ colors }}" as="c" hint-placeholder-count="14">
+        <tr style="border-bottom: 1px solid #e6e0d5">
+          <td style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; color: #1F1B16; white-space: nowrap">{{ c.name }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; white-space: nowrap">{{ c.hex }}</td>
+          <td style="padding: 6px 8px; color: #5a5449">{{ c.use }}</td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+
+  <p style="margin: 12px 0 0; font-size: 9.5pt; color: #5a5449">Máximo dos fondos por pantalla. Ink sobre crema y blanco sobre azul son los dos únicos pares de texto/fondo del sitio; el resto son superficies de tarjeta.</p>
+
+  <h3 style="margin: 22px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #a09889">Tipografía</h3>
+
+  <p style="margin: 10px 0 0">Tres familias, por Google Fonts (usar <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">next/font/google</code> con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">display: 'swap'</code>): <strong style="color:#1F1B16">Archivo</strong> 400/500/600/700/800 para todo el cuerpo y titulares; <strong style="color:#1F1B16">JetBrains Mono</strong> 400/500 para eyebrows, etiquetas y numeración; <strong style="color:#1F1B16">Instrument Serif</strong> itálica sólo para acentos (“(stack)”, “Puebla, México”, “padel casi diario”).</p>
+
+  <table style="width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 9pt">
+    <thead>
+      <tr style="border-bottom: 1.5px solid #1F1B16; text-align: left">
+        <th style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">rol</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">tamaño</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">peso / interlínea / tracking</th>
+      </tr>
+    </thead>
+    <tbody>
+      <sc-for list="{{ type }}" as="t" hint-placeholder-count="10">
+        <tr style="border-bottom: 1px solid #e6e0d5">
+          <td style="padding: 6px 8px 6px 0; color: #1F1B16; font-weight: 700; white-space: nowrap">{{ t.role }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8pt">{{ t.size }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8pt; color: #5a5449">{{ t.rest }}</td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+
+  <h3 style="margin: 22px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #a09889">Forma, sombra y movimiento</h3>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; margin-top: 10px; break-inside: avoid">
+    <div>
+      <p style="margin: 0"><strong style="color:#1F1B16">Radios.</strong> La firma del sitio es la tarjeta con pestaña: cuerpo <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">0 22px 22px 22px</code> y pestaña <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">14px 26px 0 0</code> (268×46px) pegada arriba a la izquierda con <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">margin-top:-1px</code>. Tarjetas del hero: cuerpo 12px, pestaña <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">10px 16px 0 0</code>. Tabs del modal <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">12px 20px 0 0</code>. Marco de teléfono: borde 10px <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">#1F1B16</code>, radio 38px, relación 9/19.5. Chips 10px, botones circulares 999px, slots de imagen 14px.</p>
+    </div>
+    <div>
+      <p style="margin: 0"><strong style="color:#1F1B16">Sombras.</strong> Tarjeta de proyecto: <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">0 -18px 60px rgba(31,27,22,.10), 0 40px 90px rgba(31,27,22,.14)</code> — la segunda sube a .16 y .18 en las tarjetas 2 y 3 para reforzar el apilado. Modal <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">0 40px 120px rgba(0,0,0,.42)</code>. Teléfono <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">0 30px 70px rgba(31,27,22,.22)</code>.</p>
+      <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Easing.</strong> Un solo easing de interacción: <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">cubic-bezier(.2,.7,.2,1)</code> a 200–260 ms para hovers; <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">cubic-bezier(.2,.8,.2,1)</code> a 380 ms para la apertura del modal. Todo lo ligado a scroll usa easeOutCubic (<code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">1-(1-k)³</code>), sin resortes.</p>
+    </div>
+  </div>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">3 · Layout global</h2>
+
+  <p style="margin: 12px 0 0">Fondo de página <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#FBFAF8</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">overflow-x: clip</code> en <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">html</code> y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">body</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">scroll-behavior: smooth</code>. Anchos de contenido: hero 1320px, intro / proceso / footer 1180px, tarjetas de proyecto 1100px, modal 1240px. Padding lateral 56px en secciones de texto, 40px en las de tarjetas.</p>
+
+  <h3 style="margin: 18px 0 0; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; color: #a09889">Header</h3>
+
+  <p style="margin: 10px 0 0">Fijo, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">z-index: 40</code>, sin fondo ni blur. Fila mono de 11px / <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">0.14em</code> en mayúsculas: avatar 24px circular + TIAGOGOCO a la izquierda, nav centrado (Proyectos, Sobre mí) con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">margin: 0 auto</code>, Contacto a la derecha. Dos comportamientos:</p>
+
+  <ul style="margin: 10px 0 0; padding-left: 18px; font-size: 10pt">
+    <li style="margin-bottom: 5px"><strong style="color:#1F1B16">Aparición.</strong> Oculto en el hero. Se muestra cuando el borde superior de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#intro</code> llega a <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">0.35 × innerHeight</code>: opacidad 0→1, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">translateY(-24px)→0</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">pointer-events none→auto</code>. Transición 420–480 ms.</li>
+    <li><strong style="color:#1F1B16">Inversión.</strong> Sobre la sección azul el texto pasa a blanco: activo mientras <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#sobre-mi</code> cumpla <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">top ≤ 46 &amp;&amp; bottom &gt; 46</code>. Ink <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#1F1B16</code> / suave <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#6d675e</code> pasan a <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#fff</code> / <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">rgba(255,255,255,.78)</code>, con transición de color de 380 ms.</li>
+  </ul>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">4 · Motor de scroll</h2>
+
+  <p style="margin: 12px 0 0">Cinco secciones son <em>sticky largas</em>: un contenedor de altura fija en vh con un hijo <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">position: sticky; top: 0</code>. Todo el movimiento interno se deriva de dos escalares. En el prototipo se calculan en un loop de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">requestAnimationFrame</code>; en Next.js el equivalente directo es <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">useScroll</code> de Framer Motion.</p>
+
+<pre style="margin: 14px 0 0; padding: 14px 16px; background: #F4F1EA; border: 1px solid #ddd6ca; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; line-height: 1.6; break-inside: avoid; white-space: pre">// progress(ref) — recorrido de una sección sticky, 0 → 1
+//   -top / (height - innerHeight)
+const { scrollYProgress } = useScroll({
+  target: ref,
+  offset: ['start start', 'end end'],
+});
+
+// enter(ref) — entrada de un bloque normal, 0 → 1
+//   (innerHeight*0.92 - top) / (innerHeight*0.75)
+const { scrollYProgress: enter } = useScroll({
+  target: ref,
+  offset: ['start 92%', 'start 17%'],
+});</pre>
+
+  <p style="margin: 12px 0 0; font-size: 9.5pt; color: #5a5449">Reglas que conviene mantener: nada se anima con <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">top</code> / <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">height</code>, sólo <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">opacity</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">transform</code> y <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">filter: blur</code>; las filas que se mueven llevan <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">will-change: transform, opacity</code>; y las alturas de las secciones sticky son el único “timeline” — cambiarlas cambia la velocidad de todo lo que contienen.</p>
+
+  <div style="margin-top: 14px; padding: 14px 16px; border-left: 3px solid #1F6FEB; background: #F4F7FE; break-inside: avoid">
+    <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: #1F6FEB">alturas del timeline</div>
+    <p style="margin: 8px 0 0; font-size: 9.5pt">intro 380vh · proyectos 3 × 145vh · proceso 350vh · stack 460vh · whoami 460vh</p>
+  </div>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">5 · Sección por sección</h2>
+
+  <h3 style="margin: 20px 0 0; font-weight: 800; font-size: 13pt; letter-spacing: -0.025em; color: #1F1B16">5.1 Hero · <code style="font-family:'JetBrains Mono',monospace; font-size:9.5pt; font-weight:400; color:#6d675e">#top</code></h3>
+
+  <sc-if value="{{ capturas }}" hint-placeholder-val="{{ true }}">
+    <figure style="margin: 12px 0 0; break-inside: avoid">
+      <img src="spec-shots/ref-01-hero.png" alt="Captura del hero" style="display: block; width: 100%; border: 1px solid #ddd6ca; border-radius: 8px">
+      <figcaption style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #a09889">ref 01 · hero, estado inicial</figcaption>
+    </figure>
+  </sc-if>
+
+  <p style="margin: 12px 0 0">Alto mínimo 100vh, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">flex-direction: column; justify-content: space-between</code>: titular arriba, abanico abajo. Padding <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(80px,15vh,190px) 56px clamp(60px,12vh,130px)</code>.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Degradado.</strong> Un <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">span</code> absoluto que sangra a todo el ancho (<code style="font-family:'JetBrains Mono',monospace; font-size:9pt">left/right: calc(-50vw + 50%)</code>) y ocupa el 50% superior: <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">linear-gradient(to bottom, rgba(31,111,235,.28), .16 al 34%, .06 al 64%, 0 al 100%)</code>. Es el estado “marcado”; existen variantes al 0.14 (“sutil”) y sin degradado.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Titular.</strong> “Creando productos digitales desde la idea, hasta producción”, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">max-width: 20em</code>, peso 800, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(38px,6.4vw,96px)</code>, interlínea 0.94, tracking −0.045em.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Abanico de 5 tarjetas.</strong> Contenedor <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">min(816px,100%) × clamp(220px,34vh,320px)</code>, tarjetas absolutas de ancho 36.76% cada una, con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">left</code> en 0 / 15.68% / 31.37% / 47.06% / 62.75% y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">z-index</code> descendente 5→1, así que la primera queda encima. Cada una es una pestaña + un cuerpo, ambos del mismo color:</p>
+
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 9pt; break-inside: avoid">
+    <thead>
+      <tr style="border-bottom: 1.5px solid #1F1B16; text-align: left">
+        <th style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">z</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">etiqueta</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">color</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">destino</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">blur</th>
+      </tr>
+    </thead>
+    <tbody>
+      <sc-for list="{{ heroCards }}" as="h" hint-placeholder-count="5">
+        <tr style="border-bottom: 1px solid #e6e0d5">
+          <td style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt">{{ h.z }}</td>
+          <td style="padding: 6px 8px; font-weight: 700; color: #1F1B16">{{ h.label }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt">{{ h.color }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; color: #5a5449">{{ h.href }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; color: #5a5449">{{ h.blur }}</td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+
+  <p style="margin: 10px 0 0">Las etiquetas van en <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">writing-mode: vertical-rl</code>, mono 11px / 0.16em, abajo a la derecha (<code style="font-family:'JetBrains Mono',monospace; font-size:9pt">bottom: 20px; right: 14px</code>). La tarjeta “Proyectos” es la excepción: título horizontal de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(20px,2.8vw,30px)</code> a 44px del borde superior y la línea “3 sitios · abrir” abajo a la izquierda. Hover: <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">translateY(-16px)</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">blur → 0</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">z-index: 9</code>, 240 ms.</p>
+
+  <h3 style="margin: 24px 0 0; font-weight: 800; font-size: 13pt; letter-spacing: -0.025em; color: #1F1B16">5.2 Intro · <code style="font-family:'JetBrains Mono',monospace; font-size:9.5pt; font-weight:400; color:#6d675e">#intro</code> · 380vh</h3>
+
+  <sc-if value="{{ capturas }}" hint-placeholder-val="{{ true }}">
+    <figure style="margin: 12px 0 0; break-inside: avoid">
+      <img src="spec-shots/ref-02-intro.png" alt="Captura del revelado de intro" style="display: block; width: 100%; border: 1px solid #ddd6ca; border-radius: 8px">
+      <figcaption style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #a09889">ref 02 · intro con el revelado casi completo (p ≈ 0.85)</figcaption>
+    </figure>
+  </sc-if>
+
+  <p style="margin: 12px 0 0">Sticky centrado, ancho 1180px, con una columna izquierda fija de eyebrow “( intro )” (mono 11px / 0.22em, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#a09889</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">padding-top: 18px</code>) y 28px de gap. Resplandor de fondo: <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">radial-gradient(120% 90% at 50% 50%, rgba(31,111,235,.05), transparent 62%)</code>.</p>
+
+  <p style="margin: 10px 0 0">Tres párrafos de peso 600, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(30px,3.6vw,54px)</code>, interlínea 1.14, tracking −0.028em, maquetados como <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">flex-wrap</code> con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">column-gap: .28em; row-gap: .06em</code> — cada palabra es un <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">span</code> inline-block independiente. El texto es:</p>
+
+  <ol style="margin: 10px 0 0; padding-left: 20px; font-size: 10pt">
+    <li style="margin-bottom: 4px">Soy Tiago, desarrollador en Puebla.</li>
+    <li style="margin-bottom: 4px">Construyo productos digitales desde el diseño hasta los cobros en producción.</li>
+    <li>Tres en línea desde 2025, con usuarios usándolos hoy.</li>
+  </ol>
+
+<pre style="margin: 14px 0 0; padding: 14px 16px; background: #F4F1EA; border: 1px solid #ddd6ca; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; line-height: 1.6; break-inside: avoid; white-space: pre">// revelado palabra por palabra. total = nº de palabras de los 3 párrafos
+const head   = p / 0.82;               // termina al 82% del recorrido
+const start  = i / total;               // i = índice global de la palabra
+const window = 1.35 / total + 0.06;     // solape entre palabras vecinas
+const k = clamp((head - start) / window, 0, 1);
+const e = 1 - Math.pow(1 - k, 3);       // easeOutCubic
+
+opacity   = 0.10 + 0.90 * e
+translateY= 14px * (1 - e)
+blur      = 5px  * (1 - e)
+color     = e &gt; 0.55 ? '#1F1B16' : '#8d8578'   // salto duro, sin lerp</pre>
+
+  <p style="margin: 12px 0 0"><strong style="color:#1F1B16">Cola.</strong> Debajo, una regla de 64×1px <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#d8d2c7</code> y el enlace “Últimos proyectos ↓” (mono 13px / 0.2em) aparecen con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">opacity = clamp((p - 0.84) / 0.12, 0, 1)</code>.</p>
+
+  <h3 style="margin: 24px 0 0; font-weight: 800; font-size: 13pt; letter-spacing: -0.025em; color: #1F1B16">5.3 Proyectos · <code style="font-family:'JetBrains Mono',monospace; font-size:9.5pt; font-weight:400; color:#6d675e">#proyectos</code></h3>
+
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; margin-top: 12px; break-inside: avoid">
+    <sc-if value="{{ capturas }}" hint-placeholder-val="{{ true }}">
+      <figure style="margin: 0">
+        <img src="spec-shots/ref-03-proyecto-01.png" alt="Tarjeta de proyecto 01" style="display: block; width: 100%; border: 1px solid #ddd6ca; border-radius: 8px">
+        <figcaption style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #a09889">ref 03 · tarjeta 01</figcaption>
+      </figure>
+    </sc-if>
+    <sc-if value="{{ capturas }}" hint-placeholder-val="{{ true }}">
+      <figure style="margin: 0">
+        <img src="spec-shots/ref-04-proyecto-03.png" alt="Tarjeta de proyecto 03" style="display: block; width: 100%; border: 1px solid #ddd6ca; border-radius: 8px">
+        <figcaption style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #a09889">ref 04 · tarjeta 03</figcaption>
+      </figure>
+    </sc-if>
+  </div>
+
+  <p style="margin: 12px 0 0">Tres bloques hermanos, cada uno <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">position: sticky; top: 0; height: 145vh</code>, con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">align-items: flex-start</code>. El apilado sale de tres valores que crecen juntos: <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">padding-top</code> 8vh / 12vh / 16vh, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">z-index</code> 1 / 2 / 3 y la sombra inferior .14 / .16 / .18. No hay animación por scroll: la tarjeta siguiente sube sola y tapa a la anterior dejando 4vh de la de atrás a la vista. La sección cierra con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">padding-bottom: 12vh</code>.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Anatomía de la tarjeta</strong> (ancho máx. 1100px). Pestaña 268×46px del color de la tarjeta; cuerpo con padding <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">34px 40px 40px</code>. Dentro: etiqueta “proyecto 0N” absoluta a <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">top:12px; left:32px</code> (mono 12px / 0.18em) sobre la pestaña; fila con el nombre a 44px peso 800 y, a la derecha, un botón circular de 46px con el icono de globo (SVG 23px, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">stroke-width 1.8</code>: círculo r=9, elipse rx=4 ry=9, línea horizontal); y una rejilla <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">300px 1fr</code> con gap 40px: descripción de 20px / 1.35 + chips + botón “abrir caso →” a la izquierda, imagen 16/9 con radio 14px a la derecha.</p>
+
+  <p style="margin: 10px 0 0">Los chips son <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">padding: 10px 18px</code>, radio 10px, borde 1px del tono medio de la tarjeta, fondo <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">rgba(255,255,255,.35)</code>, texto 13px peso 700 en mayúsculas con tracking 0.06em. El botón “abrir caso →” es texto de 26px peso 700 con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">border-bottom: 3px</code> del color de acento y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">opacity .6</code> en hover; abre el overlay del caso correspondiente.</p>
+
+  <table style="width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 9pt; break-inside: avoid">
+    <thead>
+      <tr style="border-bottom: 1.5px solid #1F1B16; text-align: left">
+        <th style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">tarjeta</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">superficie</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">borde chip / texto</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">acento (botón)</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">chips</th>
+      </tr>
+    </thead>
+    <tbody>
+      <sc-for list="{{ projCards }}" as="p" hint-placeholder-count="3">
+        <tr style="border-bottom: 1px solid #e6e0d5">
+          <td style="padding: 6px 8px 6px 0; font-weight: 700; color: #1F1B16; white-space: nowrap">{{ p.name }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt">{{ p.bg }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt">{{ p.chip }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt">{{ p.accent }}</td>
+          <td style="padding: 6px 8px; color: #5a5449">{{ p.tags }}</td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+
+  <h3 style="margin: 24px 0 0; font-weight: 800; font-size: 13pt; letter-spacing: -0.025em; color: #1F1B16">5.4 Proceso · <code style="font-family:'JetBrains Mono',monospace; font-size:9.5pt; font-weight:400; color:#6d675e">#sobre-mi</code> · 350vh</h3>
+
+  <sc-if value="{{ capturas }}" hint-placeholder-val="{{ true }}">
+    <figure style="margin: 12px 0 0; break-inside: avoid">
+      <img src="spec-shots/ref-05-proceso.png" alt="Captura de la sección de proceso" style="display: block; width: 100%; border: 1px solid #ddd6ca; border-radius: 8px">
+      <figcaption style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #a09889">ref 05 · proceso, fase 1 activa</figcaption>
+    </figure>
+  </sc-if>
+
+  <p style="margin: 12px 0 0">Único bloque azul <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#1F6FEB</code> con texto blanco. Sticky centrado, 1180px, padding vertical 8vh. Orden: eyebrow “( proceso creativo )”, titular “QUÉ HAGO Y CÓMO” (<code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(34px,4.4vw,66px)</code>, peso 800, interlínea 0.98, tracking −0.035em), párrafo de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">max-width: 560px</code> al 74% de blanco, y una rejilla <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">minmax(0,1.35fr) minmax(200px,.65fr)</code> con gap 56px.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Lista de fases.</strong> Cinco filas separadas por <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">border-top: 1px solid rgba(255,255,255,.22)</code> (más una regla de cierre al final), cada una con el número en mono 12px y la etiqueta en peso 700 <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(18px,2.1vw,30px)</code>, alineadas por <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">baseline</code> con gap 20px y padding vertical <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(10px,1.6vh,18px)</code>. La columna derecha muestra “( 0N )” y la descripción de la fase activa.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Interacción.</strong> La fase activa se fija con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">mouseenter</code> y con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">click</code> (para touch); arranca en la 1. La fila activa va a opacidad 1, las demás a 0.44 — multiplicado por su progreso de entrada. Transición sólo de opacidad, 260 ms. En teclado, convertir las filas en botones de un <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">role="tablist"</code>: hoy no son focusables.</p>
+
+<pre style="margin: 14px 0 0; padding: 14px 16px; background: #F4F1EA; border: 1px solid #ddd6ca; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; line-height: 1.6; break-inside: avoid; white-space: pre">// stagger de toda la sección: q = progress(#sobre-mi) / 0.7
+const step = (i) =&gt; {
+  const k = clamp((q - i * 0.10) / 0.22, 0, 1);
+  const e = 1 - Math.pow(1 - k, 3);
+  return { opacity: e, y: 26 * (1 - e) };   // px
+};
+// i = 0 eyebrow · 1 titular · 2 párrafo · 3+n fase n · 3+5 panel derecho</pre>
+
+  <p style="margin: 12px 0 0; font-size: 9.5pt; color: #5a5449">Las cinco fases, verbatim: <strong style="color:#1F1B16">1</strong> Spec antes que código · <strong style="color:#1F1B16">2</strong> Diseño del sistema visual · <strong style="color:#1F1B16">3</strong> Datos y permisos primero · <strong style="color:#1F1B16">4</strong> Implementación por fases, con cierre · <strong style="color:#1F1B16">5</strong> Despliegue y operación. Las descripciones largas viven en <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">content/process.ts</code>.</p>
+
+  <h3 style="margin: 24px 0 0; font-weight: 800; font-size: 13pt; letter-spacing: -0.025em; color: #1F1B16">5.5 Stack · <code style="font-family:'JetBrains Mono',monospace; font-size:9.5pt; font-weight:400; color:#6d675e">#stack</code> · 460vh</h3>
+
+  <sc-if value="{{ capturas }}" hint-placeholder-val="{{ true }}">
+    <figure style="margin: 12px 0 0; break-inside: avoid">
+      <img src="spec-shots/ref-06-stack.png" alt="Captura de la sección de stack" style="display: block; width: 100%; border: 1px solid #ddd6ca; border-radius: 8px">
+      <figcaption style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #a09889">ref 06 · stack a mitad del loop</figcaption>
+    </figure>
+  </sc-if>
+
+  <p style="margin: 12px 0 0">Sticky de 100vh con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">overflow: hidden</code>, partido en dos columnas absolutas: 46% izquierda con el titular fijo “LAS HERRAMIENTAS QUE USO <em style="font-family:'Instrument Serif',serif">(stack)</em>” en azul <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#1F6FEB</code> (<code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(30px,4.6vw,68px)</code>, peso 800, interlínea 0.94, tracking −0.04em) y 54% derecha con la lista en movimiento. Eyebrow “( herramientas )” a <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">top:26px; left:40px</code>. Fondo blanco puro, no crema.</p>
+
+  <p style="margin: 10px 0 0">La lista tiene 19 filas de tres tipos, y el tipo define el estilo. <strong style="color:#1F1B16">h</strong> (encabezado): mono <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(11px,1vw,14px)</code>, peso 500, tracking 0.22em, mayúsculas, azul. <strong style="color:#1F1B16">i</strong> (herramienta): Archivo peso 800, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(24px,3.2vw,50px)</code>, tracking −0.035em, mayúsculas, ink. <strong style="color:#1F1B16">n</strong> (nota): Archivo peso 600, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(14px,1.5vw,21px)</code>, color <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#5a5449</code>. Cada fila lleva <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">border-bottom: 1px solid #e2ddd3</code> y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">padding-bottom: clamp(10px,1.4vh,18px)</code>.</p>
+
+<pre style="margin: 14px 0 0; padding: 14px 16px; background: #F4F1EA; border: 1px solid #ddd6ca; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; line-height: 1.6; break-inside: avoid; white-space: pre">// loop vertical infinito. r = progress(#stack)
+const SP = 13;                       // separación entre filas, en vh
+const TOTAL = rows.length * SP;      // 19 * 13 = 247vh
+const shift = r * TOTAL;             // un recorrido completo = una vuelta
+
+// por fila i:
+const pos = ((i * SP - shift) % TOTAL + TOTAL) % TOTAL;
+const y   = pos - SP;                                    // vh
+const opacity = clamp(min((100 - y) / 14, (y + SP) / 14), 0, 1);</pre>
+
+  <p style="margin: 12px 0 0; font-size: 9.5pt; color: #5a5449">Es decir: las filas suben, se desvanecen en los 14vh de cada borde y reaparecen por abajo. Un recorrido de scroll = exactamente una vuelta, así que la lista nunca se corta a media transición. En Framer Motion, un <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">useTransform(scrollYProgress, v =&gt; …)</code> por fila alimentando un <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">motion.div</code> con <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">y</code> y <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">opacity</code> en su style.</p>
+
+  <h3 style="margin: 24px 0 0; font-weight: 800; font-size: 13pt; letter-spacing: -0.025em; color: #1F1B16">5.6 Whoami · <code style="font-family:'JetBrains Mono',monospace; font-size:9.5pt; font-weight:400; color:#6d675e">#whoami</code> · 460vh</h3>
+
+  <sc-if value="{{ capturas }}" hint-placeholder-val="{{ true }}">
+    <figure style="margin: 12px 0 0; break-inside: avoid">
+      <img src="spec-shots/ref-07-whoami.png" alt="Captura de la sección whoami" style="display: block; width: 100%; border: 1px solid #ddd6ca; border-radius: 8px">
+      <figcaption style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #a09889">ref 07 · whoami; los 4 cuadros grises son slots de Lottie sin llenar</figcaption>
+    </figure>
+  </sc-if>
+
+  <p style="margin: 12px 0 0">Sticky de 100vh sobre fondo blanco. Fijos en el centro: el título <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">~whoami</code> en mono peso 500, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(22px,2.6vw,40px)</code>, a <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">top: 8%</code>, y el retrato de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">min(26vw,360px)</code> en relación 4/5 (<code style="font-family:'JetBrains Mono',monospace; font-size:9pt">object-position: 50% 18%</code>), sin radio. Los dos derivan lentamente con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">translateY(-7vh × w)</code>.</p>
+
+  <p style="margin: 10px 0 0">Ocho satélites en cuatro carriles: <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">left: 5%</code> y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">left: 11%</code>, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">right: 5%</code> y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">right: 11%</code>. Los carriles al 5% llevan cuadros 1/1 con radio 14px y fondo <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#EFEBE4</code> (destinados a Lotties); los del 11% llevan texto. Contenido y fase de cada uno:</p>
+
+  <table style="width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 9pt; break-inside: avoid">
+    <thead>
+      <tr style="border-bottom: 1.5px solid #1F1B16; text-align: left">
+        <th style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">fase</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">carril</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">ancho</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">contenido</th>
+      </tr>
+    </thead>
+    <tbody>
+      <sc-for list="{{ satellites }}" as="s" hint-placeholder-count="8">
+        <tr style="border-bottom: 1px solid #e6e0d5">
+          <td style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt">{{ s.phase }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt">{{ s.lane }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8pt; color: #5a5449">{{ s.w }}</td>
+          <td style="padding: 6px 8px; color: #1F1B16">{{ s.content }}</td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+
+<pre style="margin: 14px 0 0; padding: 14px 16px; background: #F4F1EA; border: 1px solid #ddd6ca; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; line-height: 1.6; break-inside: avoid; white-space: pre">// flujo continuo: entran por abajo, cruzan, salen por arriba. w = progress(#whoami)
+const t = (phase + w * 1.25) % 1;        // 1.25 vueltas por recorrido
+const y = 104 - t * 130;                 // 104vh → -26vh
+const opacity = clamp(min(t / 0.12, (1 - t) / 0.14), 0, 1);</pre>
+
+  <p style="margin: 12px 0 0; font-size: 9.5pt; color: #5a5449">Nota de implementación: los textos tipo “Puebla, México” y “padel casi diario” usan Instrument Serif itálica; “Autodidacta desde 2022” y “Buceo cuando el mar deja” usan Archivo peso 700. Las etiquetas mono en <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">#a09889</code> (“base”, “off · screen”) son opcionales por satélite.</p>
+
+  <h3 style="margin: 24px 0 0; font-weight: 800; font-size: 13pt; letter-spacing: -0.025em; color: #1F1B16">5.7 Footer · <code style="font-family:'JetBrains Mono',monospace; font-size:9.5pt; font-weight:400; color:#6d675e">#contacto</code></h3>
+
+  <sc-if value="{{ capturas }}" hint-placeholder-val="{{ true }}">
+    <figure style="margin: 12px 0 0; break-inside: avoid">
+      <img src="spec-shots/ref-08-footer.png" alt="Captura del footer" style="display: block; width: 100%; border: 1px solid #ddd6ca; border-radius: 8px">
+      <figcaption style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #a09889">ref 08 · footer completo</figcaption>
+    </figure>
+  </sc-if>
+
+  <p style="margin: 12px 0 0">Tres franjas. <strong style="color:#1F1B16">Ticker</strong>: fila de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">width: max-content</code> con la lista duplicada y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">animation: 26s linear infinite</code> de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">translate3d(0,0,0)</code> a <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">translate3d(-50%,0,0)</code>; mono 13px / 0.28em al 55% de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#F2EFE7</code>, separador ✦ en azul, padding vertical 26px, borde inferior al 14%. Ítems: disponible para proyectos · puebla · méxico · producto · diseño · código · tiagogocor@gmail.com · saint padel · rankeo · piri.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Cuerpo negro</strong> (1180px, padding <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(70px,14vh,150px)</code> arriba): a la izquierda las tres redes como enlaces enormes — número mono <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(10px,1vw,13px)</code> + etiqueta peso 800 <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(30px,5vw,76px)</code>, tracking −0.04em, gap 18px; en hover, color azul y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">translateX(26px)</code> en 320 ms. A la derecha el wordmark TIAGOGOCO en <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(34px,6.6vw,104px)</code>, interlínea 0.86, tracking −0.05em, que entra desde <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">translateX(46px)</code> a 0 según <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">enter(footer)</code>, y debajo “© 2026 · portafolio”.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Barra gris</strong> <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#D9D9D9</code>: “hecho con figma, next.js, tailwind y mucho &lt;3” en <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#6b6b6b</code> y el mailto <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">tiagogocor@gmail.com</code> en <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#0d0d0d</code>, ambos peso 700 <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(18px,2.2vw,30px)</code>, separados 42px; hover del mailto: azul y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">translateX(10px)</code>.</p>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">6 · Overlay de caso</h2>
+
+  <sc-if value="{{ capturas }}" hint-placeholder-val="{{ true }}">
+    <figure style="margin: 12px 0 0; break-inside: avoid">
+      <img src="spec-shots/ref-09-caso.png" alt="Captura del overlay de caso" style="display: block; width: 100%; border: 1px solid #ddd6ca; border-radius: 8px">
+      <figcaption style="margin-top: 6px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #a09889">ref 09 · caso 01 abierto</figcaption>
+    </figure>
+  </sc-if>
+
+  <p style="margin: 12px 0 0"><code style="font-family:'JetBrains Mono',monospace; font-size:9pt">position: fixed; inset: 0; z-index: 90</code>, padding <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(12px,3vh,40px)</code>. Backdrop <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">rgba(31,27,22,.62)</code> con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">backdrop-filter: blur(6px)</code>, aparece en 260 ms y cierra al click. Panel de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">min(1240px,100%) × min(92vh,940px)</code>, entra con opacidad 0→1, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">translateY(26px)→0</code> y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">scale(.985)→1</code> en 380 ms.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Tabs.</strong> Tres pestañas sobre el panel, mono 11px / 0.16em, radio <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">12px 20px 0 0</code>, gap 2px. Activa: fondo <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#FBFAF8</code>, texto ink, padding <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">14px 26px 13px</code>. Inactiva: <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#E7E1D6</code>, texto <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#8d8578</code>, padding <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">11px 22px 10px</code> — la diferencia de padding es la que “levanta” la activa, con transición de 200 ms. A la derecha, “esc · cerrar”.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Comportamiento.</strong> Escape cierra; al abrir o cambiar de caso, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">body</code> pasa a <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">overflow: hidden</code> y el scroll interno vuelve a 0. Pendiente para la implementación real: <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">role="dialog" aria-modal</code>, focus trap, devolver el foco al botón que abrió, y compensar el ancho del scrollbar al bloquear el body.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Contenido, en orden.</strong> (1) Cabecera en rejilla <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">1.15fr 0.85fr</code>: eyebrow “caso 0N · tipo” en el color de acento, título <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(38px,5vw,66px)</code> peso 800, botón circular de 52px al sitio en vivo, lede <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(17px,1.8vw,23px)</code> a 34em; a la derecha, el primer teléfono. (2) Bloque STACK: título 800 <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp(26px,3vw,38px)</code> y lista de máx. 340px, cada ítem con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">border-bottom: 2px solid #1F1B16</code>, nombre en mayúsculas peso 700 y número mono a la derecha. (3) Problema / Solución en dos columnas <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">auto-fit minmax(260px,1fr)</code> sobre un <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">border-top: 2px</code>. (4) Decisiones técnicas: tres párrafos con la primera frase en negrita ink y el resto en <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#5a5449</code>. (5) Aprendizaje: bloque de radio 26px con fondo de acento y su tinta, junto al segundo teléfono. (6) Reseñas, sólo si el caso las tiene: tarjetas <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#F4F1EA</code> radio 20px, borde <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#ddd6ca</code>, estrellas <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#C79A3A</code> + “verificada”, cita, y autor con el artículo comprado en mono. (7) “Siguiente: NOMBRE →” abajo a la derecha, que rota entre los tres casos.</p>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">7 · Modelo de datos</h2>
+
+  <p style="margin: 12px 0 0">Todo el contenido de proyectos sale de un solo arreglo; la tarjeta de la sección y el overlay son dos vistas del mismo objeto. Nombres tal como están hoy en el prototipo.</p>
+
+<pre style="margin: 14px 0 0; padding: 14px 16px; background: #F4F1EA; border: 1px solid #ddd6ca; border-radius: 8px; font-family: 'JetBrains Mono', monospace; font-size: 8.5pt; line-height: 1.6; break-inside: avoid; white-space: pre">export type Project = {
+  id: 'saint' | 'rankeo' | 'piri';
+  n: '01' | '02' | '03';
+  title: string;          // SAINT PADEL
+  short: string;          // etiqueta del "siguiente"
+  tab: string;            // saint padel
+  kind: string;           // ecommerce de drops
+  href: string;           // sitio en vivo (o '#contacto' si no hay)
+  accent: string;         // color del eyebrow, botón y bloque aprendizaje
+  accentInk: string;      // tinta sobre accent
+  cardBg: string;         // superficie de la tarjeta en #proyectos
+  cardChipBorder: string;
+  teaser: string;         // 20px en la tarjeta
+  teaserTags: string[];   // 3 chips
+  lede: string;           // párrafo del overlay
+  problema: string;
+  solucion: string;
+  stack: string[];        // numerado 01..N en el overlay
+  decisiones: { n: string; title: string; note: string }[];
+  aprendizajes: string[];
+  shots: { src?: string; alt: string }[];   // 2 capturas verticales
+  resenas?: { q: string; by: string; item: string }[];
+};</pre>
+
+  <p style="margin: 12px 0 0; font-size: 9.5pt; color: #5a5449">Los otros arreglos son planos: <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">process</code> (<code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">n, label, desc</code>), <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">stackRows</code> (<code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">k: 'h'|'i'|'n', t</code>), <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">socials</code> (<code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">n, label, href</code>), <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">ticker</code> (<code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">string[]</code>) y <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">satellites</code> (<code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">phase, lane, width, kind: 'lottie'|'text'</code>).</p>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">8 · Assets</h2>
+
+  <p style="margin: 12px 0 0">Las imágenes que hoy están en el prototipo van exportadas junto a este documento, en <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">assets-export/</code> (WebP) y <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">uploads/</code>. Sugerencia de destino: <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">public/img/…</code> y servirlas con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">next/image</code>; sólo el retrato y el avatar necesitan <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">priority</code> nulo — nada del hero es imagen.</p>
+
+  <table style="width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 9pt">
+    <thead>
+      <tr style="border-bottom: 1.5px solid #1F1B16; text-align: left">
+        <th style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">archivo</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">dónde va</th>
+        <th style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.14em; text-transform: uppercase; color: #6d675e; font-weight: 500">encuadre</th>
+      </tr>
+    </thead>
+    <tbody>
+      <sc-for list="{{ assets }}" as="a" hint-placeholder-count="12">
+        <tr style="border-bottom: 1px solid #e6e0d5">
+          <td style="padding: 6px 8px 6px 0; font-family: 'JetBrains Mono', monospace; font-size: 8pt; color: #1F1B16">{{ a.file }}</td>
+          <td style="padding: 6px 8px; color: #5a5449">{{ a.where }}</td>
+          <td style="padding: 6px 8px; font-family: 'JetBrains Mono', monospace; font-size: 8pt; color: #5a5449">{{ a.fit }}</td>
+        </tr>
+      </sc-for>
+    </tbody>
+  </table>
+
+  <sc-if value="{{ pendientes }}" hint-placeholder-val="{{ true }}">
+    <div style="margin-top: 16px; padding: 14px 16px; border-left: 3px solid #C79A3A; background: #FBF6EA; break-inside: avoid">
+      <div style="font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.18em; text-transform: uppercase; color: #8a6a1f">falta material</div>
+      <ul style="margin: 8px 0 0; padding-left: 18px; font-size: 9.5pt">
+        <li style="margin-bottom: 4px">Cuatro Lotties de la sección whoami: slots de 1/1 sin llenar (ref 07). Formato y peso por decidir; si se resuelven como video o GIF, cambia el markup.</li>
+        <li style="margin-bottom: 4px">Textos “Pendiente:” en los casos de Rankeo y Piri — problema, solución, decisiones y aprendizajes. Van a producción tal cual si no se escriben.</li>
+        <li style="margin-bottom: 4px">URLs reales de GitHub, LinkedIn e Instagram: hoy apuntan a la raíz de cada sitio.</li>
+        <li>Sitio en vivo de Rankeo y Piri: los botones de globo apuntan a <code style="font-family:'JetBrains Mono',monospace; font-size:8.5pt">#contacto</code>.</li>
+      </ul>
+    </div>
+  </sc-if>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">9 · Responsive, accesibilidad y rendimiento</h2>
+
+  <p style="margin: 12px 0 0"><strong style="color:#1F1B16">Responsive.</strong> El prototipo es desktop y todo lo tipográfico ya es fluido con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">clamp()</code>, así que sobrevive hasta ~1024px. Debajo hay cuatro cosas que hay que decidir explícitamente: la rejilla <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">300px 1fr</code> de las tarjetas de proyecto y la <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">1.15fr 0.85fr</code> del overlay pasan a una columna; el abanico del hero, con tarjetas de 36.76% superpuestas, necesita otra forma en móvil (carrusel o pila); las secciones sticky de 380–460vh son mucho scroll en un teléfono, conviene bajarlas a 200–260vh; y el whoami de ocho satélites en carriles laterales no cabe — la vía corta es reducirlo a un carril central de cuatro.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Accesibilidad.</strong> Pendientes concretos: las filas de fase deben ser <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">button</code>; el overlay necesita <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">role="dialog"</code>, focus trap y retorno de foco; los tabs, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">role="tab"</code> con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">aria-selected</code>; el ticker, <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">aria-hidden</code> por ser decorativo. Bajo <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">prefers-reduced-motion</code>: parar la marquesina, y en las secciones sticky mostrar el estado final (opacidad 1, sin desplazamiento ni blur) en lugar de animar — el contenido no debe depender del scroll para ser legible. Los botones circulares de 46px ya cumplen tamaño táctil; los enlaces mono de 11px del header son el punto más justo de contraste, mantener <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">#6d675e</code> como mínimo sobre crema.</p>
+
+  <p style="margin: 10px 0 0"><strong style="color:#1F1B16">Rendimiento.</strong> Un solo suscriptor de scroll para toda la página (o los <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">useScroll</code> de Framer, que ya comparten un rAF). El prototipo re-renderiza sólo cuando algún progreso cambia más de 0.002 y sólo alterna las banderas de header con transiciones discretas; con Framer, mantener el valor en <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">MotionValue</code> y no en estado de React para no re-renderizar por frame. Las palabras de intro (≈25 spans) y las 19 filas del stack son los dos únicos puntos con muchos nodos animados.</p>
+
+  <h2 style="margin: 30px 0 0; font-weight: 800; font-size: 16pt; letter-spacing: -0.03em; color: #1F1B16">10 · Orden de implementación</h2>
+
+  <ol style="margin: 12px 0 0; padding-left: 20px; font-size: 10pt">
+    <li style="margin-bottom: 6px">Tokens en <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">@theme</code> de Tailwind + fuentes con <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">next/font</code>; verificar los tres tamaños de titular contra las capturas.</li>
+    <li style="margin-bottom: 6px">Contenido a <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">content/*.ts</code> con los tipos de §7, antes de cualquier componente.</li>
+    <li style="margin-bottom: 6px">Secciones estáticas sin movimiento: hero, tarjetas de proyecto, footer. Esto ya debe verse igual que las capturas.</li>
+    <li style="margin-bottom: 6px">Overlay de caso completo, con accesibilidad, antes de las animaciones de scroll.</li>
+    <li style="margin-bottom: 6px">Hook de progreso (§4) y luego, en este orden: intro, proceso, stack, whoami. Cada uno se valida solo comparando el estado a 0, 0.5 y 1.</li>
+    <li style="margin-bottom: 6px">Header (aparición e inversión) al final, cuando las secciones ya tienen su altura definitiva.</li>
+    <li>Pasada de <code style="font-family:'JetBrains Mono',monospace; font-size:9pt">prefers-reduced-motion</code>, móvil y metadata / OG.</li>
+  </ol>
+
+  <p style="margin: 22px 0 0; padding-top: 14px; border-top: 1px solid #ddd6ca; font-family: 'JetBrains Mono', monospace; font-size: 7.5pt; letter-spacing: 0.16em; text-transform: uppercase; color: #a09889">fin del documento · las capturas de referencia están en spec-shots/ y los assets en assets-export/</p>
+
+</div>
+
+</doc-page>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;capturas&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Documento&quot;},&quot;pendientes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Documento&quot;}}">
+const COLORS = [
+  ['ink', '#1F1B16', 'Texto principal, marcos de teléfono, tarjeta gris del hero'],
+  ['page', '#FBFAF8', 'Fondo de página y del panel del overlay'],
+  ['blue', '#1F6FEB', 'Acento principal, sección de proceso, hovers'],
+  ['blue-500 / 300 / 100', '#4C8FF5 · #85B8FA · #C6DDFD', 'Escalones del abanico del hero'],
+  ['gray-card', '#4A4A48', 'Tarjeta “Proyectos” del hero'],
+  ['ink-soft', '#6d675e', 'Nav inactivo, etiquetas de tarjeta'],
+  ['ink-mute', '#a09889', 'Eyebrows sobre claro'],
+  ['body', '#5a5449', 'Notas y párrafos secundarios'],
+  ['cream-card', '#EFE9DE', 'Tarjetas de proyecto 01 y 03'],
+  ['green-card', '#C9DCAF', 'Tarjeta de proyecto 02 (Rankeo)'],
+  ['chip-border', '#CFC6B6 · #A9C088', 'Borde de chip en tarjeta crema / verde'],
+  ['saint', '#14664A', 'Acento de Saint Padel'],
+  ['rankeo', '#2f3b23 · tinta #E8F3D8', 'Acento de Rankeo (marca #0F0F0F)'],
+  ['piri', '#3A2317 · tinta #F6E9D8', 'Acento de Piri'],
+  ['footer-ink', '#F2EFE7', 'Texto sobre negro'],
+  ['footer-bar', '#D9D9D9', 'Barra inferior; texto #6b6b6b y #0d0d0d'],
+  ['rule', '#e2ddd3 · #ddd6ca', 'Reglas del stack / bordes de tarjeta de reseña'],
+  ['star', '#C79A3A', 'Estrellas de reseña']
+];
+
+const TYPE = [
+  ['H1 hero', 'clamp(38px, 6.4vw, 96px)', '800 / 0.94 / -0.045em'],
+  ['H2 sección', 'clamp(34px, 4.4vw, 66px)', '800 / 0.98 / -0.035em'],
+  ['H2 tarjeta proyecto', '44px', '800 / 1 / -0.03em'],
+  ['Título de caso', 'clamp(38px, 5vw, 66px)', '800 / 0.94 / -0.04em'],
+  ['Párrafo intro', 'clamp(30px, 3.6vw, 54px)', '600 / 1.14 / -0.028em'],
+  ['Fila de stack (i)', 'clamp(24px, 3.2vw, 50px)', '800 / 1.16 / -0.035em · mayúsculas'],
+  ['Redes del footer', 'clamp(30px, 5vw, 76px)', '800 / 1 / -0.04em'],
+  ['Wordmark', 'clamp(34px, 6.6vw, 104px)', '800 / 0.86 / -0.05em'],
+  ['Cuerpo de tarjeta', '20px', '400 / 1.35 / 0'],
+  ['Lede de caso', 'clamp(17px, 1.8vw, 23px)', '400 / 1.4 / -0.01em'],
+  ['Eyebrow (mono)', '11px', '400 / 0.22em / mayúsculas'],
+  ['Etiqueta de tarjeta (mono)', '12px', '400 / 0.18em / mayúsculas'],
+  ['Header y tabs (mono)', '11px', '400 / 0.14–0.16em / mayúsculas']
+];
+
+const HERO = [
+  ['5', 'Proyectos', '#4A4A48', '#proyectos', '—'],
+  ['4', 'Sobre mí', '#1F6FEB', '#sobre-mi', '—'],
+  ['3', 'Experiencia', '#4C8FF5', '#sobre-mi', '—'],
+  ['2', 'Stack', '#85B8FA', '#stack', '1.4px'],
+  ['1', 'Contacto', '#C6DDFD', '#contacto', '2.6px']
+];
+
+const PROJ = [
+  ['01 · Saint Padel', '#EFE9DE', '#CFC6B6 / #6d675e', '#14664A', 'Next.js · Supabase · Stripe'],
+  ['02 · Rankeo', '#C9DCAF', '#A9C088 / #4c5a3d', '#0F0F0F sobre #D8F24A', 'Next.js · PostgreSQL · Tailwind'],
+  ['03 · Piri', '#EFE9DE', '#CFC6B6 / #6d675e', '#3A2317', 'Next.js · Stripe · Admin propio']
+];
+
+const SAT = [
+  ['0.03', 'left 5%', 'clamp(96px,11vw,148px)', 'Lottie 1 (slot vacío)'],
+  ['0.17', 'left 11%', 'clamp(120px,14vw,190px)', 'Puebla, México — serif itálica + etiqueta “base”'],
+  ['0.30', 'left 5%', 'clamp(100px,12vw,158px)', 'Lottie 2 (slot vacío)'],
+  ['0.44', 'left 11%', 'clamp(130px,15vw,200px)', 'Autodidacta desde 2022'],
+  ['0.11', 'right 5%', 'clamp(96px,11vw,148px)', 'Lottie 3 (slot vacío)'],
+  ['0.25', 'right 11%', 'clamp(110px,13vw,170px)', 'padel casi diario — serif itálica'],
+  ['0.38', 'right 5%', 'clamp(100px,12vw,158px)', 'Lottie 4 (slot vacío)'],
+  ['0.52', 'right 11%', 'clamp(130px,15vw,205px)', 'Buceo cuando el mar deja + “off · screen”']
+];
+
+const ASSETS = [
+  ['uploads/1C51CC23-…_1_105_c.jpeg', 'Avatar del header, 24px circular', 'object-position 36% 30%'],
+  ['uploads/pasted-1788504742367-0.png', 'Retrato central de whoami', '4/5, object-position 50% 18%'],
+  ['assets-export/proy-saint.webp', 'Imagen de la tarjeta 01', '16/9, radio 14px'],
+  ['assets-export/proy-rankeo.webp', 'Imagen de la tarjeta 02', '16/9 (recorte guardado: escala 1.01, offset 0.47 / -0.47)'],
+  ['assets-export/proy-piri.webp', 'Imagen de la tarjeta 03', '16/9, radio 14px'],
+  ['uploads/fotos-1788637622451-xxin.png', 'Caso Saint, teléfono 1', '9/19.5, cover top'],
+  ['uploads/fotos-1788637622457-5ag5.png', 'Caso Saint, teléfono 2', '9/19.5, cover top'],
+  ['assets-export/shot-rankeo-1.webp', 'Caso Rankeo, teléfono 1', '9/19.5, cover top'],
+  ['assets-export/shot-rankeo-2.webp', 'Caso Rankeo, teléfono 2', '9/19.5, cover top'],
+  ['assets-export/shot-piri-1.webp', 'Caso Piri, teléfono 1', '9/19.5, cover top'],
+  ['assets-export/shot-piri-2.webp', 'Caso Piri, teléfono 2', '9/19.5, cover top'],
+  ['assets-export/cap-*.webp, real-piri-*.webp', 'Capturas alternas guardadas, hoy sin usar', '—'],
+  ['uploads/saint-padel-*.png, monograma-oscuro.png, caballito-oscuro.png, rankeo-social.png', 'Logotipos de las marcas; no se usan en el sitio, útiles para OG y favicons', '—']
+];
+
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      capturas: this.props.capturas ?? true,
+      pendientes: this.props.pendientes ?? true,
+      colors: COLORS.map(([name, hex, use]) => ({ name, hex, use })),
+      type: TYPE.map(([role, size, rest]) => ({ role, size, rest })),
+      heroCards: HERO.map(([z, label, color, href, blur]) => ({ z, label, color, href, blur })),
+      projCards: PROJ.map(([name, bg, chip, accent, tags]) => ({ name, bg, chip, accent, tags })),
+      satellites: SAT.map(([phase, lane, w, content]) => ({ phase, lane, w, content })),
+      assets: ASSETS.map(([file, where, fit]) => ({ file, where, fit }))
+    };
+  }
+}
+
+</script>
+</body>
+</html>

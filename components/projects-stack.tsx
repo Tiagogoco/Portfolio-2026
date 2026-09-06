@@ -1,7 +1,11 @@
 'use client';
 
+import { useRef } from 'react';
 import Image from 'next/image';
+import { motion, useTransform, type MotionValue } from 'motion/react';
 import { projects, type Project } from '@/content/projects';
+import { proyectosHeader } from '@/content/site';
+import { stagger, useEnterProgress } from '@/lib/scroll';
 import { GlobeIcon } from './globe-icon';
 
 /**
@@ -22,6 +26,7 @@ export function ProjectsStack({ onOpen }: { onOpen: (index: number) => void }) {
       id="proyectos"
       className="relative bg-page pb-[12vh] max-md:flex max-md:flex-col max-md:gap-16 max-md:px-6 max-md:pt-10 max-md:pb-16"
     >
+      <ProjectsHeader />
       {projects.map((p, i) => (
         <ProjectCard key={p.id} project={p} layer={LAYERS[i]} index={i} onOpen={() => onOpen(i)} />
       ))}
@@ -89,9 +94,9 @@ function ProjectCard({
 
           {/* Nombre y stack en una sola fila. */}
           <div className="mt-7 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-4 max-md:mt-6">
-            <h2 className="m-0 font-extrabold tracking-[-0.03em] text-[clamp(30px,8vw,44px)]">
+            <h3 className="m-0 font-extrabold tracking-[-0.03em] text-[clamp(30px,8vw,44px)]">
               {p.title}
-            </h2>
+            </h3>
             <div className="flex flex-wrap gap-2">
               {p.teaserTags.map((tag) => (
                 <span
@@ -123,5 +128,71 @@ function ProjectCard({
         </div>
       </div>
     </div>
+  );
+}
+
+/**
+ * Encabezado de la sección. Entra con el revelado escalonado de §5.4: mismo easing y
+ * mismo desplazamiento de 26px, encadenado al progreso de entrada del bloque (§4).
+ */
+function ProjectsHeader() {
+  const ref = useRef<HTMLElement>(null);
+  const enter = useEnterProgress(ref);
+
+  return (
+    <header
+      ref={ref}
+      className="mx-auto w-full max-w-[1180px] px-10 pt-[14vh] pb-[7vh] max-md:px-0 max-md:pt-0 max-md:pb-0"
+    >
+      <Reveal p={enter} i={0}>
+        <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute">
+          {proyectosHeader.eyebrow}
+        </div>
+      </Reveal>
+
+      <Reveal p={enter} i={1}>
+        <h2
+          className="m-0 mt-[18px] font-extrabold tracking-[-0.035em]"
+          style={{ fontSize: 'clamp(34px, 4.4vw, 66px)', lineHeight: 0.98 }}
+        >
+          {proyectosHeader.title}
+        </h2>
+      </Reveal>
+
+      <Reveal p={enter} i={2}>
+        <p
+          className="m-0 mt-4 max-w-[560px] leading-[1.34] text-body"
+          style={{ fontSize: 'clamp(16px, 1.6vw, 22px)', textWrap: 'pretty' }}
+        >
+          {proyectosHeader.lede}
+        </p>
+      </Reveal>
+
+      <Reveal p={enter} i={3}>
+        <div className="mt-[clamp(24px,4vh,46px)] flex items-center gap-[18px] font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute">
+          <span className="h-px w-16 bg-rule" />
+          {String(projects.length).padStart(2, '0')} proyectos
+        </div>
+      </Reveal>
+    </header>
+  );
+}
+
+function Reveal({
+  p,
+  i,
+  children,
+}: {
+  p: MotionValue<number>;
+  i: number;
+  children: React.ReactNode;
+}) {
+  const e = useTransform(p, (v) => stagger(v, i, 0.12, 0.3));
+  const y = useTransform(e, (v) => 26 * (1 - v));
+
+  return (
+    <motion.div data-motion="scroll" style={{ opacity: e, y }}>
+      {children}
+    </motion.div>
   );
 }

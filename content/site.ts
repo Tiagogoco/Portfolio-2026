@@ -25,6 +25,13 @@ export const introLines: string[] = [
   'Tres en línea desde 2025, con usuarios usándolos hoy.',
 ];
 
+/** Encabezado de la sección de proyectos. El conteo se deriva de `projects`. */
+export const proyectosHeader = {
+  eyebrow: '( selección )',
+  title: 'PROYECTOS SELECCIONADOS',
+  lede: 'Tres productos en producción, del modelo de negocio al primer cobro.',
+};
+
 export type HeroCard = {
   label: string;
   color: string;

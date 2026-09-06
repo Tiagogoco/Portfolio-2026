@@ -40,15 +40,12 @@ export const metadata: Metadata = {
     siteName: 'tiagogoco',
     title: 'Tiago Gómez — Desarrollador y product designer',
     description: 'Creando productos digitales desde la idea hasta producción.',
-    images: [{ url: '/img/brand/og.png', width: 1200, height: 630, alt: 'tiagogoco' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tiago Gómez — Desarrollador y product designer',
     description: 'Creando productos digitales desde la idea hasta producción.',
-    images: ['/img/brand/og.png'],
   },
-  icons: { icon: '/img/brand/icon.png', apple: '/img/brand/icon.png' },
 };
 
 export const viewport: Viewport = {

@@ -65,10 +65,35 @@ function ProjectCard({
             proyecto {p.n}
           </div>
 
-          {/* Imagen dominante, con año y enlace al sitio en vivo encima. */}
+          {/* Año y enlace al sitio, fuera de la imagen: los banners son composiciones
+              cerradas y cualquier cosa encima les tapa el logotipo. */}
+          <div className="mb-5 flex items-center gap-4 max-md:mb-4">
+            <span
+              className="font-mono text-[11px] uppercase tracking-[0.22em]"
+              style={{ color: p.cardLabelInk }}
+            >
+              {p.year}
+            </span>
+            <span className="h-px flex-1" style={{ background: p.cardChipBorder }} />
+            <a
+              href={p.href}
+              {...(p.hrefExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+              aria-label={`Ver sitio de ${p.title}`}
+              title="ver sitio"
+              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full transition-transform duration-200 ease-[var(--ease-ui)] hover:scale-[1.06]"
+              style={{ background: p.accent, color: p.accentInk }}
+            >
+              <GlobeIcon size={21} />
+            </a>
+          </div>
+
           <div
-            className="relative aspect-[16/10] overflow-hidden rounded-[14px] md:aspect-video"
-            style={{ background: p.cardShotBg }}
+            /* La caja toma la proporción del propio asset: así ningún banner se recorta. */
+            className="relative overflow-hidden rounded-[14px]"
+            style={{
+              aspectRatio: `${p.cardShot.w} / ${p.cardShot.h}`,
+              background: p.cardShotBg,
+            }}
           >
             <Image
               src={p.cardShot.src}
@@ -77,19 +102,6 @@ function ProjectCard({
               sizes="(max-width: 768px) 92vw, 1020px"
               className="object-cover"
             />
-            <span className="absolute left-4 top-4 rounded-full bg-page px-4 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-ink">
-              {p.year}
-            </span>
-            <a
-              href={p.href}
-              {...(p.hrefExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              aria-label={`Ver sitio de ${p.title}`}
-              title="ver sitio"
-              className="absolute right-4 top-4 inline-flex size-12 items-center justify-center rounded-full bg-page transition-transform duration-200 ease-[var(--ease-ui)] hover:scale-[1.06] max-md:size-11"
-              style={{ color: p.accent }}
-            >
-              <GlobeIcon />
-            </a>
           </div>
 
           {/* Nombre y stack en una sola fila. */}

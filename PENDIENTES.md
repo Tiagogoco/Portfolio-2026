@@ -14,7 +14,21 @@ Se ven en el overlay de esos dos casos. Saint Padel está completo y sirve de mo
 `components/whoami.tsx` → `LottieSlot`. Hoy son cuadros 1/1 de color `#EFEBE4`.
 Formato y peso por decidir; si se resuelven como video o GIF cambia el markup del slot.
 
-## 3. La copy del encabezado de proyectos
+## 3. Marca propia para favicon y Open Graph
+
+Error mío, ya corregido a medias. §8 de la spec listaba los logotipos de las marcas como
+"útiles para OG y favicons" y los tomé literalmente: el favicon del portafolio era **el
+logo de Rankeo** y la imagen de Open Graph **el banner publicitario de Saint Padel**. Al
+compartir tiagogo.co salía el anuncio de un cliente.
+
+Ambos assets están fuera. En su lugar hay dos generados con `next/og` a partir de
+contenido propio: `app/icon.tsx` (una "t" sobre el azul del sitio) y
+`app/opengraph-image.tsx` (wordmark, titular y "Puebla · México" sobre la paleta). Son
+sustitutos honestos y funcionales, pero no son diseño de marca: cuando tengas identidad
+propia, cámbialos. Nota menor: `ImageResponse` usa la tipografía del sistema, no Archivo;
+para que use Archivo hay que cargar el .ttf en esos archivos.
+
+## 4. La copy del encabezado de proyectos
 
 `content/site.ts` → `proyectosHeader`. Título y bajada los escribí yo siguiendo el tono
 del resto ("PROYECTOS SELECCIONADOS" / "Tres productos en producción, del modelo de
@@ -25,7 +39,7 @@ Ojo con la repetición: la intro cierra con "ÚLTIMOS PROYECTOS ↓" justo antes
 eyebrow es `( selección )` y no `( proyectos )`, que dejaba la palabra tres veces
 seguidas en media pantalla.
 
-## 4. El año de los proyectos
+## 5. El año de los proyectos
 
 `content/projects.ts` → `year`. Los tres están en `'2025'`, tomado de la propia copy de
 la intro ("Tres en línea desde 2025"). Si alguno salió a producción en otro año, hay que
@@ -35,12 +49,12 @@ La referencia en la que se basa la tarjeta lleva también un botón de GitHub ju
 sitio en vivo. No se puso porque no hay URLs de repositorio en los datos; si se añaden,
 el hueco está justo a la izquierda del botón de globo.
 
-## 5. URLs reales de redes
+## 6. URLs reales de redes
 
 `content/site.ts` → `socials`. Hoy apuntan a la raíz de github.com, linkedin.com e
 instagram.com.
 
-## 6. Sitios en vivo de Rankeo y Piri
+## 7. Sitios en vivo de Rankeo y Piri
 
 `content/projects.ts` → `href` de esos dos casos apunta a `#contacto` y `hrefExterno`
 está en `false`. Cuando existan, poner la URL y `hrefExterno: true`; el botón de globo
@@ -54,11 +68,17 @@ de la tarjeta y del overlay se actualizan solos.
   `300px 1fr`: texto a la izquierda, imagen 16/9 a la derecha. Se rehízo con una
   anatomía más minimalista, que además se bifurca por breakpoint (ver abajo):
 
-  1. imagen dominante a todo el ancho (16/10 en móvil, 16/9 desde `md`), con la píldora
-     del año arriba a la izquierda y el botón circular al sitio en vivo arriba a la derecha;
-  2. fila de nombre + chips de stack, alineados a los extremos;
-  3. descripción;
-  4. `abrir caso →`.
+  1. fila de meta: año, regla y botón circular al sitio en vivo;
+  2. imagen dominante a todo el ancho, en la proporción exacta del asset;
+  3. fila de nombre + chips de stack, alineados a los extremos;
+  4. descripción;
+  5. `abrir caso →`.
+
+  Dos detalles que salieron de probarlo: la caja de la imagen toma su `aspect-ratio` de
+  las dimensiones del propio archivo (`cardShot.w/h`), porque los tres banners tienen
+  proporciones distintas (1.905, 1.776, 1.600) y cualquier caja fija recortaba alguno. Y
+  el año y el botón acabaron **fuera** de la imagen: los banners son composiciones
+  cerradas, con su logotipo arriba a la izquierda, y encima le tapaban la marca.
 
   Los chips pasan de Archivo 13px con relleno blanco a mono 11–12px sin relleno y con
   borde, más acordes al conjunto.

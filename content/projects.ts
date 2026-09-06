@@ -1,6 +1,8 @@
 export type Decision = { n: string; title: string; note: string };
 export type Resena = { q: string; by: string; item: string };
 export type Shot = { src: string; alt: string };
+/** Captura de tarjeta: lleva sus dimensiones para que la caja adopte su proporción. */
+export type CardShot = Shot & { w: number; h: number };
 
 export type Project = {
   id: 'saint' | 'rankeo' | 'piri';
@@ -21,7 +23,7 @@ export type Project = {
   cardTeaserInk: string;
   cardLabelInk: string;
   cardShotBg: string;
-  cardShot: Shot;
+  cardShot: CardShot;
   globeBg: string;
   globeInk: string;
   globeBgHover: string;
@@ -55,8 +57,8 @@ export const projects: Project[] = [
     cardChipInk: '#3f5a7d',
     cardTeaserInk: '#2a3b52',
     cardLabelInk: '#4a6382',
-    cardShotBg: '#14664A',
-    cardShot: { src: '/img/proyectos/saint.webp', alt: 'Captura del sitio Saint Padel' },
+    cardShotBg: '#107C59',
+    cardShot: { src: '/img/proyectos/saint-banner.webp', alt: 'Banner de Saint Padel: encuentra tu próxima pala', w: 1200, h: 630 },
     globeBg: '#14664A',
     globeInk: '#ffffff',
     globeBgHover: '#0e5039',
@@ -111,8 +113,8 @@ export const projects: Project[] = [
     cardChipInk: '#2c5fa8',
     cardTeaserInk: '#22364f',
     cardLabelInk: '#3a5680',
-    cardShotBg: '#0F0F0F',
-    cardShot: { src: '/img/proyectos/rankeo.webp', alt: 'Captura de Rankeo' },
+    cardShotBg: '#020202',
+    cardShot: { src: '/img/proyectos/rankeo.webp', alt: 'Banner de Rankeo: torneos, ligas y ranking', w: 712, h: 401 },
     globeBg: '#0F0F0F',
     globeInk: '#D8F24A',
     globeBgHover: '#000000',
@@ -155,8 +157,8 @@ export const projects: Project[] = [
     cardChipInk: '#164b96',
     cardTeaserInk: '#16294a',
     cardLabelInk: '#274a7d',
-    cardShotBg: '#5A1D26',
-    cardShot: { src: '/img/proyectos/piri-marca.webp', alt: 'Identidad de Piri, antigüedades y vintage' },
+    cardShotBg: '#591D26',
+    cardShot: { src: '/img/proyectos/piri-marca.webp', alt: 'Identidad de Piri, antigüedades y vintage', w: 1600, h: 1000 },
     globeBg: '#3A2317',
     globeInk: '#F6E9D8',
     globeBgHover: '#2a1810',

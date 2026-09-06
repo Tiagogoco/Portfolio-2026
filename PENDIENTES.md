@@ -64,21 +64,25 @@ de la tarjeta y del overlay se actualizan solos.
 
 ## Desviaciones deliberadas de la spec
 
-- **Anatomía de la tarjeta de proyecto** — la spec §5.3 la define como una rejilla
-  `300px 1fr`: texto a la izquierda, imagen 16/9 a la derecha. Se rehízo con una
-  anatomía más minimalista, que además se bifurca por breakpoint (ver abajo):
+- **Dos anatomías de tarjeta, una por breakpoint** — `components/projects-stack.tsx`
+  tiene `DesktopCard` y `MobileCard`, y comparten `Shot`, `Chips`, `Globo` y `AbrirCaso`.
 
-  1. fila de meta: año, regla y botón circular al sitio en vivo;
-  2. imagen dominante a todo el ancho, en la proporción exacta del asset;
-  3. fila de nombre + chips de stack, alineados a los extremos;
-  4. descripción;
-  5. `abrir caso →`.
+  **Desktop** conserva la carpeta de §5.3 tal cual: pestaña, superficie de color, titular
+  de 44px con el botón circular a la derecha, y rejilla `300px 1fr` con descripción,
+  chips y `abrir caso →` a la izquierda e imagen a la derecha.
 
-  Dos detalles que salieron de probarlo: la caja de la imagen toma su `aspect-ratio` de
-  las dimensiones del propio archivo (`cardShot.w/h`), porque los tres banners tienen
-  proporciones distintas (1.905, 1.776, 1.600) y cualquier caja fija recortaba alguno. Y
-  el año y el botón acabaron **fuera** de la imagen: los banners son composiciones
-  cerradas, con su logotipo arriba a la izquierda, y encima le tapaban la marca.
+  **Móvil** sigue la referencia minimalista: sin carpeta ni apilado, fila de meta
+  (año · regla · botón), imagen dominante, nombre + chips, descripción y CTA.
+
+  El markup está duplicado a propósito: las dos disposiciones difieren en el orden del
+  DOM, no sólo en estilos, y resolverlo con `grid-area` salía más frágil que legible. No
+  cuesta descargas: las imágenes son `loading="lazy"` y la variante oculta nunca llega a
+  intersecar el viewport, así que no se pide (comprobado: una sola petición a
+  `/_next/image` con las dos variantes en el DOM).
+
+  En ambas, la caja de la imagen toma su `aspect-ratio` de las dimensiones del archivo
+  (`cardShot.w/h`): los tres banners tienen proporciones distintas (1.905, 1.776, 1.600)
+  y cualquier caja fija recortaba alguno.
 
   Los chips pasan de Archivo 13px con relleno blanco a mono 11–12px sin relleno y con
   borde, más acordes al conjunto.
@@ -91,9 +95,7 @@ de la tarjeta y del overlay se actualizan solos.
   pestaña de 268×46, superficie de color, radio `0 22px 22px 22px`, las tres sombras
   crecientes (.14 / .16 / .18) y el apilado sticky de 145vh con `padding-top` 8/12/16vh.
   Por debajo de 768px no hay carpeta ni apilado: cada proyecto es la captura sobre el
-  fondo de página en una lista vertical con 64px de separación. Sale de la referencia
-  que trajo el usuario y evita meter una tarjeta de color dentro de una pantalla
-  estrecha. Todo se resuelve con variantes `md:`, sin JS ni duplicar markup.
+  fondo de página en una lista vertical con 64px de separación.
 - **Header con banda opaca** — §3 lo define "sin fondo ni blur". Con la página compacta
   eso dejaba el contenido leyéndose por debajo al pasar por detrás. Ahora la banda es
   opaca y su color sigue al de la sección que tiene debajo, muestreada en `y = 46`:

@@ -65,78 +65,8 @@ function ProjectCard({
             proyecto {p.n}
           </div>
 
-          {/* Año y enlace al sitio, fuera de la imagen: los banners son composiciones
-              cerradas y cualquier cosa encima les tapa el logotipo. */}
-          <div className="mb-5 flex items-center gap-4 max-md:mb-4">
-            <span
-              className="font-mono text-[11px] uppercase tracking-[0.22em]"
-              style={{ color: p.cardLabelInk }}
-            >
-              {p.year}
-            </span>
-            <span className="h-px flex-1" style={{ background: p.cardChipBorder }} />
-            <a
-              href={p.href}
-              {...(p.hrefExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-              aria-label={`Ver sitio de ${p.title}`}
-              title="ver sitio"
-              className="inline-flex size-11 shrink-0 items-center justify-center rounded-full transition-transform duration-200 ease-[var(--ease-ui)] hover:scale-[1.06]"
-              style={{ background: p.accent, color: p.accentInk }}
-            >
-              <GlobeIcon size={21} />
-            </a>
-          </div>
-
-          <div
-            /* La caja toma la proporción del propio asset: así ningún banner se recorta. */
-            className="relative overflow-hidden rounded-[14px]"
-            style={{
-              aspectRatio: `${p.cardShot.w} / ${p.cardShot.h}`,
-              background: p.cardShotBg,
-            }}
-          >
-            <Image
-              src={p.cardShot.src}
-              alt={p.cardShot.alt}
-              fill
-              sizes="(max-width: 768px) 92vw, 1020px"
-              className="object-cover"
-            />
-          </div>
-
-          {/* Nombre y stack en una sola fila. */}
-          <div className="mt-7 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-4 max-md:mt-6">
-            <h3 className="m-0 font-extrabold tracking-[-0.03em] text-[clamp(30px,8vw,44px)]">
-              {p.title}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {p.teaserTags.map((tag) => (
-                <span
-                  key={tag}
-                  className="rounded-[10px] border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] md:text-xs"
-                  style={{ borderColor: p.cardChipBorder, color: p.cardChipInk }}
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <p
-            className="m-0 mt-4 max-w-[46em] text-[17px] leading-[1.45] md:text-xl"
-            style={{ color: p.cardTeaserInk, textWrap: 'pretty' }}
-          >
-            {p.teaser}
-          </p>
-
-          <button
-            type="button"
-            onClick={onOpen}
-            className="mt-7 cursor-pointer border-0 bg-transparent p-0 text-[26px] font-bold tracking-[-0.03em] transition-opacity duration-200 hover:opacity-60 max-md:mt-6 max-md:text-[22px]"
-            style={{ color: p.accent, borderBottom: `3px solid ${p.accent}` }}
-          >
-            abrir caso →
-          </button>
+          <MobileCard project={p} onOpen={onOpen} />
+          <DesktopCard project={p} onOpen={onOpen} />
         </div>
       </div>
     </div>
@@ -206,5 +136,132 @@ function Reveal({
     <motion.div data-motion="scroll" style={{ opacity: e, y }}>
       {children}
     </motion.div>
+  );
+}
+
+function Chips({ project: p }: { project: Project }) {
+  return (
+    <div className="flex flex-wrap gap-2">
+      {p.teaserTags.map((tag) => (
+        <span
+          key={tag}
+          className="rounded-[10px] border px-4 py-2.5 font-mono text-[11px] uppercase tracking-[0.14em] md:text-xs"
+          style={{ borderColor: p.cardChipBorder, color: p.cardChipInk }}
+        >
+          {tag}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/** La caja toma la proporción del propio asset: así ningún banner se recorta. */
+function Shot({ project: p }: { project: Project }) {
+  return (
+    <div
+      className="relative overflow-hidden rounded-[14px]"
+      style={{ aspectRatio: `${p.cardShot.w} / ${p.cardShot.h}`, background: p.cardShotBg }}
+    >
+      <Image
+        src={p.cardShot.src}
+        alt={p.cardShot.alt}
+        fill
+        sizes="(max-width: 768px) 92vw, 1020px"
+        className="object-cover"
+      />
+    </div>
+  );
+}
+
+function AbrirCaso({ project: p, onOpen, className }: { project: Project; onOpen: () => void; className: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      className={`cursor-pointer border-0 bg-transparent p-0 font-bold tracking-[-0.03em] transition-opacity duration-200 hover:opacity-60 ${className}`}
+      style={{ color: p.accent, borderBottom: `3px solid ${p.accent}` }}
+    >
+      abrir caso →
+    </button>
+  );
+}
+
+function Globo({ project: p, size, className }: { project: Project; size: number; className: string }) {
+  return (
+    <a
+      href={p.href}
+      {...(p.hrefExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+      aria-label={`Ver sitio de ${p.title}`}
+      title="ver sitio"
+      className={`inline-flex shrink-0 items-center justify-center rounded-full transition-transform duration-200 ease-[var(--ease-ui)] hover:scale-[1.06] ${className}`}
+      style={{ background: p.accent, color: p.accentInk }}
+    >
+      <GlobeIcon size={size} />
+    </a>
+  );
+}
+
+/** Móvil: la captura manda, y el año y el enlace van fuera de ella. */
+function MobileCard({ project: p, onOpen }: { project: Project; onOpen: () => void }) {
+  return (
+    <div className="md:hidden">
+      <div className="mb-4 flex items-center gap-4">
+        <span
+          className="font-mono text-[11px] uppercase tracking-[0.22em]"
+          style={{ color: p.cardLabelInk }}
+        >
+          {p.year}
+        </span>
+        <span className="h-px flex-1" style={{ background: p.cardChipBorder }} />
+        <Globo project={p} size={21} className="size-11" />
+      </div>
+
+      <Shot project={p} />
+
+      <div className="mt-6 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-4">
+        <h3 className="m-0 font-extrabold tracking-[-0.03em] text-[clamp(30px,8vw,44px)]">
+          {p.title}
+        </h3>
+        <Chips project={p} />
+      </div>
+
+      <p
+        className="m-0 mt-4 text-[17px] leading-[1.45]"
+        style={{ color: p.cardTeaserInk, textWrap: 'pretty' }}
+      >
+        {p.teaser}
+      </p>
+
+      <AbrirCaso project={p} onOpen={onOpen} className="mt-6 text-[22px]" />
+    </div>
+  );
+}
+
+/** Desktop: la carpeta de §5.3 — titular arriba y rejilla 300px / 1fr debajo. */
+function DesktopCard({ project: p, onOpen }: { project: Project; onOpen: () => void }) {
+  return (
+    <div className="hidden md:block">
+      <div className="flex items-start justify-between gap-6">
+        <h3 className="m-0 text-[44px] font-extrabold tracking-[-0.03em]">{p.title}</h3>
+        <Globo project={p} size={23} className="size-[46px]" />
+      </div>
+
+      <div className="mt-[30px] grid grid-cols-[300px_1fr] items-start gap-10">
+        <div>
+          <p
+            className="m-0 text-xl leading-[1.35]"
+            style={{ color: p.cardTeaserInk, textWrap: 'pretty' }}
+          >
+            {p.teaser}
+          </p>
+          <div className="mt-[34px]">
+            <Chips project={p} />
+          </div>
+          <AbrirCaso project={p} onOpen={onOpen} className="mt-[26px] text-[26px]" />
+        </div>
+
+        <Shot project={p} />
+      </div>
+    </div>
   );
 }

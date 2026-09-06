@@ -38,6 +38,6 @@ La spec dejaba cuatro puntos abiertos para <768px. Quedaron así:
 - **Alturas sticky** — bajan a 230–280vh (tabla en el README).
 - **Whoami** — de ocho satélites a los cuatro de texto, en dos carriles al 2% de cada
   borde, con el retrato reducido a 46vw para que no se crucen.
-- **Stack** — el titular ocupa la mitad superior y la lista la inferior, con una máscara
-  que conserva el desvanecido de los bordes.
+- **Stack** — el titular sube justo bajo el eyebrow (13vh) y la lista arranca a 23vh y
+  llega al borde inferior, con una máscara que conserva el desvanecido de los bordes.
 - **Header** — el nav central se oculta; quedan logo y Contacto.

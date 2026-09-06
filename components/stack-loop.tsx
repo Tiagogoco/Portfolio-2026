@@ -24,7 +24,7 @@ export function StackLoop() {
           ( herramientas )
         </div>
 
-        <div className="absolute left-0 top-0 z-2 flex h-[46vh] w-full items-end pl-6 md:h-full md:w-[46%] md:items-center md:pl-[clamp(40px,5vw,96px)]">
+        <div className="absolute left-0 top-[13vh] z-2 flex w-full items-start px-6 md:top-0 md:h-full md:items-center md:w-[46%] md:px-0 md:pl-[clamp(40px,5vw,96px)]">
           <h2
             className="m-0 font-extrabold tracking-[-0.04em] text-blue"
             style={{ fontSize: 'clamp(30px, 4.6vw, 68px)', lineHeight: 0.94 }}
@@ -36,9 +36,9 @@ export function StackLoop() {
           </h2>
         </div>
 
-        {/* En movil la lista ocupa la mitad inferior; la mascara conserva el desvanecido
-            de los bordes que en desktop da la propia formula de opacidad. */}
-        <div className="absolute right-0 top-[50vh] h-[50vh] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,#000_14%,#000_86%,transparent)] md:top-0 md:h-full md:w-[54%] md:[mask-image:none]">
+        {/* En movil la lista arranca bajo el titular y llega al borde inferior; la mascara
+            conserva el desvanecido que en desktop da la propia formula de opacidad. */}
+        <div className="absolute right-0 top-[23vh] h-[77vh] w-full overflow-hidden [mask-image:linear-gradient(to_bottom,transparent,#000_10%,#000_90%,transparent)] md:top-0 md:h-full md:w-[54%] md:[mask-image:none]">
           {stackRows.map((row, i) => (
             <Row key={`${row.k}-${i}`} row={row} index={i} progress={r} />
           ))}

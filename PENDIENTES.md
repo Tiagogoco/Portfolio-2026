@@ -27,6 +27,25 @@ de la tarjeta y del overlay se actualizan solos.
 
 ---
 
+## Desviaciones deliberadas de la spec
+
+- **Degradado del hero** — eliminado. El hero va sobre el fondo sólido de página.
+- **Superficies de las tarjetas de proyecto** — la spec §2 las define en crema
+  (`#EFE9DE`) y verde (`#C9DCAF`). Se cambiaron a una escala azul de tres pasos, la
+  misma familia del abanico del hero, para que las dos secciones lean como un sistema:
+
+  | tarjeta | superficie | borde de chip | tinta de chip | etiqueta |
+  | ------- | ---------- | ------------- | ------------- | -------- |
+  | 01 Saint  | `#E6EFFD` | `#B9D1F4` | `#3f5a7d` | `#4a6382` |
+  | 02 Rankeo | `#C6DDFD` | `#9BC0F3` | `#2c5fa8` | `#3a5680` |
+  | 03 Piri   | `#A8CBFB` | `#7FAEF0` | `#164b96` | `#274a7d` |
+
+  Los acentos de marca (verde Saint, negro/lima Rankeo, marrón Piri) **no** cambian:
+  siguen en el botón de globo, en "abrir caso →" y en todo el overlay, que es donde
+  identifican al proyecto. Todas las combinaciones quedan por encima de 5:1.
+
+---
+
 ## Decisiones de móvil ya tomadas
 
 La spec dejaba cuatro puntos abiertos para <768px. Quedaron así:

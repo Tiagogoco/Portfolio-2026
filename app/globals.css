@@ -14,10 +14,13 @@
   --color-blue-100: #C6DDFD;
 
   --color-gray-card: #4A4A48;
-  --color-cream-card: #EFE9DE;
-  --color-green-card: #C9DCAF;
-  --color-chip-border: #CFC6B6;
-  --color-chip-border-green: #A9C088;
+  /* Superficies de las tarjetas de proyecto: misma familia azul que el abanico del hero. */
+  --color-card-1: #E6EFFD;
+  --color-card-2: #C6DDFD;
+  --color-card-3: #A8CBFB;
+  --color-chip-border-1: #B9D1F4;
+  --color-chip-border-2: #9BC0F3;
+  --color-chip-border-3: #7FAEF0;
 
   --color-saint: #14664A;
   --color-rankeo: #2f3b23;

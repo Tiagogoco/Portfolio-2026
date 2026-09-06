@@ -3,12 +3,14 @@ import { heroCards } from '@/content/site';
 /**
  * §5.1 — titular arriba, abanico de 5 tarjetas abajo. Nada aquí es imagen.
  * Sin degradado: el hero queda sobre el fondo sólido de página.
+ * En móvil deja de ocupar 100vh: la altura la marca el contenido, para que el titular
+ * y el abanico queden juntos en vez de repartidos por `justify-between` (§9).
  */
 export function Hero() {
   return (
     <section
       id="top"
-      className="relative mx-auto flex min-h-screen max-w-[1320px] flex-col justify-between gap-[clamp(40px,6vh,80px)] px-14 pt-[clamp(80px,15vh,190px)] pb-[clamp(60px,12vh,130px)] max-md:px-6"
+      className="relative mx-auto flex min-h-screen max-w-[1320px] flex-col justify-between gap-[clamp(40px,6vh,80px)] px-14 pt-[clamp(80px,15vh,190px)] pb-[clamp(60px,12vh,130px)] max-md:min-h-0 max-md:justify-start max-md:gap-11 max-md:px-6 max-md:pt-[104px] max-md:pb-16"
     >
       <h1
         className="relative m-0 max-w-[20em] font-extrabold"

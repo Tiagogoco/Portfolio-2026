@@ -37,6 +37,9 @@ La spec dejaba cuatro puntos abiertos para <768px. Quedaron así:
   que las cinco de desktop y llena el ancho. El padding lateral baja a 24px.
 - **Titular del hero** — el piso del `clamp()` baja de 38px a 28px para que quepa en
   3 líneas a 375px en vez de 5. Por encima de ~594px de ancho no cambia nada.
+- **Alto del hero** — en móvil deja de ser 100vh y la marca el contenido (567px a
+  375×812). Sin `justify-between`, titular y abanico quedan a 44px en vez de repartirse
+  el viewport. Desktop sigue a 100vh con `space-between`.
 - **Rejillas** — la de `300px 1fr` de las tarjetas de proyecto y la de `1.15fr 0.85fr`
   del overlay pasan a una columna.
 - **Alturas sticky** — bajan a 230–280vh (tabla en el README).

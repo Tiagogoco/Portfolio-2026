@@ -14,12 +14,22 @@ Se ven en el overlay de esos dos casos. Saint Padel está completo y sirve de mo
 `components/whoami.tsx` → `LottieSlot`. Hoy son cuadros 1/1 de color `#EFEBE4`.
 Formato y peso por decidir; si se resuelven como video o GIF cambia el markup del slot.
 
-## 3. URLs reales de redes
+## 3. El año de los proyectos
+
+`content/projects.ts` → `year`. Los tres están en `'2025'`, tomado de la propia copy de
+la intro ("Tres en línea desde 2025"). Si alguno salió a producción en otro año, hay que
+corregirlo: se ve en la píldora sobre la imagen de cada tarjeta.
+
+La referencia en la que se basa la tarjeta lleva también un botón de GitHub junto al del
+sitio en vivo. No se puso porque no hay URLs de repositorio en los datos; si se añaden,
+el hueco está justo a la izquierda del botón de globo.
+
+## 4. URLs reales de redes
 
 `content/site.ts` → `socials`. Hoy apuntan a la raíz de github.com, linkedin.com e
 instagram.com.
 
-## 4. Sitios en vivo de Rankeo y Piri
+## 5. Sitios en vivo de Rankeo y Piri
 
 `content/projects.ts` → `href` de esos dos casos apunta a `#contacto` y `hrefExterno`
 está en `false`. Cuando existan, poner la URL y `hrefExterno: true`; el botón de globo
@@ -29,6 +39,19 @@ de la tarjeta y del overlay se actualizan solos.
 
 ## Desviaciones deliberadas de la spec
 
+- **Anatomía de la tarjeta de proyecto** — la spec §5.3 la define como una rejilla
+  `300px 1fr`: texto a la izquierda, imagen 16/9 a la derecha. Se rehízo con una
+  anatomía más minimalista, conservando la pestaña de carpeta:
+
+  1. imagen dominante a todo el ancho (16/10 en móvil, 16/9 desde `md`), con la píldora
+     del año arriba a la izquierda y el botón circular al sitio en vivo arriba a la derecha;
+  2. fila de nombre + chips de stack, alineados a los extremos;
+  3. descripción;
+  4. `abrir caso →`.
+
+  Los chips pasan de Archivo 13px con relleno blanco a mono 11–12px sin relleno y con
+  borde, más acordes al conjunto. El `padding-top` de la tarjeta cubre los 4vh que asoma
+  la de atrás, para que en el apilado se vea la superficie y no el borde de la imagen.
 - **Degradado del hero** — eliminado. El hero va sobre el fondo sólido de página.
 - **Superficies de las tarjetas de proyecto** — la spec §2 las define en crema
   (`#EFE9DE`) y verde (`#C9DCAF`). Se cambiaron a una escala azul de tres pasos, la
@@ -78,7 +101,7 @@ La spec dejaba cuatro puntos abiertos para <768px. Quedaron así:
   | transición | antes | ahora | cambio |
   | ---------- | ----- | ----- | ------ |
   | intro → proyectos | 372px | 97px | el hijo sticky de `#intro` pasa a `min-h-0` |
-  | proyectos → proceso | 426px | 117px | los contenedores de tarjeta pasan de `145vh` a `h-auto min-h-[115vh]`, y el `pb` de la sección de 12vh a 32px |
+  | proyectos → proceso | 426px | 95px | los contenedores de tarjeta pasan de `145vh` a `h-auto min-h-[102vh]`, y el `pb` de la sección de 12vh a 32px |
 
   `min-h` en vez de una altura fija para que una pantalla corta y estrecha, donde la
   tarjeta crece de alto, no recorte nada. `#sobre-mi`, `#stack` y `#whoami` no necesitan

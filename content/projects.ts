@@ -9,6 +9,8 @@ export type Project = {
   short: string;
   tab: string;
   kind: string;
+  /** Año que se muestra en la píldora sobre la imagen. */
+  year: string;
   href: string;
   hrefExterno: boolean;
   accent: string;
@@ -43,6 +45,7 @@ export const projects: Project[] = [
     short: 'SAINT PADEL',
     tab: 'saint padel',
     kind: 'ecommerce de drops',
+    year: '2025',
     href: 'https://saintpadel.com.mx',
     hrefExterno: true,
     accent: '#14664A',
@@ -98,6 +101,7 @@ export const projects: Project[] = [
     short: 'RANKEO',
     tab: 'rankeo',
     kind: 'saas de torneos y ligas',
+    year: '2025',
     href: '#contacto',
     hrefExterno: false,
     accent: '#2f3b23',
@@ -141,6 +145,7 @@ export const projects: Project[] = [
     short: 'PIRI',
     tab: 'piri',
     kind: 'ecommerce de antigüedades',
+    year: '2025',
     href: '#contacto',
     hrefExterno: false,
     accent: '#3A2317',

@@ -1,21 +1,15 @@
 import { heroCards } from '@/content/site';
 
-/** §5.1 — titular arriba, abanico de 5 tarjetas abajo. Nada aquí es imagen. */
+/**
+ * §5.1 — titular arriba, abanico de 5 tarjetas abajo. Nada aquí es imagen.
+ * Sin degradado: el hero queda sobre el fondo sólido de página.
+ */
 export function Hero() {
   return (
     <section
       id="top"
       className="relative mx-auto flex min-h-screen max-w-[1320px] flex-col justify-between gap-[clamp(40px,6vh,80px)] px-14 pt-[clamp(80px,15vh,190px)] pb-[clamp(60px,12vh,130px)] max-md:px-6"
     >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute top-0 h-1/2 left-[calc(-50vw+50%)] right-[calc(-50vw+50%)]"
-        style={{
-          background:
-            'linear-gradient(to bottom, rgba(31,111,235,0.28) 0%, rgba(31,111,235,0.160) 34%, rgba(31,111,235,0.059) 64%, rgba(31,111,235,0) 100%)',
-        }}
-      />
-
       <h1
         className="relative m-0 max-w-[20em] font-extrabold"
         style={{

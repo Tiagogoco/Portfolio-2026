@@ -19,7 +19,9 @@ export function IntroReveal() {
 
   return (
     <section id="intro" ref={ref} className="relative h-[380vh] bg-page max-md:h-[240vh]">
-      <div className="sticky top-0 flex min-h-screen items-center pt-[clamp(96px,13vh,132px)] pb-14">
+      {/* En móvil el bloque se alinea arriba en vez de centrarse: con el sticky centrado
+          quedaban ~245px muertos entre el hero y el primer párrafo. */}
+      <div className="sticky top-0 flex min-h-screen items-center pt-[clamp(96px,13vh,132px)] pb-14 max-md:items-start max-md:pt-24 max-md:pb-8">
         <span
           aria-hidden
           className="pointer-events-none absolute inset-0"

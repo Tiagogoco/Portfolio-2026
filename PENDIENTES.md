@@ -50,15 +50,24 @@ de la tarjeta y del overlay se actualizan solos.
 
 La spec dejaba cuatro puntos abiertos para <768px. Quedaron así:
 
-- **Abanico del hero** — se conserva el abanico, pero de 5 tarjetas pasa a 3
-  (Proyectos, Sobre mí, Stack) para simplificar la navegación. Las tarjetas crecen a
-  54% de ancho en posiciones 0 / 23% / 46%, que mantiene el mismo solape proporcional
-  que las cinco de desktop y llena el ancho. El padding lateral baja a 24px.
+- **Abanico del hero** — en móvil deja de ser un abanico superpuesto y pasa a ser un
+  **carrusel horizontal** de 3 tarjetas (Proyectos, Sobre mí, Stack) en flujo, con
+  `scroll-snap`, sangrado a los bordes de pantalla y scrollbar oculta. Tarjetas al 62%
+  de ancho con 12px de separación, etiqueta horizontal abajo a la izquierda y sin blur.
+  Encima va la ayuda `DESLIZA ——— 03`. Desde `md` vuelven a ser absolutas, al 36.76% en
+  las posiciones de la spec, con etiqueta vertical y blur. El padding lateral baja a 24px.
+  Si se quieren las 5 en el carrusel, basta con poner `onMobile: true` en
+  `content/site.ts`.
 - **Titular del hero** — el piso del `clamp()` baja de 38px a 28px para que quepa en
   3 líneas a 375px en vez de 5. Por encima de ~594px de ancho no cambia nada.
-- **Alto del hero** — en móvil deja de ser 100vh y la marca el contenido (567px a
-  375×812). Sin `justify-between`, titular y abanico quedan a 44px en vez de repartirse
+- **Alto del hero** — en móvil deja de ser 100vh y la marca el contenido (556px a
+  375×812). Sin `justify-between`, titular y carrusel quedan juntos en vez de repartirse
   el viewport. Desktop sigue a 100vh con `space-between`.
+- **Alineación de la intro** — en móvil el bloque sticky se alinea arriba
+  (`items-start`, 96px) en vez de centrarse. Centrado dejaba 245px muertos entre el hero
+  y el primer párrafo; así son 124px. El coste es que, con el sticky fijado, el texto
+  queda en la mitad superior de la pantalla en lugar de centrado. Para volver atrás,
+  quitar `max-md:items-start max-md:pt-24` de `components/intro-reveal.tsx`.
 - **Rejillas** — la de `300px 1fr` de las tarjetas de proyecto y la de `1.15fr 0.85fr`
   del overlay pasan a una columna.
 - **Alturas sticky** — bajan a 230–280vh (tabla en el README).

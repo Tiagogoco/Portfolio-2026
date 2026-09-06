@@ -5,20 +5,25 @@ import { projects, type Project } from '@/content/projects';
 import { GlobeIcon } from './globe-icon';
 
 /**
- * §5.3 — tres tarjetas sticky que se apilan solas. Sin animación por scroll.
- * El apilado sale de tres valores que crecen juntos: padding-top, z-index y la sombra.
+ * §5.3 — desde `md`, tres tarjetas-carpeta sticky que se apilan solas: el apilado sale
+ * de tres valores que crecen juntos (padding-top, z-index y sombra) y no hay animación
+ * por scroll. En móvil la carpeta desaparece: cada proyecto es la captura sobre el fondo
+ * de página, en una lista vertical normal.
  */
 const LAYERS = [
-  { paddingTop: '8vh', zIndex: 1, shadow: '0 -18px 60px rgba(31,27,22,0.10), 0 40px 90px rgba(31,27,22,0.14)' },
-  { paddingTop: '12vh', zIndex: 2, shadow: '0 -18px 60px rgba(31,27,22,0.10), 0 40px 90px rgba(31,27,22,0.16)' },
-  { paddingTop: '16vh', zIndex: 3, shadow: '0 -18px 60px rgba(31,27,22,0.10), 0 40px 90px rgba(31,27,22,0.18)' },
+  { paddingTop: '8vh', shadow: '0 -18px 60px rgba(31,27,22,0.10), 0 40px 90px rgba(31,27,22,0.14)' },
+  { paddingTop: '12vh', shadow: '0 -18px 60px rgba(31,27,22,0.10), 0 40px 90px rgba(31,27,22,0.16)' },
+  { paddingTop: '16vh', shadow: '0 -18px 60px rgba(31,27,22,0.10), 0 40px 90px rgba(31,27,22,0.18)' },
 ];
 
 export function ProjectsStack({ onOpen }: { onOpen: (index: number) => void }) {
   return (
-    <section id="proyectos" className="relative bg-page pb-[12vh] max-md:pb-8">
+    <section
+      id="proyectos"
+      className="relative bg-page pb-[12vh] max-md:flex max-md:flex-col max-md:gap-16 max-md:px-6 max-md:pt-10 max-md:pb-16"
+    >
       {projects.map((p, i) => (
-        <ProjectCard key={p.id} project={p} layer={LAYERS[i]} onOpen={() => onOpen(i)} />
+        <ProjectCard key={p.id} project={p} layer={LAYERS[i]} index={i} onOpen={() => onOpen(i)} />
       ))}
     </section>
   );
@@ -27,30 +32,29 @@ export function ProjectsStack({ onOpen }: { onOpen: (index: number) => void }) {
 function ProjectCard({
   project: p,
   layer,
+  index,
   onOpen,
 }: {
   project: Project;
   layer: (typeof LAYERS)[number];
+  index: number;
   onOpen: () => void;
 }) {
   return (
     <div
-      /* En móvil la tarjeta es alta y estrecha: 145vh dejaba ~330px muertos debajo.
-         `h-auto` con un mínimo evita el hueco sin arriesgar recortes en pantallas cortas. */
-      className="sticky top-0 flex h-[145vh] items-start justify-center px-10 max-md:h-auto max-md:min-h-[102vh] max-md:px-4"
-      style={{ paddingTop: layer.paddingTop, zIndex: layer.zIndex }}
+      className="relative md:sticky md:top-0 md:flex md:h-[145vh] md:items-start md:justify-center md:px-10 md:pt-[var(--pt)]"
+      style={{ '--pt': layer.paddingTop, zIndex: index + 1 } as React.CSSProperties}
     >
-      <div className="relative w-full max-w-[1100px]">
-        <div
-          className="h-[46px] w-[268px] rounded-[14px_26px_0_0] shadow-[0_-1px_0_rgba(0,0,0,0.03)] max-md:w-[200px]"
-          style={{ background: p.cardBg }}
-        />
-        <div
-          className="-mt-px rounded-[0_22px_22px_22px] p-10 max-md:p-5 max-md:pt-9"
-          style={{ background: p.cardBg, boxShadow: layer.shadow }}
-        >
+      <div
+        className="relative w-full md:max-w-[1100px]"
+        style={{ '--bg': p.cardBg, '--sh': layer.shadow } as React.CSSProperties}
+      >
+        {/* Pestaña y superficie de carpeta: sólo desde md. */}
+        <div className="hidden h-[46px] w-[268px] rounded-[14px_26px_0_0] bg-[var(--bg)] shadow-[0_-1px_0_rgba(0,0,0,0.03)] md:block" />
+
+        <div className="md:-mt-px md:rounded-[0_22px_22px_22px] md:bg-[var(--bg)] md:p-10 md:shadow-[var(--sh)]">
           <div
-            className="absolute left-8 top-3 font-mono text-xs uppercase tracking-[0.18em] max-md:left-5"
+            className="absolute left-8 top-3 hidden font-mono text-xs uppercase tracking-[0.18em] md:block"
             style={{ color: p.cardLabelInk }}
           >
             proyecto {p.n}
@@ -83,7 +87,7 @@ function ProjectCard({
             </a>
           </div>
 
-          {/* Nombre y stack en una sola fila, como en la referencia. */}
+          {/* Nombre y stack en una sola fila. */}
           <div className="mt-7 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-4 max-md:mt-6">
             <h2 className="m-0 font-extrabold tracking-[-0.03em] text-[clamp(30px,8vw,44px)]">
               {p.title}

@@ -41,7 +41,7 @@ de la tarjeta y del overlay se actualizan solos.
 
 - **Anatomía de la tarjeta de proyecto** — la spec §5.3 la define como una rejilla
   `300px 1fr`: texto a la izquierda, imagen 16/9 a la derecha. Se rehízo con una
-  anatomía más minimalista, conservando la pestaña de carpeta:
+  anatomía más minimalista, que además se bifurca por breakpoint (ver abajo):
 
   1. imagen dominante a todo el ancho (16/10 en móvil, 16/9 desde `md`), con la píldora
      del año arriba a la izquierda y el botón circular al sitio en vivo arriba a la derecha;
@@ -50,8 +50,14 @@ de la tarjeta y del overlay se actualizan solos.
   4. `abrir caso →`.
 
   Los chips pasan de Archivo 13px con relleno blanco a mono 11–12px sin relleno y con
-  borde, más acordes al conjunto. El `padding-top` de la tarjeta cubre los 4vh que asoma
-  la de atrás, para que en el apilado se vea la superficie y no el borde de la imagen.
+  borde, más acordes al conjunto.
+- **La carpeta es sólo de desktop** — desde `md` se mantiene todo lo de la spec:
+  pestaña de 268×46, superficie de color, radio `0 22px 22px 22px`, las tres sombras
+  crecientes (.14 / .16 / .18) y el apilado sticky de 145vh con `padding-top` 8/12/16vh.
+  Por debajo de 768px no hay carpeta ni apilado: cada proyecto es la captura sobre el
+  fondo de página en una lista vertical con 64px de separación. Sale de la referencia
+  que trajo el usuario y evita meter una tarjeta de color dentro de una pantalla
+  estrecha. Todo se resuelve con variantes `md:`, sin JS ni duplicar markup.
 - **Degradado del hero** — eliminado. El hero va sobre el fondo sólido de página.
 - **Superficies de las tarjetas de proyecto** — la spec §2 las define en crema
   (`#EFE9DE`) y verde (`#C9DCAF`). Se cambiaron a una escala azul de tres pasos, la
@@ -98,14 +104,14 @@ La spec dejaba cuatro puntos abiertos para <768px. Quedaron así:
   estrecho y alto, y sobraba mucho por debajo, que se veía como un hueco enorme antes de
   la sección siguiente. Corregido en los dos sitios donde pasaba:
 
-  | transición | antes | ahora | cambio |
-  | ---------- | ----- | ----- | ------ |
-  | intro → proyectos | 372px | 97px | el hijo sticky de `#intro` pasa a `min-h-0` |
-  | proyectos → proceso | 426px | 95px | los contenedores de tarjeta pasan de `145vh` a `h-auto min-h-[102vh]`, y el `pb` de la sección de 12vh a 32px |
+  | transición | antes | ahora |
+  | ---------- | ----- | ----- |
+  | intro → proyectos | 372px | 72px |
+  | proyectos → proceso | 426px | 64px |
 
-  `min-h` en vez de una altura fija para que una pantalla corta y estrecha, donde la
-  tarjeta crece de alto, no recorte nada. `#sobre-mi`, `#stack` y `#whoami` no necesitan
-  ajuste: su contenido sí llena el viewport.
+  El hijo sticky de `#intro` pasa a `min-h-0`, y `#proyectos` deja de ser sticky en
+  móvil, así que su alto ya lo marca el contenido. `#sobre-mi`, `#stack` y `#whoami` no
+  necesitan ajuste: su contenido sí llena el viewport.
 - **Rejillas** — la de `300px 1fr` de las tarjetas de proyecto y la de `1.15fr 0.85fr`
   del overlay pasan a una columna.
 - **Alturas sticky** — bajan a 230–280vh (tabla en el README).

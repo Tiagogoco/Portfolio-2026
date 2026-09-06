@@ -53,13 +53,15 @@ La spec dejaba cuatro puntos abiertos para <768px. Quedaron así:
 - **Abanico del hero** — en móvil deja de ser un abanico superpuesto y pasa a ser un
   **carrusel horizontal** de 3 tarjetas (Proyectos, Sobre mí, Stack) en flujo, con
   `scroll-snap`, sangrado a los bordes de pantalla y scrollbar oculta. Tarjetas al 62%
-  de ancho con 12px de separación, etiqueta horizontal abajo a la izquierda y sin blur.
-  Encima va la ayuda `DESLIZA ——— 03`. Desde `md` vuelven a ser absolutas, al 36.76% en
+  de ancho con 12px de separación, etiqueta horizontal abajo a la izquierda, sin blur y
+  **sin las sombras laterales**: en el abanico caen bajo la tarjeta vecina y leen como
+  profundidad, pero en flujo se esparcen sobre el fondo y lo ensucian de gris. Debajo va
+  la ayuda `DESLIZA ——— 03`. Desde `md` vuelven a ser absolutas, al 36.76% en
   las posiciones de la spec, con etiqueta vertical y blur. El padding lateral baja a 24px.
   Si se quieren las 5 en el carrusel, basta con poner `onMobile: true` en
   `content/site.ts`.
-- **Titular del hero** — el piso del `clamp()` baja de 38px a 28px para que quepa en
-  3 líneas a 375px en vez de 5. Por encima de ~594px de ancho no cambia nada.
+- **Titular del hero** — el piso del `clamp()` baja de 38px a 34px: 4 líneas a 375px en
+  vez de las 5 del original. Por encima de ~532px de ancho no cambia nada.
 - **Alto del hero** — en móvil deja de ser 100vh y la marca el contenido (556px a
   375×812). Sin `justify-between`, titular y carrusel quedan juntos en vez de repartirse
   el viewport. Desktop sigue a 100vh con `space-between`.

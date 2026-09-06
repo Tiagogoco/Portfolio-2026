@@ -94,6 +94,13 @@ de la tarjeta y del overlay se actualizan solos.
   fondo de página en una lista vertical con 64px de separación. Sale de la referencia
   que trajo el usuario y evita meter una tarjeta de color dentro de una pantalla
   estrecha. Todo se resuelve con variantes `md:`, sin JS ni duplicar markup.
+- **Header con banda opaca** — §3 lo define "sin fondo ni blur". Con la página compacta
+  eso dejaba el contenido leyéndose por debajo al pasar por detrás. Ahora la banda es
+  opaca y su color sigue al de la sección que tiene debajo, muestreada en `y = 46`:
+  crema en hero/intro/proyectos, azul en proceso, blanco en stack/whoami. El texto se
+  invierte a blanco sobre azul, como ya hacía. Fondo y color transicionan en 380 ms, así
+  que el cambio de sección no da un salto. Los destinos de ancla llevan
+  `scroll-margin-top: 76px` para no quedar debajo de la banda (mide 63–67px).
 - **Degradado del hero** — eliminado. El hero va sobre el fondo sólido de página.
 - **Superficies de las tarjetas de proyecto** — la spec §2 las define en crema
   (`#EFE9DE`) y verde (`#C9DCAF`). Se cambiaron a una escala azul de tres pasos, la

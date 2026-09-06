@@ -24,7 +24,7 @@ export function ProjectsStack({ onOpen }: { onOpen: (index: number) => void }) {
   return (
     <section
       id="proyectos"
-      className="relative bg-page pb-[12vh] max-md:flex max-md:flex-col max-md:gap-16 max-md:px-6 max-md:pt-10 max-md:pb-16"
+      className="relative bg-page pb-[12vh] max-md:flex max-md:flex-col max-md:gap-16 max-md:px-6 max-md:pt-16 max-md:pb-16"
     >
       <ProjectsHeader />
       {projects.map((p, i) => (

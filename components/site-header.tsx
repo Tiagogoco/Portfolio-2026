@@ -4,16 +4,30 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 
 /**
- * §3 — dos comportamientos independientes:
- * aparición cuando #intro cruza 0.35 × innerHeight, e inversión sobre la sección azul.
+ * Fondo de cada sección, para que la banda del header sea opaca sin cortar el color
+ * de lo que hay debajo. La spec §3 lo dejaba sin fondo, pero con la página compacta
+ * el contenido se leía por debajo al pasar.
  */
+const SECTIONS = [
+  { id: 'top', bg: '#FBFAF8', dark: false },
+  { id: 'intro', bg: '#FBFAF8', dark: false },
+  { id: 'proyectos', bg: '#FBFAF8', dark: false },
+  { id: 'sobre-mi', bg: '#1F6FEB', dark: true },
+  { id: 'stack', bg: '#FFFFFF', dark: false },
+  { id: 'whoami', bg: '#FFFFFF', dark: false },
+  { id: 'contacto', bg: '#000000', dark: true },
+];
+
+/** Línea de sondeo: el borde inferior de la banda. */
+const PROBE = 46;
+
 export function SiteHeader() {
   const [visible, setVisible] = useState(false);
-  const [dark, setDark] = useState(false);
+  const [{ bg, dark }, setSkin] = useState({ bg: '#FBFAF8', dark: false });
 
   useEffect(() => {
+    const nodes = SECTIONS.map((s) => ({ ...s, el: document.getElementById(s.id) }));
     const intro = document.getElementById('intro');
-    const azul = document.getElementById('sobre-mi');
     let raf = 0;
 
     const tick = () => {
@@ -23,9 +37,15 @@ export function SiteHeader() {
       const nextVisible = !!ir && ir.top <= window.innerHeight * 0.35;
       setVisible((v) => (v === nextVisible ? v : nextVisible));
 
-      const ar = azul?.getBoundingClientRect();
-      const nextDark = !!ar && ar.top <= 46 && ar.bottom > 46;
-      setDark((v) => (v === nextDark ? v : nextDark));
+      const bajo = nodes.find((s) => {
+        const r = s.el?.getBoundingClientRect();
+        return r && r.top <= PROBE && r.bottom > PROBE;
+      });
+      if (bajo) {
+        setSkin((prev) =>
+          prev.bg === bajo.bg && prev.dark === bajo.dark ? prev : { bg: bajo.bg, dark: bajo.dark },
+        );
+      }
     };
 
     tick();
@@ -40,12 +60,13 @@ export function SiteHeader() {
       <div
         className="flex items-center gap-6 px-[clamp(20px,3.4vw,46px)] py-[clamp(14px,2.4vh,24px)] font-mono text-[11px] uppercase tracking-[0.14em]"
         style={{
+          background: bg,
           color: soft,
           opacity: visible ? 1 : 0,
           transform: `translateY(${visible ? '0px' : '-24px'})`,
           pointerEvents: visible ? 'auto' : 'none',
           transition:
-            'opacity 420ms ease, transform 480ms cubic-bezier(.2,.7,.2,1), color 380ms ease',
+            'opacity 420ms ease, transform 480ms cubic-bezier(.2,.7,.2,1), color 380ms ease, background-color 380ms ease',
         }}
       >
         <a href="#top" className="flex shrink-0 items-center gap-[9px]" style={{ color: ink }}>

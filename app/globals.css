@@ -60,6 +60,12 @@ a {
   text-decoration: none;
 }
 
+/* El header es una banda fija: los destinos de ancla no deben quedar debajo. */
+section[id],
+footer[id] {
+  scroll-margin-top: 76px;
+}
+
 @keyframes marquee {
   from { transform: translate3d(0, 0, 0); }
   to { transform: translate3d(-50%, 0, 0); }

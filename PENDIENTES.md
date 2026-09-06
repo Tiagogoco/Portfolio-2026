@@ -70,6 +70,19 @@ La spec dejaba cuatro puntos abiertos para <768px. Quedaron así:
   y el primer párrafo; así son 124px. El coste es que, con el sticky fijado, el texto
   queda en la mitad superior de la pantalla en lugar de centrado. Para volver atrás,
   quitar `max-md:items-start max-md:pt-24` de `components/intro-reveal.tsx`.
+- **Alto de los bloques sticky en móvil** — en desktop el hijo sticky mide justo un
+  viewport y su contenido lo llena, así que no sobra nada. En móvil el contenido es más
+  estrecho y alto, y sobraba mucho por debajo, que se veía como un hueco enorme antes de
+  la sección siguiente. Corregido en los dos sitios donde pasaba:
+
+  | transición | antes | ahora | cambio |
+  | ---------- | ----- | ----- | ------ |
+  | intro → proyectos | 372px | 97px | el hijo sticky de `#intro` pasa a `min-h-0` |
+  | proyectos → proceso | 426px | 117px | los contenedores de tarjeta pasan de `145vh` a `h-auto min-h-[115vh]`, y el `pb` de la sección de 12vh a 32px |
+
+  `min-h` en vez de una altura fija para que una pantalla corta y estrecha, donde la
+  tarjeta crece de alto, no recorte nada. `#sobre-mi`, `#stack` y `#whoami` no necesitan
+  ajuste: su contenido sí llena el viewport.
 - **Rejillas** — la de `300px 1fr` de las tarjetas de proyecto y la de `1.15fr 0.85fr`
   del overlay pasan a una columna.
 - **Alturas sticky** — bajan a 230–280vh (tabla en el README).

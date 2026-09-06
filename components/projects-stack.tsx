@@ -13,7 +13,7 @@ const LAYERS = [
 
 export function ProjectsStack({ onOpen }: { onOpen: (index: number) => void }) {
   return (
-    <section id="proyectos" className="relative bg-page pb-[12vh]">
+    <section id="proyectos" className="relative bg-page pb-[12vh] max-md:pb-8">
       {projects.map((p, i) => (
         <ProjectCard key={p.id} project={p} layer={LAYERS[i]} onOpen={() => onOpen(i)} />
       ))}
@@ -32,7 +32,9 @@ function ProjectCard({
 }) {
   return (
     <div
-      className="sticky top-0 flex h-[145vh] items-start justify-center px-10 max-md:px-4"
+      /* En móvil la tarjeta es alta y estrecha: 145vh dejaba ~330px muertos debajo.
+         `h-auto` con un mínimo evita el hueco sin arriesgar recortes en pantallas cortas. */
+      className="sticky top-0 flex h-[145vh] items-start justify-center px-10 max-md:h-auto max-md:min-h-[115vh] max-md:px-4"
       style={{ paddingTop: layer.paddingTop, zIndex: layer.zIndex }}
     >
       <div className="relative w-full max-w-[1100px]">

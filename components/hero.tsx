@@ -13,7 +13,7 @@ export function Hero() {
       <h1
         className="relative m-0 max-w-[20em] font-extrabold"
         style={{
-          fontSize: 'clamp(38px, 6.4vw, 96px)',
+          fontSize: 'clamp(28px, 6.4vw, 96px)',
           lineHeight: 0.94,
           letterSpacing: '-0.045em',
           textWrap: 'pretty',
@@ -28,8 +28,17 @@ export function Hero() {
             <a
               key={card.label}
               href={card.href}
-              className="group absolute top-0 h-full w-[36.76%] transition-[transform,filter] duration-[240ms] ease-[var(--ease-ui)] hover:z-[9] hover:translate-y-[-16px] hover:blur-none"
-              style={{ left: card.left, zIndex: card.z, filter: card.blur ? `blur(${card.blur}px)` : undefined }}
+              className={`group absolute top-0 h-full transition-[transform,filter] duration-[240ms] ease-[var(--ease-ui)] hover:z-[9] hover:translate-y-[-16px] hover:blur-none w-[54%] left-[var(--l-mobile)] md:w-[36.76%] md:left-[var(--l)] ${
+                card.mobileLeft ? '' : 'hidden md:block'
+              }`}
+              style={
+                {
+                  '--l': card.left,
+                  '--l-mobile': card.mobileLeft ?? card.left,
+                  zIndex: card.z,
+                  filter: card.blur ? `blur(${card.blur}px)` : undefined,
+                } as React.CSSProperties
+              }
             >
               <span
                 className="absolute top-0 left-0 h-[26px] w-[40%] rounded-[10px_16px_0_0]"
@@ -53,7 +62,7 @@ export function Hero() {
 
           <a
             href="#proyectos"
-            className="absolute top-0 left-0 z-[5] h-full w-[36.76%] transition-transform duration-[240ms] ease-[var(--ease-ui)] hover:z-[9] hover:translate-y-[-16px]"
+            className="absolute top-0 left-0 z-[5] h-full w-[54%] transition-transform duration-[240ms] ease-[var(--ease-ui)] hover:z-[9] hover:translate-y-[-16px] md:w-[36.76%]"
           >
             <span className="absolute top-0 left-0 h-[28px] w-[43%] rounded-[10px_16px_0_0] bg-gray-card" />
             <span className="absolute inset-x-0 bottom-0 top-[23px] rounded-[12px] bg-gray-card shadow-[-20px_0_46px_rgba(31,27,22,0.16)]" />

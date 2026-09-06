@@ -31,8 +31,12 @@ de la tarjeta y del overlay se actualizan solos.
 
 La spec dejaba cuatro puntos abiertos para <768px. Quedaron así:
 
-- **Abanico del hero** — se conserva el abanico; sólo baja el padding lateral a 24px.
-  Las tarjetas siguen cabiendo a 375px.
+- **Abanico del hero** — se conserva el abanico, pero de 5 tarjetas pasa a 3
+  (Proyectos, Sobre mí, Stack) para simplificar la navegación. Las tarjetas crecen a
+  54% de ancho en posiciones 0 / 23% / 46%, que mantiene el mismo solape proporcional
+  que las cinco de desktop y llena el ancho. El padding lateral baja a 24px.
+- **Titular del hero** — el piso del `clamp()` baja de 38px a 28px para que quepa en
+  3 líneas a 375px en vez de 5. Por encima de ~594px de ancho no cambia nada.
 - **Rejillas** — la de `300px 1fr` de las tarjetas de proyecto y la de `1.15fr 0.85fr`
   del overlay pasan a una columna.
 - **Alturas sticky** — bajan a 230–280vh (tabla en el README).

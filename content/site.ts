@@ -30,17 +30,23 @@ export type HeroCard = {
   color: string;
   ink: string;
   href: string;
+  /** Posición en el abanico de 5 (desktop), con tarjetas del 36.76%. */
   left: string;
+  /**
+   * Posición en el abanico de 3 (móvil), con tarjetas del 54%: mismo solape
+   * proporcional que en desktop. `null` = la tarjeta no se muestra en móvil.
+   */
+  mobileLeft: string | null;
   z: number;
   blur: number;
 };
 
 /** Abanico del hero, de atrás hacia adelante en el DOM (§5.1). */
 export const heroCards: HeroCard[] = [
-  { label: 'Contacto', color: '#C6DDFD', ink: '#2c5fa8', href: '#contacto', left: '62.75%', z: 1, blur: 2.6 },
-  { label: 'Stack', color: '#85B8FA', ink: '#164b96', href: '#stack', left: '47.06%', z: 2, blur: 1.4 },
-  { label: 'Experiencia', color: '#4C8FF5', ink: '#ffffff', href: '#sobre-mi', left: '31.37%', z: 3, blur: 0 },
-  { label: 'Sobre mí', color: '#1F6FEB', ink: '#ffffff', href: '#sobre-mi', left: '15.68%', z: 4, blur: 0 },
+  { label: 'Contacto', color: '#C6DDFD', ink: '#2c5fa8', href: '#contacto', left: '62.75%', mobileLeft: null, z: 1, blur: 2.6 },
+  { label: 'Stack', color: '#85B8FA', ink: '#164b96', href: '#stack', left: '47.06%', mobileLeft: '46%', z: 2, blur: 1.4 },
+  { label: 'Experiencia', color: '#4C8FF5', ink: '#ffffff', href: '#sobre-mi', left: '31.37%', mobileLeft: null, z: 3, blur: 0 },
+  { label: 'Sobre mí', color: '#1F6FEB', ink: '#ffffff', href: '#sobre-mi', left: '15.68%', mobileLeft: '23%', z: 4, blur: 0 },
 ];
 
 export type Satellite = {

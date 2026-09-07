@@ -22,9 +22,9 @@ app/
 components/
   site.tsx          compone las 7 secciones y gobierna el overlay vía ?caso=
   site-header.tsx   header fijo: aparición por scroll e inversión sobre el azul
-  hero.tsx          titular + abanico de 5 tarjetas
+  hero.tsx          portada tipográfica + panel visual de diseño/código
   intro-reveal.tsx  revelado palabra por palabra (sticky 380vh)
-  projects-stack.tsx 3 tarjetas sticky apiladas
+  projects-stack.tsx archivo editorial de proyectos sticky
   process.tsx       5 fases + panel de descripción (sticky 350vh)
   stack-loop.tsx    lista en loop vertical (sticky 460vh)
   whoami.tsx        satélites en flujo continuo (sticky 460vh)
@@ -34,7 +34,7 @@ content/
   projects.ts       los 3 casos — fuente única de la tarjeta y del overlay
   process.ts        las 5 fases
   stack.ts          filas del stack y su estilo por tipo
-  site.ts           intro, ticker, redes, tarjetas del hero, satélites
+  site.ts           intro, ticker, redes y satélites
 lib/
   scroll.ts         hooks de progreso (§4), easings y media queries
 spec/               spec original, prototipo y capturas de referencia

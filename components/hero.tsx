@@ -10,32 +10,50 @@ export function Hero() {
     >
       <div className="flex items-center justify-between gap-6 font-mono text-[10px] uppercase tracking-[0.2em] text-ink-mute md:text-[11px]">
         <span>tiagogoco / portfolio 2026</span>
-        <span className="hidden md:block">puebla, méxico / disponible</span>
       </div>
 
       <div className="grid items-end gap-[clamp(42px,8vh,96px)] lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.42fr)] lg:gap-16">
         <div>
-          <h1 className="m-0 font-extrabold uppercase tracking-[-0.08em] text-ink" style={{ fontSize: 'clamp(70px, 15.3vw, 236px)', lineHeight: 0.76 }}>
+          <h1
+            className="m-0 font-extrabold uppercase tracking-[-0.08em] text-ink"
+            style={{
+              fontSize: "clamp(95px, 15.3vw, 236px)",
+              lineHeight: 0.76,
+            }}
+          >
             <span className="block">design</span>
-            <span className="ml-[0.12em] block">code<span className="font-serif font-normal lowercase tracking-[-0.08em] text-blue"> &amp;</span></span>
+            <span className="ml-[0.12em] block">
+              code
+              <span className="font-serif font-normal lowercase tracking-[-0.08em] text-blue">
+                {" "}
+                &amp;
+              </span>
+            </span>
           </h1>
-          <p className="m-0 mt-10 max-w-[490px] text-[clamp(18px,2.1vw,28px)] leading-[1.08] tracking-[-0.035em] text-body">
-            Soy Tiago, desarrollador y product designer. Construyo productos digitales desde la idea hasta producción.
-          </p>
+          {/* <p className="m-0 mt-10 max-w-[490px] text-[clamp(18px,2.1vw,28px)] leading-[1.08] tracking-[-0.035em] text-body">
+            desarrollador y digital product designer, ayudo a marcas tener las
+            mejores experiencias del mercado digital.
+          </p> */}
         </div>
 
         <Workbench />
       </div>
 
-      <div className="flex flex-wrap items-center justify-between gap-6 border-t border-rule pt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-mute">
-        <nav aria-label="Navegación principal" className="flex flex-wrap gap-x-8 gap-y-3">
-          <a className="transition-colors hover:text-blue" href="#proyectos">Proyectos</a>
-          <a className="transition-colors hover:text-blue" href="#sobre-mi">Sobre mí</a>
-          <a className="transition-colors hover:text-blue" href="#stack">Stack</a>
+      <div className="flex flex-wrap items-center justify-between gap-6 pt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-mute">
+        <nav
+          aria-label="Navegación principal"
+          className="flex flex-wrap gap-x-8 gap-y-3"
+        >
+          <a className="transition-colors hover:text-blue" href="#proyectos">
+            Proyectos
+          </a>
+          <a className="transition-colors hover:text-blue" href="#sobre-mi">
+            Sobre mí
+          </a>
+          <a className="transition-colors hover:text-blue" href="#stack">
+            Stack
+          </a>
         </nav>
-        <span aria-hidden className="hidden items-center gap-3 md:flex">
-          <span className="size-2 rounded-full bg-blue" /> scroll to explore
-        </span>
       </div>
     </section>
   );
@@ -44,7 +62,10 @@ export function Hero() {
 function Workbench() {
   return (
     <div className="relative overflow-hidden rounded-[18px] bg-[#101010] p-5 text-[#f7f7f3] shadow-[0_18px_60px_rgba(31,27,22,0.16)] md:p-7">
-      <div aria-hidden className="absolute inset-0 opacity-70 [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:22px_22px]" />
+      <div
+        aria-hidden
+        className="absolute inset-0 opacity-70 [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:22px_22px]"
+      />
       <div className="relative">
         <div className="flex items-center justify-between border-b border-white/15 pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-white/55">
           <span>hero / auto layout</span>
@@ -56,8 +77,12 @@ function Workbench() {
           <div className="absolute left-[65%] top-[14%] size-2 -translate-x-1/2 -translate-y-1/2 bg-white" />
           <div className="absolute left-[8%] top-[45%] size-2 -translate-x-1/2 translate-y-1/2 bg-white" />
           <div className="absolute left-[65%] top-[45%] size-2 -translate-x-1/2 translate-y-1/2 bg-white" />
-          <div className="absolute left-[22%] top-[27%] font-mono text-[10px] text-white/55">W 412 · H 268</div>
-          <div className="absolute bottom-[13%] left-[28%] bg-[#64df83] px-2 py-1 font-mono text-[10px] text-[#07140b]">design → production</div>
+          <div className="absolute left-[22%] top-[27%] font-mono text-[10px] text-white/55">
+            W 412 · H 268
+          </div>
+          <div className="absolute bottom-[13%] left-[28%] bg-[#64df83] px-2 py-1 font-mono text-[10px] text-[#07140b]">
+            design → production
+          </div>
           <div className="absolute bottom-[11%] right-[8%] size-3 rounded-full bg-blue shadow-[0_0_0_5px_rgba(31,111,235,0.16)]" />
         </div>
         <div className="flex items-center justify-between border-t border-white/15 pt-4 font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">

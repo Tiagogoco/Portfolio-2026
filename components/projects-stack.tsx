@@ -107,7 +107,7 @@ function ProjectsHeader() {
       <Reveal p={enter} i={0}><div className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute">{proyectosHeader.eyebrow}</div></Reveal>
       <Reveal p={enter} i={1}><h2 className="m-0 mt-5 max-w-[850px] font-extrabold uppercase tracking-[-0.07em]" style={{ fontSize: 'clamp(48px,9vw,132px)', lineHeight: 0.82 }}>{proyectosHeader.title}</h2></Reveal>
       <Reveal p={enter} i={2}>
-        <div className="mt-8 flex flex-col justify-between gap-5 border-t border-rule pt-5 max-md:border-t-0 md:flex-row md:items-start">
+        <div className="mt-8 flex flex-col justify-between gap-5 pt-5 md:flex-row md:items-start">
           <p className="m-0 max-w-[480px] text-[clamp(17px,1.7vw,23px)] leading-[1.18] tracking-[-0.025em] text-body">{proyectosHeader.lede}</p>
           <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-mute">{String(projects.length).padStart(2, '0')} piezas / en producción</span>
         </div>

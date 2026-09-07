@@ -28,30 +28,9 @@ export const introLines: string[] = [
 /** Encabezado de la sección de proyectos. El conteo se deriva de `projects`. */
 export const proyectosHeader = {
   eyebrow: '( selección )',
-  title: 'PROYECTOS SELECCIONADOS',
-  lede: 'Tres productos en producción, del modelo de negocio al primer cobro.',
+  title: 'TRABAJO EN PRODUCCIÓN',
+  lede: 'Tres productos construidos desde el modelo de negocio hasta el primer cobro.',
 };
-
-export type HeroCard = {
-  label: string;
-  color: string;
-  ink: string;
-  href: string;
-  /** Posición en el abanico de 5 de desktop, con tarjetas del 36.76%. */
-  left: string;
-  /** Si entra en el carrusel de móvil, que coloca las tarjetas en flujo (§9). */
-  onMobile: boolean;
-  z: number;
-  blur: number;
-};
-
-/** Abanico del hero, de atrás hacia adelante en el DOM (§5.1). */
-export const heroCards: HeroCard[] = [
-  { label: 'Contacto', color: '#C6DDFD', ink: '#2c5fa8', href: '#contacto', left: '62.75%', onMobile: false, z: 1, blur: 2.6 },
-  { label: 'Stack', color: '#85B8FA', ink: '#164b96', href: '#stack', left: '47.06%', onMobile: true, z: 2, blur: 1.4 },
-  { label: 'Experiencia', color: '#4C8FF5', ink: '#ffffff', href: '#sobre-mi', left: '31.37%', onMobile: false, z: 3, blur: 0 },
-  { label: 'Sobre mí', color: '#1F6FEB', ink: '#ffffff', href: '#sobre-mi', left: '15.68%', onMobile: true, z: 4, blur: 0 },
-];
 
 export type Satellite = {
   phase: number;

@@ -1,102 +1,70 @@
-import { heroCards } from '@/content/site';
-
-/** Tarjetas visibles en el carrusel de móvil: las marcadas + la de Proyectos. */
-const MOBILE_COUNT = heroCards.filter((c) => c.onMobile).length + 1;
-
-/* Tarjeta: en móvil va en flujo dentro del scroller; desde md se posiciona en el abanico. */
-const CARD =
-  'group relative h-full w-[62%] shrink-0 snap-start transition-transform duration-[240ms] ease-[var(--ease-ui)] ' +
-  'md:absolute md:top-0 md:w-[36.76%] md:hover:z-[9] md:hover:translate-y-[-16px]';
-
 /**
- * §5.1 — titular arriba, abanico de 5 tarjetas abajo. Nada aquí es imagen.
- * Sin degradado: el hero queda sobre el fondo sólido de página.
- * En móvil deja de ocupar 100vh y el abanico se vuelve un carrusel horizontal de 3
- * tarjetas en flujo, con snap; desde md vuelven a ser absolutas y superpuestas (§9).
+ * El hero funciona como una portada editorial: identidad tipográfica arriba,
+ * una herramienta visual al centro y navegación al final.
  */
 export function Hero() {
   return (
     <section
       id="top"
-      className="relative mx-auto flex min-h-screen max-w-[1320px] flex-col justify-between gap-[clamp(40px,6vh,80px)] px-14 pt-[clamp(80px,15vh,190px)] pb-[clamp(60px,12vh,130px)] max-md:min-h-0 max-md:justify-start max-md:gap-9 max-md:px-6 max-md:pt-[104px] max-md:pb-7"
+      className="relative mx-auto flex min-h-[100svh] max-w-[1440px] flex-col justify-between px-[clamp(24px,5vw,72px)] pb-[clamp(28px,5vh,64px)] pt-[clamp(92px,13vh,150px)]"
     >
-      <h1
-        className="relative m-0 max-w-[20em] font-extrabold"
-        style={{
-          fontSize: 'clamp(34px, 6.4vw, 96px)',
-          lineHeight: 0.94,
-          letterSpacing: '-0.045em',
-          textWrap: 'pretty',
-        }}
-      >
-        Creando productos digitales desde la idea, hasta producción
-      </h1>
+      <div className="flex items-center justify-between gap-6 font-mono text-[10px] uppercase tracking-[0.2em] text-ink-mute md:text-[11px]">
+        <span>tiagogoco / portfolio 2026</span>
+        <span className="hidden md:block">puebla, méxico / disponible</span>
+      </div>
 
-      <div className="relative">
-        <div className="relative -mx-6 flex h-[clamp(220px,34vh,320px)] snap-x snap-mandatory gap-3 overflow-x-auto scroll-px-6 px-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-auto md:block md:w-[min(816px,100%)] md:gap-0 md:overflow-visible md:px-0">
-          <a
-            href="#proyectos"
-            className={`${CARD} md:left-0 md:z-[5]`}
-            style={{ order: -5 }}
-          >
-            <span className="absolute top-0 left-0 h-[28px] w-[43%] rounded-[10px_16px_0_0] bg-gray-card" />
-            <span className="absolute inset-x-0 bottom-0 top-[23px] rounded-[12px] bg-gray-card md:shadow-[-20px_0_46px_rgba(31,27,22,0.16)]" />
-            <span
-              className="absolute left-6 top-[44px] font-bold text-page"
-              style={{ fontSize: 'clamp(20px, 2.8vw, 30px)', letterSpacing: '-0.03em' }}
-            >
-              Proyectos
-            </span>
-            <span className="absolute bottom-5 left-6 font-mono text-[11px] uppercase tracking-[0.16em] text-[rgba(251,250,248,0.7)]">
-              3 sitios · abrir
-            </span>
-          </a>
-
-          {heroCards.map((card) => (
-            <a
-              key={card.label}
-              href={card.href}
-              className={`${CARD} md:left-[var(--l)] ${
-                card.blur ? 'md:[filter:blur(var(--b))] md:hover:[filter:blur(0px)]' : ''
-              } ${card.onMobile ? '' : 'hidden md:block'}`}
-              style={
-                {
-                  '--l': card.left,
-                  '--b': `${card.blur}px`,
-                  order: -card.z,
-                  zIndex: card.z,
-                } as React.CSSProperties
-              }
-            >
-              <span
-                className="absolute top-0 left-0 h-[26px] w-[40%] rounded-[10px_16px_0_0]"
-                style={{ background: card.color }}
-              />
-              <span
-                className={`absolute inset-x-0 bottom-0 top-[21px] rounded-[12px] ${
-                  card.label === 'Sobre mí' ? 'md:shadow-[-18px_0_40px_rgba(31,111,235,0.18)]' : ''
-                }`}
-                style={{ background: card.color }}
-              />
-              <span
-                className="absolute bottom-5 left-6 font-bold text-[20px] tracking-[-0.03em] md:left-auto md:right-[14px] md:font-mono md:text-[11px] md:font-normal md:uppercase md:tracking-[0.16em] md:[writing-mode:vertical-rl]"
-                style={{ color: card.ink }}
-              >
-                {card.label}
-              </span>
-            </a>
-          ))}
+      <div className="grid items-end gap-[clamp(42px,8vh,96px)] lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.42fr)] lg:gap-16">
+        <div>
+          <h1 className="m-0 font-extrabold uppercase tracking-[-0.08em] text-ink" style={{ fontSize: 'clamp(70px, 15.3vw, 236px)', lineHeight: 0.76 }}>
+            <span className="block">design</span>
+            <span className="ml-[0.12em] block">code<span className="font-serif font-normal lowercase tracking-[-0.08em] text-blue"> &amp;</span></span>
+          </h1>
+          <p className="m-0 mt-10 max-w-[490px] text-[clamp(18px,2.1vw,28px)] leading-[1.08] tracking-[-0.035em] text-body">
+            Soy Tiago, desarrollador y product designer. Construyo productos digitales desde la idea hasta producción.
+          </p>
         </div>
 
-        <div
-          aria-hidden
-          className="mt-5 flex items-center gap-4 font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute md:hidden"
-        >
-          desliza
-          <span className="h-px flex-1 bg-rule" />
-          {String(MOBILE_COUNT).padStart(2, '0')}
-        </div>
+        <Workbench />
+      </div>
+
+      <div className="flex flex-wrap items-center justify-between gap-6 border-t border-rule pt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-mute">
+        <nav aria-label="Navegación principal" className="flex flex-wrap gap-x-8 gap-y-3">
+          <a className="transition-colors hover:text-blue" href="#proyectos">Proyectos</a>
+          <a className="transition-colors hover:text-blue" href="#sobre-mi">Sobre mí</a>
+          <a className="transition-colors hover:text-blue" href="#stack">Stack</a>
+        </nav>
+        <span aria-hidden className="hidden items-center gap-3 md:flex">
+          <span className="size-2 rounded-full bg-blue" /> scroll to explore
+        </span>
       </div>
     </section>
+  );
+}
+
+function Workbench() {
+  return (
+    <div className="relative overflow-hidden rounded-[18px] bg-[#101010] p-5 text-[#f7f7f3] shadow-[0_18px_60px_rgba(31,27,22,0.16)] md:p-7">
+      <div aria-hidden className="absolute inset-0 opacity-70 [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:22px_22px]" />
+      <div className="relative">
+        <div className="flex items-center justify-between border-b border-white/15 pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-white/55">
+          <span>hero / auto layout</span>
+          <span>01 — 04</span>
+        </div>
+        <div className="relative mt-10 aspect-[1.12] min-h-[220px]">
+          <div className="absolute left-[8%] top-[14%] h-[31%] w-[57%] border border-[#64df83]" />
+          <div className="absolute left-[8%] top-[14%] size-2 -translate-x-1/2 -translate-y-1/2 bg-white" />
+          <div className="absolute left-[65%] top-[14%] size-2 -translate-x-1/2 -translate-y-1/2 bg-white" />
+          <div className="absolute left-[8%] top-[45%] size-2 -translate-x-1/2 translate-y-1/2 bg-white" />
+          <div className="absolute left-[65%] top-[45%] size-2 -translate-x-1/2 translate-y-1/2 bg-white" />
+          <div className="absolute left-[22%] top-[27%] font-mono text-[10px] text-white/55">W 412 · H 268</div>
+          <div className="absolute bottom-[13%] left-[28%] bg-[#64df83] px-2 py-1 font-mono text-[10px] text-[#07140b]">design → production</div>
+          <div className="absolute bottom-[11%] right-[8%] size-3 rounded-full bg-blue shadow-[0_0_0_5px_rgba(31,111,235,0.16)]" />
+        </div>
+        <div className="flex items-center justify-between border-t border-white/15 pt-4 font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">
+          <span>grid / type / motion</span>
+          <span className="text-[#64df83]">● live</span>
+        </div>
+      </div>
+    </div>
   );
 }

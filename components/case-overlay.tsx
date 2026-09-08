@@ -12,10 +12,11 @@ type Props = {
   onSelect: (index: number) => void;
   onClose: () => void;
   /** Elemento al que se devuelve el foco al cerrar. */
-  opener: RefObject<HTMLElement | null>;
+  opener?: RefObject<HTMLElement | null>;
+  standalone?: boolean;
 };
 
-export function CaseOverlay({ index, onSelect, onClose, opener }: Props) {
+export function CaseOverlay({ index, onSelect, onClose, opener, standalone = false }: Props) {
   const panelRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
@@ -25,6 +26,8 @@ export function CaseOverlay({ index, onSelect, onClose, opener }: Props) {
 
   /* Bloquea el body compensando el ancho de la barra de scroll (§6). */
   useEffect(() => {
+    if (standalone) return;
+
     const { body } = document;
     const gap = window.innerWidth - document.documentElement.clientWidth;
     const prevOverflow = body.style.overflow;
@@ -37,13 +40,14 @@ export function CaseOverlay({ index, onSelect, onClose, opener }: Props) {
       body.style.overflow = prevOverflow;
       body.style.paddingRight = prevPadding;
     };
-  }, []);
+  }, [standalone]);
 
   /* Devuelve el foco al botón que abrió el caso. */
   useEffect(() => {
+    if (standalone || !opener) return;
     const el = opener.current;
     return () => el?.focus();
-  }, [opener]);
+  }, [opener, standalone]);
 
   /* El scroll interno vuelve a 0 al abrir o cambiar de caso. */
   useEffect(() => {
@@ -79,16 +83,16 @@ export function CaseOverlay({ index, onSelect, onClose, opener }: Props) {
   );
 
   return (
-    <div className="fixed inset-0 z-90 flex items-center justify-center bg-[#1d1d1d] p-[clamp(0px,2vh,24px)]" onKeyDown={onKeyDown}>
-      <div className="absolute inset-0 bg-black/45" onClick={onClose} />
+    <div className={standalone ? 'min-h-screen bg-page' : 'fixed inset-0 z-90 flex items-center justify-center bg-[#1d1d1d] p-[clamp(0px,2vh,24px)]'} onKeyDown={onKeyDown}>
+      {!standalone && <div className="absolute inset-0 bg-black/45" onClick={onClose} />}
 
       <div
         ref={panelRef}
-        role="dialog"
-        aria-modal="true"
+        role={standalone ? 'main' : 'dialog'}
+        aria-modal={standalone ? undefined : true}
         aria-labelledby={titleId}
         tabIndex={-1}
-        className="relative flex h-full w-full max-w-[1280px] animate-[overlay-open_380ms_var(--ease-modal)_both] flex-col bg-page outline-none md:h-[min(96vh,1500px)]"
+        className={standalone ? 'relative flex min-h-screen w-full flex-col bg-page outline-none' : 'relative flex h-full w-full max-w-[1280px] animate-[overlay-open_380ms_var(--ease-modal)_both] flex-col bg-page outline-none md:h-[min(96vh,1500px)]'}
       >
         <div className="flex items-center justify-between border-b border-ink/15 px-[clamp(20px,4vw,60px)] py-4">
           <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-mute">

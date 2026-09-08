@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, useTransform, type MotionValue } from 'motion/react';
 import { projects, type Project } from '@/content/projects';
 import { proyectosHeader } from '@/content/site';
@@ -10,31 +11,31 @@ import { GlobeIcon } from './globe-icon';
 
 const SURFACES = ['#F2F0EB', '#E9EDF1', '#F4F1EC'];
 
-export function ProjectsStack({ onOpen }: { onOpen: (index: number) => void }) {
+export function ProjectsStack() {
   return (
     <section id="proyectos" className="relative bg-page pb-[14vh] max-md:px-6 max-md:pb-16">
       <ProjectsHeader />
       <div className="mx-auto max-w-[1180px]">
         {projects.map((p, i) => (
-          <ProjectCard key={p.id} project={p} index={i} onOpen={() => onOpen(i)} />
+          <ProjectCard key={p.id} project={p} index={i} />
         ))}
       </div>
     </section>
   );
 }
 
-function ProjectCard({ project: p, index, onOpen }: { project: Project; index: number; onOpen: () => void }) {
+function ProjectCard({ project: p, index }: { project: Project; index: number }) {
   return (
     <article className="relative md:sticky md:top-0 md:flex md:min-h-[100svh] md:items-center md:py-[9vh]" style={{ zIndex: index + 1 }}>
       <div className="w-full border-t border-ink/15 pt-5 max-md:border-t-0 md:rounded-[4px] md:border-0 md:bg-[var(--surface)] md:p-8 md:shadow-[0_18px_60px_rgba(31,27,22,0.08)]" style={{ '--surface': SURFACES[index] } as React.CSSProperties}>
-        <MobileProjectCard project={p} onOpen={onOpen} />
-        <DesktopProjectCard project={p} index={index} onOpen={onOpen} />
+        <MobileProjectCard project={p} />
+        <DesktopProjectCard project={p} index={index} />
       </div>
     </article>
   );
 }
 
-function MobileProjectCard({ project: p, onOpen }: { project: Project; onOpen: () => void }) {
+function MobileProjectCard({ project: p }: { project: Project }) {
   return (
     <div className="md:hidden">
       <div className="relative overflow-hidden rounded-[4px] border border-ink/30 bg-white p-2">
@@ -56,13 +57,13 @@ function MobileProjectCard({ project: p, onOpen }: { project: Project; onOpen: (
             <span key={tag} className="rounded-[4px] border border-ink/15 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-mute">{tag}</span>
           ))}
         </div>
-        <AbrirCaso project={p} onOpen={onOpen} className="mt-6 text-[20px]" />
+        <AbrirCaso project={p} className="mt-6 text-[20px]" />
       </div>
     </div>
   );
 }
 
-function DesktopProjectCard({ project: p, index, onOpen }: { project: Project; index: number; onOpen: () => void }) {
+function DesktopProjectCard({ project: p, index }: { project: Project; index: number }) {
   return (
     <div className="hidden md:block">
       <div className="flex items-start justify-between gap-6">
@@ -81,7 +82,7 @@ function DesktopProjectCard({ project: p, index, onOpen }: { project: Project; i
             {p.teaserTags.map((tag) => <span key={tag}>{tag}</span>)}
           </div>
           <div className="mt-8 flex flex-wrap items-center gap-5">
-            <AbrirCaso project={p} onOpen={onOpen} />
+            <AbrirCaso project={p} />
             <Globo project={p} size={19} className="size-11" />
           </div>
         </div>
@@ -130,8 +131,8 @@ function Shot({ project: p }: { project: Project }) {
   );
 }
 
-function AbrirCaso({ project: p, onOpen, className = '' }: { project: Project; onOpen: () => void; className?: string }) {
-  return <button type="button" onClick={onOpen} className={`inline-flex min-h-11 items-center border-0 border-b-[3px] bg-transparent p-0 font-bold tracking-[-0.03em] transition-opacity duration-200 hover:opacity-60 ${className}`} style={{ color: p.accent, borderBottomColor: p.accent }}>abrir caso →</button>;
+function AbrirCaso({ project: p, className = '' }: { project: Project; className?: string }) {
+  return <Link href={`/proyectos/${p.id}`} className={`inline-flex min-h-11 items-center border-b-[3px] font-bold tracking-[-0.03em] transition-opacity duration-200 hover:opacity-60 ${className}`} style={{ color: p.accent, borderBottomColor: p.accent }}>abrir caso →</Link>;
 }
 
 function Globo({ project: p, size, className, plain = false }: { project: Project; size: number; className: string; plain?: boolean }) {

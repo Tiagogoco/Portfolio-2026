@@ -94,10 +94,7 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
         tabIndex={-1}
         className={standalone ? 'relative flex min-h-screen w-full flex-col bg-page outline-none' : 'relative flex h-full w-full max-w-[1280px] animate-[overlay-open_380ms_var(--ease-modal)_both] flex-col bg-page outline-none md:h-[min(96vh,1500px)]'}
       >
-        <div className="flex items-center justify-between border-b border-ink/15 px-[clamp(20px,4vw,60px)] py-4">
-          <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-mute">
-            detalle proyecto / {p.n}
-          </span>
+        <div className="flex items-center justify-end px-[clamp(20px,4vw,60px)] py-4">
           <button
             type="button"
             onClick={onClose}
@@ -113,7 +110,7 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
               <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:gap-12">
                 <div className="flex min-w-0 items-start gap-4">
                   <span className="pt-2 font-mono text-[11px] font-bold tracking-[0.12em] text-ink-mute">{p.n}</span>
-                  <h2 id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold uppercase tracking-[-0.09em] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`} style={{ fontSize: 'clamp(30px, 6vw, 86px)', lineHeight: 0.76 }}>
+                  <h2 id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold text-[clamp(30px,6vw,86px)] uppercase leading-[0.76] tracking-[-0.09em] max-md:text-[clamp(60px,16vw,128px)] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`}>
                     {p.id === 'saint' ? <>SAINT<br />PADEL</> : p.title}
                   </h2>
                 </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useTransform, type MotionValue } from 'motion/react';
@@ -26,7 +26,7 @@ export function ProjectsStack() {
 
 function ProjectCard({ project: p, index }: { project: Project; index: number }) {
   return (
-    <article className="relative md:sticky md:top-0 md:flex md:min-h-[100svh] md:items-center md:py-[9vh]" style={{ zIndex: index + 1 }}>
+    <article className="relative mb-[10px] md:sticky md:top-0 md:mb-0 md:flex md:min-h-[100svh] md:items-center md:py-[9vh]" style={{ zIndex: index + 1 }}>
       <div className="w-full border-t border-ink/15 pt-5 max-md:border-t-0 md:rounded-[4px] md:border-0 md:bg-[var(--surface)] md:p-8 md:shadow-[0_18px_60px_rgba(31,27,22,0.08)]" style={{ '--surface': SURFACES[index] } as React.CSSProperties}>
         <MobileProjectCard project={p} />
         <DesktopProjectCard project={p} index={index} />
@@ -38,12 +38,8 @@ function ProjectCard({ project: p, index }: { project: Project; index: number })
 function MobileProjectCard({ project: p }: { project: Project }) {
   return (
     <div className="md:hidden">
-      <div className="relative overflow-hidden rounded-[4px] border border-ink/30 bg-white p-2">
-        <Shot project={p} />
-        <span className="absolute left-5 top-5 inline-flex min-h-8 items-center rounded-full bg-page px-4 font-mono text-[11px] font-bold tracking-[0.08em] text-ink">
-          {p.year}
-        </span>
-        <Globo project={p} size={18} plain className="absolute right-5 top-5 size-11 shadow-[0_2px_10px_rgba(31,27,22,0.12)]" />
+      <div className="relative overflow-hidden rounded-[4px] bg-white">
+        <CardMedia project={p} showGlobe />
       </div>
 
       <div className="mt-7">
@@ -56,8 +52,8 @@ function MobileProjectCard({ project: p }: { project: Project }) {
           {p.teaserTags.slice(0, 2).map((tag) => (
             <span key={tag} className="rounded-[4px] border border-ink/15 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-mute">{tag}</span>
           ))}
+          <span className="rounded-[4px] border border-ink/15 px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-mute">{p.year}</span>
         </div>
-        <AbrirCaso project={p} className="mt-6 text-[20px]" />
       </div>
     </div>
   );
@@ -71,7 +67,6 @@ function DesktopProjectCard({ project: p, index }: { project: Project; index: nu
           <span className="inline-flex min-h-7 min-w-8 items-center justify-center px-2 text-white" style={{ background: p.accent }}>{p.n}</span>
           <span>{p.kind}</span>
         </div>
-        <span className="font-mono text-[11px] text-ink-mute">{p.year}</span>
       </div>
 
       <div className="mt-8 grid items-end gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-14">
@@ -79,20 +74,36 @@ function DesktopProjectCard({ project: p, index }: { project: Project; index: nu
           <h3 className="m-0 font-extrabold uppercase tracking-[-0.07em]" style={{ fontSize: 'clamp(46px,7vw,104px)', lineHeight: 0.82 }}>{p.title}</h3>
           <p className="m-0 mt-8 max-w-[380px] text-[clamp(17px,1.7vw,23px)] leading-[1.18] tracking-[-0.025em]" style={{ color: p.cardTeaserInk }}>{p.teaser}</p>
           <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.14em]" style={{ color: p.cardLabelInk }}>
-            {p.teaserTags.map((tag) => <span key={tag}>{tag}</span>)}
+            {p.teaserTags.map((tag) => <span key={tag} className="rounded-[4px] border border-ink/15 px-3 py-2">{tag}</span>)}
+            <span className="rounded-[4px] border border-ink/15 px-3 py-2 font-bold">{p.year}</span>
           </div>
           <div className="mt-8 flex flex-wrap items-center gap-5">
-            <AbrirCaso project={p} />
             <Globo project={p} size={19} className="size-11" />
           </div>
         </div>
 
         <div className="order-1 lg:order-2">
-          <Shot project={p} />
+          <CardMedia project={p} />
           <div className="mt-3 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.16em] text-ink-mute">
             <span>{String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}</span>
             <span>ver proyecto ↗</span>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CardMedia({ project: p, showGlobe = false }: { project: Project; showGlobe?: boolean }) {
+  return (
+    <div className="relative">
+      <Shot project={p} />
+      <div className="pointer-events-none absolute inset-x-5 top-5 flex items-start justify-between gap-3">
+        <Link href={`/proyectos/${p.id}`} className="pointer-events-auto inline-flex min-h-10 items-center rounded-full bg-page px-4 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-ink shadow-[0_2px_10px_rgba(31,27,22,0.12)] transition-transform hover:scale-[1.04]">
+          ver <span aria-hidden className="ml-2 text-[14px]">↗</span>
+        </Link>
+        <div className="flex items-center gap-3">
+          {showGlobe && <Globo project={p} size={18} plain className="size-11 shadow-[0_2px_10px_rgba(31,27,22,0.12)]" />}
         </div>
       </div>
     </div>
@@ -124,15 +135,33 @@ function Reveal({ p, i, children }: { p: MotionValue<number>; i: number; childre
 }
 
 function Shot({ project: p }: { project: Project }) {
+  const [videoFailed, setVideoFailed] = useState(false);
+  const video = p.id === 'rankeo'
+    ? '/video/rankeo-landing.mp4'
+    : p.id === 'saint'
+      ? '/video/saint-padel-landing.mp4'
+      : undefined;
+
   return (
     <div className="relative overflow-hidden rounded-[4px]" style={{ aspectRatio: `${p.cardShot.w} / ${p.cardShot.h}`, background: p.cardShotBg }}>
-      <Image src={p.cardShot.src} alt={p.cardShot.alt} fill sizes="(max-width: 768px) 92vw, 760px" className="object-cover transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]" />
+      {video && !videoFailed ? (
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={p.cardShot.src}
+          onError={() => setVideoFailed(true)}
+          className="size-full object-cover transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]"
+        >
+          <source src={video} type="video/mp4" />
+        </video>
+      ) : (
+        <Image src={p.cardShot.src} alt={p.cardShot.alt} fill sizes="(max-width: 768px) 92vw, 760px" className="object-cover transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]" />
+      )}
     </div>
   );
-}
-
-function AbrirCaso({ project: p, className = '' }: { project: Project; className?: string }) {
-  return <Link href={`/proyectos/${p.id}`} className={`inline-flex min-h-11 items-center border-b-[3px] font-bold tracking-[-0.03em] transition-opacity duration-200 hover:opacity-60 ${className}`} style={{ color: p.accent, borderBottomColor: p.accent }}>abrir caso →</Link>;
 }
 
 function Globo({ project: p, size, className, plain = false }: { project: Project; size: number; className: string; plain?: boolean }) {

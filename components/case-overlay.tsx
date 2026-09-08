@@ -106,14 +106,14 @@ export function CaseOverlay({ index, onSelect, onClose, opener }: Props) {
         <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
           <div className="mx-auto max-w-[1120px] px-[clamp(20px,5vw,72px)] pb-20 pt-[clamp(34px,7vw,88px)]">
             <header>
-              <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] lg:gap-16">
-                <div className="flex items-start gap-4">
+              <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:gap-12">
+                <div className="flex min-w-0 items-start gap-4">
                   <span className="pt-2 font-mono text-[11px] font-bold tracking-[0.12em] text-ink-mute">{p.n}</span>
-                  <h2 id={titleId} className="m-0 font-extrabold uppercase tracking-[-0.09em]" style={{ fontSize: 'clamp(54px, 10vw, 142px)', lineHeight: 0.76 }}>
-                    {p.title}
+                  <h2 id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold uppercase tracking-[-0.09em] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`} style={{ fontSize: 'clamp(30px, 6vw, 86px)', lineHeight: 0.76 }}>
+                    {p.id === 'saint' ? <>SAINT<br />PADEL</> : p.title}
                   </h2>
                 </div>
-                <p className="m-0 max-w-[620px] text-[clamp(23px,3vw,42px)] font-medium leading-[0.98] tracking-[-0.055em] text-ink">
+                <p className="m-0 min-w-0 max-w-[620px] text-[clamp(19px,2.2vw,32px)] font-medium leading-[1.02] tracking-[-0.045em] text-ink">
                   {p.lede}
                 </p>
               </div>
@@ -127,11 +127,18 @@ export function CaseOverlay({ index, onSelect, onClose, opener }: Props) {
             </header>
 
             <main className="mt-[clamp(34px,5vw,64px)]">
-              <MediaFrame src={p.cardShot.src} alt={p.cardShot.alt} accent={p.accent} className="aspect-[16/8.6]" />
+              <MediaFrame
+                src={p.cardShot.src}
+                alt={p.cardShot.alt}
+                accent={p.id === 'rankeo' ? '#CAFF00' : p.accent}
+                video={p.id === 'rankeo' ? '/video/rankeo-landing.mp4' : p.id === 'saint' ? '/video/saint-padel-landing.mp4' : undefined}
+                playbackRate={p.id === 'rankeo' || p.id === 'saint' ? 1.2 : undefined}
+                className={p.id === 'rankeo' ? 'aspect-[2988/1720]' : p.id === 'saint' ? 'aspect-[2988/1792]' : 'aspect-[16/8.6]'}
+              />
 
               <div className="mt-[clamp(26px,4vw,48px)] grid grid-cols-2 gap-[clamp(14px,3vw,32px)] max-sm:grid-cols-1">
-                <MediaFrame src={p.shots[0].src} alt={p.shots[0].alt} accent={p.accent} className="aspect-[0.72]" />
-                <MediaFrame src={p.shots[1].src} alt={p.shots[1].alt} accent={p.accent} className="aspect-[0.72]" />
+                <MediaFrame src={p.shots[0].src} alt={p.shots[0].alt} accent={p.accent} natural w={p.shots[0].w} h={p.shots[0].h} />
+                <MediaFrame src={p.shots[1].src} alt={p.shots[1].alt} accent={p.accent} natural w={p.shots[1].w} h={p.shots[1].h} />
               </div>
 
               <div className="mt-[clamp(80px,12vw,170px)] grid gap-10 border-t-2 border-ink pt-7 lg:grid-cols-2 lg:gap-20">
@@ -181,10 +188,30 @@ export function CaseOverlay({ index, onSelect, onClose, opener }: Props) {
   );
 }
 
-function MediaFrame({ src, alt, accent, className }: { src: string; alt: string; accent: string; className: string }) {
+function MediaFrame({ src, alt, accent, video, playbackRate, className = '', natural = false, w, h }: { src: string; alt: string; accent: string; video?: string; playbackRate?: number; className?: string; natural?: boolean; w?: number; h?: number }) {
   return (
     <div className={`relative overflow-hidden bg-black ${className}`} style={{ border: `clamp(8px, 1.2vw, 16px) solid ${accent}` }}>
-      <Image src={src} alt={alt} fill sizes="(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 1000px" className="object-cover object-top transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]" />
+      {video ? (
+        <video
+          key={video}
+          aria-label={alt}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          ref={(node) => {
+            if (node && playbackRate) node.playbackRate = playbackRate;
+          }}
+          className="absolute inset-0 size-full object-cover"
+        >
+          <source src={video} type="video/mp4" />
+        </video>
+      ) : natural && w && h ? (
+        <Image src={src} alt={alt} width={w} height={h} sizes="(max-width: 640px) 92vw, 560px" className="block h-auto w-full transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]" />
+      ) : (
+        <Image src={src} alt={alt} fill sizes="(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 1000px" className="object-cover object-top transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]" />
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 export type Decision = { n: string; title: string; note: string };
 export type Resena = { q: string; by: string; item: string };
-export type Shot = { src: string; alt: string };
+export type Shot = { src: string; alt: string; w: number; h: number };
 /** Captura de tarjeta: lleva sus dimensiones para que la caja adopte su proporción. */
 export type CardShot = Shot & { w: number; h: number };
 
@@ -92,8 +92,8 @@ export const projects: Project[] = [
       'Cuando el plazo de entrega es parte de la promesa, tiene que aparecer antes del pago, no en el correo de confirmación.',
     ],
     shots: [
-      { src: '/img/casos/saint-1.webp', alt: 'Home de Saint Padel en mobile' },
-      { src: '/img/casos/saint-2.webp', alt: 'Catálogo filtrado por tipo de juego' },
+      { src: '/img/casos/saint-1.webp', alt: 'Producto Metalbone Reserve 2026 de Saint Padel', w: 754, h: 1640 },
+      { src: '/img/casos/saint-2.webp', alt: 'Catálogo filtrado por tipo de juego', w: 736, h: 1602 },
     ],
   },
   {
@@ -136,8 +136,8 @@ export const projects: Project[] = [
       'Pendiente: la decisión que cambiarías hoy.',
     ],
     shots: [
-      { src: '/img/casos/rankeo-1.webp', alt: 'Ranking en mobile' },
-      { src: '/img/casos/rankeo-2.webp', alt: 'Partido o bracket en mobile' },
+      { src: '/img/casos/rankeo-1.webp', alt: 'Ranking en mobile', w: 554, h: 1200 },
+      { src: '/img/casos/rankeo-2.webp', alt: 'Partido o bracket en mobile', w: 560, h: 1200 },
     ],
   },
   {
@@ -179,8 +179,8 @@ export const projects: Project[] = [
       'Pendiente: lo que el cliente necesitaba y no estaba en el brief.',
     ],
     shots: [
-      { src: '/img/casos/piri-1.webp', alt: 'Home de Piri en mobile' },
-      { src: '/img/casos/piri-2.webp', alt: 'Ficha de pieza en mobile' },
+      { src: '/img/casos/piri-1.webp', alt: 'Home de Piri en mobile', w: 559, h: 1200 },
+      { src: '/img/casos/piri-2.webp', alt: 'Ficha de pieza en mobile', w: 559, h: 1200 },
     ],
     resenas: [
       {

@@ -132,18 +132,24 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                 src={p.cardShot.src}
                 alt={p.cardShot.alt}
                 accent={p.id === 'rankeo' ? '#CAFF00' : p.accent}
-                video={p.id === 'rankeo' ? '/video/rankeo-landing.mp4' : p.id === 'saint' ? '/video/saint-padel-landing.mp4' : undefined}
-                playbackRate={p.id === 'rankeo' || p.id === 'saint' ? 1.2 : undefined}
-                className={p.id === 'rankeo' ? 'aspect-[2988/1720]' : p.id === 'saint' ? 'aspect-[2988/1792]' : 'aspect-[16/8.6]'}
+                video={p.id === 'rankeo' ? '/video/rankeo-landing.mp4' : p.id === 'saint' ? '/video/saint-padel-landing.mp4' : p.id === 'piri' ? '/video/piri-desktop.mp4' : undefined}
+                playbackRate={p.id === 'piri' ? 1.25 : p.id === 'rankeo' || p.id === 'saint' ? 1.2 : undefined}
+                className={p.id === 'rankeo' ? 'aspect-[2988/1720]' : p.id === 'saint' ? 'aspect-[2988/1792]' : 'aspect-[2988/1796]'}
               />
 
-              <div className="mt-[clamp(26px,4vw,48px)] grid grid-cols-2 gap-[clamp(14px,3vw,32px)] max-sm:grid-cols-1">
-                <MediaFrame src={p.shots[0].src} alt={p.shots[0].alt} accent={p.accent} natural w={p.shots[0].w} h={p.shots[0].h} />
-                <MediaFrame src={p.shots[1].src} alt={p.shots[1].alt} accent={p.accent} natural w={p.shots[1].w} h={p.shots[1].h} />
-              </div>
+              {p.id === 'piri' && (
+                <MediaFrame
+                  src={p.cardShot.src}
+                  alt="Segundo recorrido de la experiencia de PIRI"
+                  accent={p.accent}
+                  video="/video/piri-desktop-2.mp4"
+                  playbackRate={1.25}
+                  className="mt-5 aspect-[2988/1796]"
+                />
+              )}
 
               <div className="mt-[clamp(80px,12vw,170px)] grid gap-10 border-t-2 border-ink pt-7 lg:grid-cols-2 lg:gap-20">
-                <Story label="problema" text={p.problema} />
+                <Story label={p.problemaLabel ?? 'problema'} text={p.problema} />
                 <Story label="solución" text={p.solucion} accent={p.accent} />
               </div>
 

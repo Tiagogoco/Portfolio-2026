@@ -30,6 +30,7 @@ export type Project = {
   teaser: string;
   teaserTags: string[];
   lede: string;
+  problemaLabel?: string;
   problema: string;
   solucion: string;
   stack: string[];
@@ -123,8 +124,9 @@ export const projects: Project[] = [
     teaserTags: ['Next.js', 'PostgreSQL', 'Tailwind'],
     lede: 'Rankeo soluciona la gestión de torneos y ligas: un SaaS completo para clubes y organizadores de eventos de padel.',
     problema:
-      'Pendiente: describe cómo se gestionaban los torneos antes (hojas de cálculo, grupos de WhatsApp) y qué se rompía al escalar.',
-    solucion: 'Pendiente: qué sustituye Rankeo y cuál es la pieza que ningún otro sistema resolvía.',
+      'Muchos clubs de pádel en México siguen utilizando herramientas manuales para gestionar lo central en el modelo de negocio de un club: las ligas y torneos.',
+    solucion:
+      'Rankeo ofrece una gestión automática, optimizada para los administradores y una experiencia profesional para los jugadores. Actualmente estoy trabajando en evolucionar Rankeo a una aplicación self service, con la visión de ser una plataforma referente de gestión de eventos de pádel.',
     stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind', 'Vercel'],
     decisiones: [
       { n: '01', title: 'Pendiente: decisión de datos', note: 'Modelo de ligas, niveles y jornadas.' },
@@ -132,8 +134,7 @@ export const projects: Project[] = [
       { n: '03', title: 'Pendiente: brackets y ranking', note: 'Cómo se calculan y se exportan.' },
     ],
     aprendizajes: [
-      'Pendiente: qué aprendiste construyendo para clubes reales.',
-      'Pendiente: la decisión que cambiarías hoy.',
+      'El mayor aprendizaje de Rankeo no fue desarrollándolo. Cuando tuve la primera versión aprendí a vender mi producto, a buscar retroalimentación de mis clientes y hacer mejoras iterativas en el producto.',
     ],
     shots: [
       { src: '/img/casos/rankeo-1.webp', alt: 'Ranking en mobile', w: 554, h: 1200 },
@@ -166,8 +167,9 @@ export const projects: Project[] = [
       'Ecommerce para una tienda de antigüedades, con sincronización de articulos diarios, pixel, cupones, admin, envíos, pagos.',
     teaserTags: ['Next.js', 'Stripe', 'Admin propio'],
     lede: 'Ecommerce para una tienda de antigüedades, con sincronización de artículos diarios, pixel, cupones, admin, envíos y pagos.',
-    problema: 'Pendiente: por qué un catálogo de piezas únicas rompe el modelo de ecommerce estándar.',
-    solucion: 'Pendiente: cómo resolviste la sincronización diaria y el inventario de una sola unidad.',
+    problemaLabel: 'planteamiento',
+    problema: 'PIRI no solo es un e-commerce, es la identidad de marca de un negocio que vivía solamente en Mercado Libre.',
+    solucion: 'E-commerce propio vinculado a Mercado Libre vía API, sincronizando miles de productos. PIRI está creciendo con múltiples ventas, incluyendo internacionales, y tiene excelentes reseñas de experiencia de usuario.',
     stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Stripe', 'Tailwind', 'Vercel'],
     decisiones: [
       { n: '01', title: 'Pendiente: piezas únicas', note: 'Inventario de una unidad y reserva en checkout.' },
@@ -175,8 +177,7 @@ export const projects: Project[] = [
       { n: '03', title: 'Pendiente: envíos y cupones', note: 'Reglas por peso, zona y campaña.' },
     ],
     aprendizajes: [
-      'Pendiente: aprendizaje sobre catálogos de piezas únicas.',
-      'Pendiente: lo que el cliente necesitaba y no estaba en el brief.',
+      'Al ser socio de este negocio, me he involucrado mucho con el proyecto, aprendiendo todos los días a mejorar la conversión a través del diseño y escogiendo la mejor arquitectura en base a la necesidad inicial.',
     ],
     shots: [
       { src: '/img/casos/piri-1.webp', alt: 'Home de Piri en mobile', w: 559, h: 1200 },

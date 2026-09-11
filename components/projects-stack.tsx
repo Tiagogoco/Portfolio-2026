@@ -25,11 +25,25 @@ export function ProjectsStack() {
 }
 
 function ProjectCard({ project: p, index }: { project: Project; index: number }) {
+  const ref = useRef<HTMLElement>(null);
+  const enter = useEnterProgress(ref);
+  const reveal = useTransform(enter, (value) => stagger(value, 0, 0, 0.34));
+  const y = useTransform(reveal, (value) => 30 * (1 - value));
+
   return (
-    <article className="relative mb-[10px] md:sticky md:top-0 md:mb-0 md:flex md:min-h-[100svh] md:items-center md:py-[9vh]" style={{ zIndex: index + 1 }}>
-      <div className="w-full border-t border-ink/15 pt-5 max-md:border-t-0 md:rounded-[4px] md:border-0 md:bg-[var(--surface)] md:p-8 md:shadow-[0_18px_60px_rgba(31,27,22,0.08)]" style={{ '--surface': SURFACES[index] } as React.CSSProperties}>
-        <MobileProjectCard project={p} />
-        <DesktopProjectCard project={p} index={index} />
+    <article ref={ref} className="relative mb-[10px] md:sticky md:top-0 md:mb-0 md:flex md:min-h-[100svh] md:items-center md:py-[9vh]" style={{ zIndex: index + 1 }}>
+      <div
+        className="w-full"
+        style={{ '--surface': SURFACES[index] } as React.CSSProperties}
+      >
+        <motion.div
+          data-motion="scroll"
+          className="w-full border-t border-ink/15 pt-5 max-md:border-t-0 md:rounded-[4px] md:border-0 md:bg-[var(--surface)] md:p-8 md:shadow-[0_18px_60px_rgba(31,27,22,0.08)]"
+          style={{ opacity: reveal, y }}
+        >
+          <MobileProjectCard project={p} />
+          <DesktopProjectCard project={p} index={index} />
+        </motion.div>
       </div>
     </article>
   );
@@ -44,7 +58,7 @@ function MobileProjectCard({ project: p }: { project: Project }) {
 
       <div className="mt-7">
         <div className="flex items-start justify-between gap-5">
-          <h3 className="m-0 font-extrabold uppercase tracking-[-0.07em]" style={{ fontSize: 'clamp(38px,11vw,58px)', lineHeight: 0.82 }}>{p.title}</h3>
+          <h3 className="m-0 font-extrabold uppercase tracking-[-0.07em]" style={{ fontSize: 'clamp(38px,11vw,58px)', lineHeight: 0.82 }}><Link href={`/proyectos/${p.id}`} className="transition-opacity hover:opacity-65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">{p.title}</Link></h3>
           <span className="pt-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink-mute">{p.n} / {String(projects.length).padStart(2, '0')}</span>
         </div>
         <p className="m-0 mt-5 max-w-[430px] text-[18px] leading-[1.28] tracking-[-0.025em] text-body">{p.teaser}</p>
@@ -71,7 +85,7 @@ function DesktopProjectCard({ project: p, index }: { project: Project; index: nu
 
       <div className="mt-8 grid items-end gap-8 lg:grid-cols-[0.7fr_1.3fr] lg:gap-14">
         <div className="order-2 lg:order-1">
-          <h3 className="m-0 font-extrabold uppercase tracking-[-0.07em]" style={{ fontSize: 'clamp(46px,7vw,104px)', lineHeight: 0.82 }}>{p.title}</h3>
+          <h3 className="m-0 font-extrabold uppercase tracking-[-0.07em]" style={{ fontSize: 'clamp(46px,7vw,104px)', lineHeight: 0.82 }}><Link href={`/proyectos/${p.id}`} className="transition-opacity hover:opacity-65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">{p.title}</Link></h3>
           <p className="m-0 mt-8 max-w-[380px] text-[clamp(17px,1.7vw,23px)] leading-[1.18] tracking-[-0.025em]" style={{ color: p.cardTeaserInk }}>{p.teaser}</p>
           <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[10px] uppercase tracking-[0.14em]" style={{ color: p.cardLabelInk }}>
             {p.teaserTags.map((tag) => <span key={tag} className="rounded-[4px] border border-ink/15 px-3 py-2">{tag}</span>)}
@@ -97,7 +111,9 @@ function DesktopProjectCard({ project: p, index }: { project: Project; index: nu
 function CardMedia({ project: p, showGlobe = false }: { project: Project; showGlobe?: boolean }) {
   return (
     <div className="relative">
-      <Shot project={p} />
+      <Link href={`/proyectos/${p.id}`} aria-label={`Abrir proyecto ${p.title}`} className="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+        <Shot project={p} />
+      </Link>
       <div className="pointer-events-none absolute inset-x-5 top-5 flex items-start justify-between gap-3">
         <Link href={`/proyectos/${p.id}`} className="pointer-events-auto inline-flex min-h-10 items-center rounded-full bg-page px-4 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-ink shadow-[0_2px_10px_rgba(31,27,22,0.12)] transition-transform hover:scale-[1.04]">
           ver <span aria-hidden className="ml-2 text-[14px]">↗</span>
@@ -140,7 +156,9 @@ function Shot({ project: p }: { project: Project }) {
     ? '/video/rankeo-landing.mp4'
     : p.id === 'saint'
       ? '/video/saint-padel-landing.mp4'
-      : undefined;
+      : p.id === 'piri'
+        ? '/video/piri-desktop.mp4'
+        : undefined;
 
   return (
     <div className="relative overflow-hidden rounded-[4px]" style={{ aspectRatio: `${p.cardShot.w} / ${p.cardShot.h}`, background: p.cardShotBg }}>

@@ -1,3 +1,5 @@
+import { CommitCalendar } from './commit-calendar';
+
 /**
  * El hero funciona como una portada editorial: identidad tipográfica arriba,
  * una herramienta visual al centro y navegación al final.
@@ -12,7 +14,7 @@ export function Hero() {
         <span>tiagogoco / portfolio 2026</span>
       </div>
 
-      <div className="grid items-end gap-[clamp(42px,8vh,96px)] lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.42fr)] lg:gap-16">
+      <div className="grid items-end gap-[clamp(42px,8vh,96px)] min-[1050px]:grid-cols-[minmax(0,1fr)_minmax(300px,0.42fr)] min-[1050px]:gap-16">
         <div>
           <h1
             className="m-0 font-extrabold uppercase tracking-[-0.08em] text-ink"
@@ -36,7 +38,9 @@ export function Hero() {
           </p> */}
         </div>
 
-        <Workbench />
+        <div className="min-[1050px]:justify-self-end min-[1050px]:w-full min-[1050px]:max-w-[460px]">
+          <CommitCalendar />
+        </div>
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-6 pt-5 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-mute">
@@ -50,46 +54,8 @@ export function Hero() {
           <a className="transition-colors hover:text-blue" href="#sobre-mi">
             Sobre mí
           </a>
-          <a className="transition-colors hover:text-blue" href="#stack">
-            Stack
-          </a>
         </nav>
       </div>
     </section>
-  );
-}
-
-function Workbench() {
-  return (
-    <div className="relative overflow-hidden rounded-[18px] bg-[#101010] p-5 text-[#f7f7f3] shadow-[0_18px_60px_rgba(31,27,22,0.16)] md:p-7">
-      <div
-        aria-hidden
-        className="absolute inset-0 opacity-70 [background-image:linear-gradient(rgba(255,255,255,0.07)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.07)_1px,transparent_1px)] [background-size:22px_22px]"
-      />
-      <div className="relative">
-        <div className="flex items-center justify-between border-b border-white/15 pb-4 font-mono text-[10px] uppercase tracking-[0.18em] text-white/55">
-          <span>hero / auto layout</span>
-          <span>01 — 04</span>
-        </div>
-        <div className="relative mt-10 aspect-[1.12] min-h-[220px]">
-          <div className="absolute left-[8%] top-[14%] h-[31%] w-[57%] border border-[#64df83]" />
-          <div className="absolute left-[8%] top-[14%] size-2 -translate-x-1/2 -translate-y-1/2 bg-white" />
-          <div className="absolute left-[65%] top-[14%] size-2 -translate-x-1/2 -translate-y-1/2 bg-white" />
-          <div className="absolute left-[8%] top-[45%] size-2 -translate-x-1/2 translate-y-1/2 bg-white" />
-          <div className="absolute left-[65%] top-[45%] size-2 -translate-x-1/2 translate-y-1/2 bg-white" />
-          <div className="absolute left-[22%] top-[27%] font-mono text-[10px] text-white/55">
-            W 412 · H 268
-          </div>
-          <div className="absolute bottom-[13%] left-[28%] bg-[#64df83] px-2 py-1 font-mono text-[10px] text-[#07140b]">
-            design → production
-          </div>
-          <div className="absolute bottom-[11%] right-[8%] size-3 rounded-full bg-blue shadow-[0_0_0_5px_rgba(31,111,235,0.16)]" />
-        </div>
-        <div className="flex items-center justify-between border-t border-white/15 pt-4 font-mono text-[10px] uppercase tracking-[0.14em] text-white/55">
-          <span>grid / type / motion</span>
-          <span className="text-[#64df83]">● live</span>
-        </div>
-      </div>
-    </div>
   );
 }

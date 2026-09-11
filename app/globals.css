@@ -81,6 +81,24 @@ footer[id] {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
+@keyframes commit-sweep {
+  0% { transform: translateX(-30%); opacity: 0; }
+  12% { opacity: 0.5; }
+  88% { opacity: 0.5; }
+  100% { transform: translateX(130%); opacity: 0; }
+}
+
+@keyframes commit-blink {
+  0%, 60% { opacity: 1; }
+  80% { opacity: 0.25; }
+  100% { opacity: 1; }
+}
+
+@keyframes copy-confirm {
+  from { opacity: 0; transform: scale(0.7) rotate(-12deg); }
+  to { opacity: 1; transform: scale(1) rotate(0); }
+}
+
 /* §9 — bajo reduced motion nada depende del scroll para ser legible. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

@@ -2,26 +2,23 @@
 
 import { useRef } from 'react';
 import { motion, useTransform } from 'motion/react';
-import { EMAIL, socials, ticker } from '@/content/site';
+import { socials, ticker } from '@/content/site';
 import { useEnterProgress } from '@/lib/scroll';
+import { CopyEmailButton } from './copy-email-button';
 
-/** §5.7 — ticker, redes, wordmark y barra gris. */
+/** Cierre editorial claro: contacto, redes y una última señal de disponibilidad. */
 export function SiteFooter() {
   const ref = useRef<HTMLElement>(null);
   const enter = useEnterProgress(ref);
-  const markX = useTransform(enter, (v) => `${(46 * (1 - v)).toFixed(1)}px`);
-
+  const markX = useTransform(enter, (v) => `${(30 * (1 - v)).toFixed(1)}px`);
   const items = [...ticker, ...ticker];
 
   return (
-    <footer id="contacto" ref={ref} className="relative overflow-hidden bg-black text-footer-ink">
-      <div aria-hidden className="border-b border-[rgba(242,239,231,0.14)] py-[26px]">
-        <div className="marquee flex w-max animate-[marquee_26s_linear_infinite]">
+    <footer id="contacto" ref={ref} className="relative overflow-hidden border-t border-ink/15 bg-page text-ink">
+      <div aria-hidden className="border-b border-ink/15 py-5">
+        <div className="marquee flex w-max animate-[marquee_28s_linear_infinite]">
           {items.map((label, i) => (
-            <span
-              key={`${label}-${i}`}
-              className="flex items-center gap-10 whitespace-nowrap pr-10 font-mono text-[13px] uppercase tracking-[0.28em] text-[rgba(242,239,231,0.55)]"
-            >
+            <span key={`${label}-${i}`} className="flex items-center gap-9 whitespace-nowrap pr-9 font-mono text-[11px] uppercase tracking-[0.24em] text-ink-mute">
               {label}
               <span className="text-blue">✦</span>
             </span>
@@ -29,57 +26,47 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="mx-auto grid max-w-[1180px] grid-cols-[minmax(0,1fr)_minmax(0,auto)] items-center gap-12 px-10 max-md:px-6 pt-[clamp(70px,14vh,150px)] pb-[clamp(70px,12vh,130px)] max-md:grid-cols-1">
-        <div className="flex flex-col items-start gap-[clamp(6px,1.4vh,16px)]">
-          {socials.map((s) => (
-            <a
-              key={s.label}
-              href={s.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-[18px] font-extrabold leading-none tracking-[-0.04em] text-footer-ink transition-[transform,color] duration-300 ease-[var(--ease-ui)] hover:translate-x-[26px] hover:text-blue"
-              style={{ fontSize: 'clamp(30px, 5vw, 76px)' }}
-            >
-              <span
-                className="font-mono font-normal tracking-[0.18em] text-[rgba(242,239,231,0.4)]"
-                style={{ fontSize: 'clamp(10px, 1vw, 13px)' }}
-              >
-                {s.n}
-              </span>
-              {s.label}
-            </a>
-          ))}
-        </div>
+      <div className="mx-auto max-w-[1440px] px-[clamp(24px,5vw,72px)] py-[clamp(72px,13vh,150px)]">
+        <div className="font-mono text-[clamp(10px,1vw,13px)] uppercase tracking-[0.22em] text-ink-mute">( contacto )</div>
 
-        <div className="justify-self-end text-right max-md:justify-self-start max-md:text-left">
-          <motion.div
-            data-motion="scroll"
-            className="font-extrabold tracking-[-0.05em]"
-            style={{ fontSize: 'clamp(34px, 6.6vw, 104px)', lineHeight: 0.86, x: markX }}
-          >
-            TIAGOGOCO
-          </motion.div>
-          <div className="mt-[18px] font-mono text-[11px] uppercase tracking-[0.22em] text-[rgba(242,239,231,0.45)]">
-            © 2026 · portafolio
+        <motion.h2
+          data-motion="scroll"
+          className="m-0 mt-[clamp(28px,5vh,68px)] max-w-[1100px] font-extrabold uppercase tracking-[-0.08em]"
+          style={{ fontSize: 'clamp(64px, 13vw, 190px)', lineHeight: 0.8, x: markX }}
+        >
+          HABLEMOS
+        </motion.h2>
+
+        <div className="mt-[clamp(70px,11vh,140px)] grid gap-14 md:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] md:gap-20">
+          <p className="m-0 max-w-[360px] text-[clamp(20px,2.1vw,32px)] font-medium leading-[1.08] tracking-[-0.04em]">
+            Disponible para construir productos digitales con intención.
+          </p>
+
+          <div className="min-w-0">
+            <CopyEmailButton pill className="px-6 py-4 text-[11px] md:px-7 md:py-5 md:text-[12px]" />
+
+            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-4">
+              {socials.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-mute transition-colors hover:text-ink"
+                >
+                  <span className="mr-2 text-ink/35">{social.n}</span>
+                  {social.label}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-footer-bar text-ink">
-        <div className="mx-auto flex max-w-[1180px] flex-col gap-[42px] px-10 max-md:px-6 pt-[34px] pb-[46px]">
-          <div
-            className="font-bold tracking-[-0.02em] text-[#6b6b6b]"
-            style={{ fontSize: 'clamp(18px, 2.2vw, 30px)' }}
-          >
-            hecho con figma, next.js, tailwind y mucho &lt;3
-          </div>
-          <a
-            href={`mailto:${EMAIL}`}
-            className="self-start font-bold tracking-[-0.02em] text-[#0d0d0d] transition-[transform,color] duration-[260ms] ease-[var(--ease-ui)] hover:translate-x-2.5 hover:text-blue"
-            style={{ fontSize: 'clamp(18px, 2.2vw, 30px)' }}
-          >
-            {EMAIL}
-          </a>
+      <div className="border-t border-ink/15 px-[clamp(24px,5vw,72px)] py-5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-mute">
+        <div className="mx-auto flex max-w-[1440px] flex-wrap justify-between gap-4">
+          <span>TIAGOGOCO / PORTFOLIO 2026</span>
+          <span>HECHO CON FIGMA, NEXT.JS, TAILWIND Y MUCHO &lt;3</span>
         </div>
       </div>
     </footer>

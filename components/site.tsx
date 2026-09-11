@@ -1,13 +1,13 @@
 'use client';
 
 import { Hero } from './hero';
-import { IntroReveal } from './intro-reveal';
+// import { IntroReveal } from './intro-reveal';
 import { Process } from './process';
 import { ProjectsStack } from './projects-stack';
 import { SiteFooter } from './site-footer';
 import { SiteHeader } from './site-header';
-import { StackLoop } from './stack-loop';
-import { Whoami } from './whoami';
+// import { StackLoop } from './stack-loop';
+// import { Whoami } from './whoami';
 
 /**
  * §1 — una sola ruta. El caso abierto vive en `?caso=`, que además da URL
@@ -19,11 +19,11 @@ export function Site() {
       <SiteHeader />
       <main>
         <Hero />
-        <IntroReveal />
+        {/* <IntroReveal /> */}
         <ProjectsStack />
         <Process />
-        <StackLoop />
-        <Whoami />
+        {/* <StackLoop /> */}
+        {/* <Whoami /> */}
       </main>
       <SiteFooter />
     </>

@@ -94,25 +94,24 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
         tabIndex={-1}
         className={standalone ? 'relative flex min-h-screen w-full flex-col bg-page outline-none' : 'relative flex h-full w-full max-w-[1280px] animate-[overlay-open_380ms_var(--ease-modal)_both] flex-col bg-page outline-none md:h-[min(96vh,1500px)]'}
       >
-        <div className="flex items-center justify-end px-[clamp(20px,4vw,60px)] py-4">
-          <button
-            type="button"
-            onClick={onClose}
-            className="inline-flex min-h-11 items-center gap-3 border-0 bg-transparent px-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
-          >
-            cerrar <span aria-hidden>×</span>
-          </button>
-        </div>
-
         <div ref={scrollRef} className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden">
-          <div className="mx-auto max-w-[1120px] px-[clamp(20px,5vw,72px)] pb-20 pt-[clamp(34px,7vw,88px)]">
+          <div className={`mx-auto max-w-[1120px] px-[clamp(20px,5vw,72px)] pb-20 ${standalone ? 'pt-[clamp(76px,10vh,100px)]' : 'pt-[clamp(34px,7vw,88px)]'}`}>
             <header>
               <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,0.86fr)_minmax(0,1.14fr)] lg:gap-12">
-                <div className="flex min-w-0 items-start gap-4">
-                  <span className="pt-2 font-mono text-[11px] font-bold tracking-[0.12em] text-ink-mute">{p.n}</span>
-                  <h2 id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold text-[clamp(30px,6vw,86px)] uppercase leading-[0.76] tracking-[-0.09em] max-md:text-[clamp(60px,16vw,128px)] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`}>
-                    {p.id === 'saint' ? <>SAINT<br />PADEL</> : p.title}
-                  </h2>
+                <div className="flex min-w-0 items-start justify-between gap-4 max-md:flex-col max-md:gap-2">
+                  <div className="flex min-w-0 items-start gap-4">
+                    <span className="pt-2 font-mono text-[11px] font-bold tracking-[0.12em] text-ink-mute">{p.n}</span>
+                    <h2 id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold text-[clamp(30px,3vw,43px)] uppercase leading-[0.76] tracking-[-0.09em] max-md:text-[clamp(60px,16vw,128px)] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`}>
+                      {p.id === 'saint' ? <>SAINT<br />PADEL</> : p.title}
+                    </h2>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={onClose}
+                    className="inline-flex min-h-11 shrink-0 items-center gap-3 border-0 bg-transparent px-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink max-md:order-first max-md:self-end"
+                  >
+                    cerrar <span aria-hidden>×</span>
+                  </button>
                 </div>
                 <p className="m-0 min-w-0 max-w-[620px] text-[clamp(19px,2.2vw,32px)] font-medium leading-[1.02] tracking-[-0.045em] text-ink">
                   {p.lede}
@@ -166,7 +165,7 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
 
               <section className="mt-[clamp(80px,12vw,170px)] grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
                 <div className="bg-ink px-[clamp(24px,4vw,60px)] py-[clamp(28px,5vw,68px)] text-page">
-                  <h3 className="m-0 font-extrabold text-[clamp(42px,6vw,86px)] uppercase leading-[0.8] tracking-[-0.08em]">Aprendizaje</h3>
+                  <h3 className="m-0 font-extrabold text-[clamp(30px,3vw,43px)] uppercase leading-[0.8] tracking-[-0.08em]">Aprendizaje</h3>
                   <div className="mt-10 flex flex-col gap-5">
                     {p.aprendizajes.map((a) => <p key={a} className="m-0 max-w-[36em] text-[clamp(18px,1.7vw,25px)] leading-[1.08] tracking-[-0.04em]">{a}</p>)}
                   </div>

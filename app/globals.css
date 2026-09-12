@@ -66,9 +66,11 @@ footer[id] {
   scroll-margin-top: 76px;
 }
 
-@keyframes marquee {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-50%, 0, 0); }
+@media (min-width: 768px) {
+  [data-motion="project-card"] {
+    opacity: 1 !important;
+    transform: none !important;
+  }
 }
 
 @keyframes overlay-fade {
@@ -102,8 +104,6 @@ footer[id] {
 /* §9 — bajo reduced motion nada depende del scroll para ser legible. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-
-  .marquee { animation: none !important; }
 
   [data-motion="scroll"] {
     opacity: 1 !important;

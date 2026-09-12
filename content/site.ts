@@ -8,16 +8,6 @@ export const socials: Social[] = [
   { n: "03", label: "INSTAGRAM", href: "https://instagram.com/" },
 ];
 
-export const ticker: string[] = [
-  "disponible para proyectos",
-  "puebla · méxico",
-  "producto · diseño · código",
-  EMAIL,
-  "saint padel",
-  "rankeo",
-  "piri",
-];
-
 /** Párrafos de la intro. Cada palabra se revela por separado (§5.2). */
 export const introLines: string[] = [
   "Soy Tiago, desarrollador de productos web.",

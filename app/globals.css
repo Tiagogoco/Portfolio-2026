@@ -60,6 +60,18 @@ a {
   text-decoration: none;
 }
 
+.site-link-pill {
+  background: #ffffff;
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000;
+}
+
+.site-link-pill:hover {
+  background: #000000;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+}
+
 /* El header es una banda fija: los destinos de ancla no deben quedar debajo. */
 section[id],
 footer[id] {

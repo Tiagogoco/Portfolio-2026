@@ -101,14 +101,14 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                 <div className="flex min-w-0 items-start justify-between gap-4 max-md:flex-col max-md:gap-2">
                   <div className="flex min-w-0 items-start gap-4">
                     <span className="pt-2 font-mono text-[11px] font-bold tracking-[0.12em] text-ink-mute">{p.n}</span>
-                    <h2 id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold text-[clamp(30px,3vw,43px)] uppercase leading-[0.76] tracking-[-0.09em] max-md:text-[clamp(60px,16vw,128px)] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`}>
+                    <h2 id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold text-[clamp(42px,5vw,76px)] uppercase leading-[0.76] tracking-[-0.09em] max-md:text-[clamp(60px,16vw,128px)] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`}>
                       {p.id === 'saint' ? <>SAINT<br />PADEL</> : p.title}
                     </h2>
                   </div>
                   <button
                     type="button"
                     onClick={onClose}
-                    className="inline-flex min-h-11 shrink-0 items-center gap-3 border-0 bg-transparent px-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink max-md:order-first max-md:self-end"
+                    className="inline-flex min-h-11 shrink-0 items-center gap-3 border-0 bg-transparent px-1 font-mono text-[10px] uppercase tracking-[0.16em] text-ink transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink max-md:order-first max-md:self-end md:hidden"
                   >
                     cerrar <span aria-hidden>×</span>
                   </button>
@@ -133,6 +133,8 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                 accent={p.id === 'rankeo' ? '#CAFF00' : p.accent}
                 video={p.id === 'rankeo' ? '/video/rankeo-landing.mp4' : p.id === 'saint' ? '/video/saint-padel-landing.mp4' : p.id === 'piri' ? '/video/piri-desktop.mp4' : undefined}
                 playbackRate={p.id === 'piri' ? 1.25 : p.id === 'rankeo' || p.id === 'saint' ? 1.2 : undefined}
+                siteHref={p.href}
+                siteHrefExternal={p.hrefExterno}
                 className={p.id === 'rankeo' ? 'aspect-[2988/1720]' : p.id === 'saint' ? 'aspect-[2988/1792]' : 'aspect-[2988/1796]'}
               />
 
@@ -194,7 +196,7 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
   );
 }
 
-function MediaFrame({ src, alt, accent, video, playbackRate, className = '', natural = false, w, h }: { src: string; alt: string; accent: string; video?: string; playbackRate?: number; className?: string; natural?: boolean; w?: number; h?: number }) {
+function MediaFrame({ src, alt, accent, video, playbackRate, siteHref, siteHrefExternal, className = '', natural = false, w, h }: { src: string; alt: string; accent: string; video?: string; playbackRate?: number; siteHref?: string; siteHrefExternal?: boolean; className?: string; natural?: boolean; w?: number; h?: number }) {
   return (
     <div className={`relative overflow-hidden bg-black ${className}`} style={{ border: `clamp(8px, 1.2vw, 16px) solid ${accent}` }}>
       {video ? (
@@ -217,6 +219,15 @@ function MediaFrame({ src, alt, accent, video, playbackRate, className = '', nat
         <Image src={src} alt={alt} width={w} height={h} sizes="(max-width: 640px) 92vw, 560px" className="block h-auto w-full transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]" />
       ) : (
         <Image src={src} alt={alt} fill sizes="(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 1000px" className="object-cover object-top transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]" />
+      )}
+      {siteHref && (
+        <a
+          href={siteHref}
+          {...(siteHrefExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+          className="site-link-pill absolute right-5 top-5 z-10 inline-flex min-h-11 items-center gap-2 rounded-full px-5 font-mono text-[10px] font-bold uppercase tracking-[0.12em] transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+        >
+          ver sitio <span aria-hidden>↗</span>
+        </a>
       )}
     </div>
   );

@@ -168,5 +168,5 @@ function Shot({ project: p }: { project: Project }) {
 }
 
 function Globo({ project: p, size, className, plain = false }: { project: Project; size: number; className: string; plain?: boolean }) {
-  return <a href={p.href} {...(p.hrefExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={`Ver sitio de ${p.title}`} title="ver sitio" className={`inline-flex shrink-0 items-center justify-center rounded-full transition-transform duration-200 ease-[var(--ease-ui)] hover:scale-[1.06] ${className}`} style={{ background: plain ? 'var(--color-page)' : p.globeBg, color: plain ? 'var(--color-ink)' : p.globeInk }}><GlobeIcon size={size} /></a>;
+  return <a href={p.href} {...(p.hrefExterno ? { target: '_blank', rel: 'noopener noreferrer' } : {})} aria-label={`Ver sitio de ${p.title}`} title="ver sitio" className={`pointer-events-auto inline-flex shrink-0 items-center justify-center rounded-full transition-transform duration-200 ease-[var(--ease-ui)] hover:scale-[1.06] ${className}`} style={{ background: plain ? 'var(--color-page)' : p.globeBg, color: plain ? 'var(--color-ink)' : p.globeInk }}><GlobeIcon size={size} /></a>;
 }

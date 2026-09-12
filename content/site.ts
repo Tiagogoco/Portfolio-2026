@@ -3,9 +3,9 @@ export const EMAIL = "tiagogocor@gmail.com";
 export type Social = { n: string; label: string; href: string };
 
 export const socials: Social[] = [
-  { n: "01", label: "GITHUB", href: "https://github.com/" },
-  { n: "02", label: "LINKEDIN", href: "https://linkedin.com/" },
-  { n: "03", label: "INSTAGRAM", href: "https://instagram.com/" },
+  { n: "01", label: "GITHUB", href: "https://github.com/Tiagogoco" },
+  { n: "02", label: "LINKEDIN", href: "https://www.linkedin.com/in/tiago-gomez-dev/" },
+  { n: "03", label: "INSTAGRAM", href: "https://www.instagram.com/tiagogoco/" },
 ];
 
 /** Párrafos de la intro. Cada palabra se revela por separado (§5.2). */

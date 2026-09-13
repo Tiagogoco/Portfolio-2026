@@ -42,15 +42,15 @@ export function Hero() {
               letterSpacing: "-0.1em",
             }}
           >
-            {/* En bloque: `tiagogoco` es una sola palabra, sin esto no hay
-                dónde partir y el wordmark sale en una línea desbordada. */}
-            <span className="block">tiago</span>
-            <span className="block">goco</span>
+            {/* En desktop va en una línea; en móvil la media query los pone en
+                bloque y el wordmark se parte en dos. */}
+            <span>tiago</span>
+            <span>goco</span>
           </h1>
 
           <span
             aria-hidden
-            className="hero-sticker-web sticker-shadow absolute left-[-16%] top-[-18.1%] h-[20.9%] w-[35%] rotate-[7.5deg]"
+            className="hero-sticker-web sticker-shadow absolute left-[0.0198em] top-[0.6314em] h-[0.3279em] w-[0.9597em] rotate-[7.5deg]"
           >
             <span className="sticker sticker-tl flex h-full w-full items-center justify-center bg-sticker-blue">
               <span className="fold bg-sticker-blue-fold" />
@@ -63,7 +63,7 @@ export function Hero() {
 
           <span
             aria-hidden
-            className="hero-sticker-saas sticker-shadow absolute left-[81%] top-[-10.9%] h-[20.9%] w-[34%] rotate-[-7deg]"
+            className="hero-sticker-saas sticker-shadow absolute left-[3.52em] top-[-0.09em] h-[0.25em] w-[0.83em] rotate-[-7deg]"
           >
             <span
               className="sticker sticker-tr flex h-full w-full items-center justify-center bg-sticker-yellow"
@@ -78,7 +78,7 @@ export function Hero() {
 
           <span
             aria-hidden
-            className="hero-sticker-commerce sticker-shadow absolute left-[21%] top-[78%] h-[20%] w-[34%] rotate-[5deg]"
+            className="hero-sticker-commerce sticker-shadow absolute left-[2.3em] top-[0.56em] h-[0.3255em] w-[0.9548em] rotate-[5deg]"
           >
             <span className="sticker sticker-br flex h-full w-full items-center justify-center bg-sticker-white">
               <span className="fold bg-sticker-white-fold" />
@@ -89,7 +89,7 @@ export function Hero() {
           </span>
         </div>
 
-        <div className="hero-actions flex items-center gap-3">
+        <div className="hero-actions flex items-center gap-3 mb-10">
           {github && (
             <a
               href={github.href}

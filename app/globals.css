@@ -91,32 +91,52 @@ a {
   position: relative;
   z-index: 1;
   color: #fff;
-  /* Sin padding inferior: `.hero-main` y el escenario del abanico son sticky
-     dentro de contenedores distintos (el shell y el track). Cualquier relleno
-     aquí alarga solo el del shell, así que la cabecera se soltaría más tarde
-     que el abanico y los dos se desapilarían al terminar la animación. */
   padding-bottom: 0;
 }
 
-/* Wordmark y abanico comparten un mismo frame fijo: los dos son sticky y miden
-   exactamente `100svh`, así se sueltan en el mismo punto del scroll y el frame
-   entero se va como un bloque. La cabecera queda de capa transparente encima
-   del abanico, de ahí `pointer-events: none`. */
+/* La portada ocupa una pantalla exacta y el bloque se centra dentro. El tope
+   por `svh` del wordmark (en el componente) es lo que garantiza que todo quepa
+   sin scroll interno en monitores bajitos. */
 .hero-main {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  height: 100svh;
-  min-height: 0;
+  min-height: 100svh;
   padding-top: clamp(72px, 8svh, 96px);
-  padding-bottom: 0;
-  pointer-events: none;
+  padding-bottom: clamp(40px, 8svh, 90px);
 }
 
-/* La intro vive en el escenario, debajo del abanico. */
+.hero-actions {
+  margin-top: clamp(36px, 6svh, 72px);
+}
+
+/* Círculos de redes: tinta blanca sobre negro, y al pasar se invierten. */
+.hero-social {
+  background: rgb(255 255 255 / 10%);
+  color: #fff;
+}
+
+.hero-social:hover {
+  background: #fff;
+  color: #000;
+}
+
+/* Mismo trato que el pill del footer: el `#111` del componente se perdía sobre
+   negro, así que va invertido. Sin `@layer`, para ganarle a las utilidades. */
+.hero-email-pill {
+  background: #fff;
+  color: #000;
+}
+
+.hero-email-pill:hover {
+  background: var(--color-blue);
+  color: #fff;
+}
+
 .hero-intro {
-  margin-top: clamp(20px, 2.6svh, 40px);
-  color: rgb(255 255 255 / 72%);
+  margin-top: clamp(48px, 9svh, 110px);
+  color: rgb(255 255 255 / 62%);
+  font-size: clamp(20px, 2.6vw, 34px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
 }
 
 .hero-shell::before {
@@ -138,10 +158,6 @@ a {
    color con tinta oscura, así que se quedan como están. */
 .hero-wordmark h1 {
   color: #fff;
-}
-
-.hero-mobile-intro {
-  color: rgb(255 255 255 / 72%);
 }
 
 /* La sección siguiente se mete debajo de las esquinas redondeadas: sin esto el
@@ -245,30 +261,28 @@ a {
 /* Composición mobile proporcional al frame de Figma. Los stickers se anclan
    al wordmark; los 72px superiores reservan espacio para el header fijo. */
 @media (max-width: 767px) {
-  /* Sin padding inferior: el texto de intro cierra el hero y la siguiente
-     sección ya trae su propio `pt`, así que este margen solo duplicaba el aire. */
+  /* El contenido se alinea a la izquierda, así que el shell necesita margen
+     lateral propio (antes iba a sangre porque el wordmark iba centrado). */
   .hero-shell {
-    padding-inline: 0;
+    padding-inline: 5vw;
     padding-bottom: 0;
-    /* Alto de la cabecera fija. Su medida natural es 72px (header) + 36vw (aire)
-       + 40.7vw (wordmark: 2 líneas × 0.6923 × 29.4vw) + 16vw de colchón; se topa
-       a media pantalla para que el abanico siempre tenga su mitad de abajo. */
-    --hero-head: min(calc(72px + 93vw), 50svh);
   }
 
-  /* El wordmark se ancla arriba, a `--hero-head` del borde superior. El resto
-     del mecanismo fijo (sticky, 100svh, pointer-events) ya viene de la regla
-     base; aquí solo cambia dónde cae el wordmark dentro del frame. */
   .hero-main {
-    padding-top: calc(var(--hero-head) - 40.7vw);
+    padding-top: clamp(92px, 15svh, 132px);
+    padding-bottom: clamp(32px, 6svh, 64px);
   }
 
+  /* 29.4vw era la medida que llenaba los 100vw a sangre. Al meter 5vw de
+     padding por lado quedan 90vw útiles, así que el cuerpo baja en la misma
+     proporción (29.4 × 0.9) y el wordmark sigue cabiendo igual de justo. */
   .hero-wordmark {
     width: 100%;
     margin-top: 0;
     padding-top: 0;
-    font-size: 29.4vw !important;
-    text-align: center;
+    padding-bottom: 0.24em;
+    font-size: 26.4vw !important;
+    text-align: left;
   }
 
   .hero-wordmark h1 {
@@ -329,18 +343,15 @@ a {
     rotate: 16.37deg;
   }
 
-  .hero-intro {
-    display: none;
+  .hero-actions {
+    margin-top: clamp(28px, 7vw, 52px);
   }
 
-  .hero-mobile-intro {
-    display: block;
-    width: 83%;
-    margin: 9.5vw auto 0;
-    color: #fff;
+  .hero-intro {
+    max-width: 20ch;
+    margin-top: clamp(40px, 11vw, 80px);
     font-size: 5.65vw;
-    font-weight: 400;
-    line-height: 0.95;
+    line-height: 1.08;
     letter-spacing: -0.04em;
   }
 
@@ -398,14 +409,6 @@ footer[id] {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
-  }
-
-  /* Sin recorrido anclado no hay nada que fijar: la cabecera vuelve al flujo.
-     Los resets del abanico van al final del archivo, después de sus reglas
-     base, para que la cascada no los descarte. */
-  .hero-main {
-    position: static;
-    height: auto;
   }
 
   *, *::before, *::after {

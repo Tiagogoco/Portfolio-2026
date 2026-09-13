@@ -32,24 +32,26 @@ export function Hero() {
               letterSpacing: "-0.1em",
             }}
           >
-            <span>tiago</span><span>goco</span>
+            <span>tiago</span>
+            <span>goco</span>
           </h1>
 
           <span
             aria-hidden
-            className="sticker-shadow absolute left-[0.0198em] top-[0.6314em] h-[0.3279em] w-[0.9597em] rotate-[7.5deg]"
+            className="hero-sticker-web sticker-shadow absolute left-[0.0198em] top-[0.6314em] h-[0.3279em] w-[0.9597em] rotate-[7.5deg]"
           >
             <span className="sticker sticker-tl flex h-full w-full items-center justify-center bg-sticker-blue">
               <span className="fold bg-sticker-blue-fold" />
               <span className="text-[0.1447em] font-medium leading-none text-wordmark">
-                full stack web
+                <span className="hidden md:inline">full stack web</span>
+                <span className="md:hidden">web products</span>
               </span>
             </span>
           </span>
 
           <span
             aria-hidden
-            className="sticker-shadow absolute left-[3.4651em] top-[0.8729em] h-[0.25em] w-[0.83em] rotate-[-7deg]"
+            className="hero-sticker-saas sticker-shadow absolute left-[3.4651em] top-[0.8729em] h-[0.25em] w-[0.83em] rotate-[-7deg]"
           >
             <span
               className="sticker sticker-tr flex h-full w-full items-center justify-center bg-sticker-yellow"
@@ -64,12 +66,23 @@ export function Hero() {
 
           <span
             aria-hidden
-            className="sticker-shadow absolute left-[3.5126em] top-[1.52em] -z-10 h-[0.3255em] w-[0.9548em] rotate-[5deg]"
+            className="hero-sticker-commerce sticker-shadow absolute left-[3.5126em] top-[1.52em] -z-10 h-[0.3255em] w-[0.9548em] rotate-[5deg]"
           >
             <span className="sticker sticker-br flex h-full w-full items-center justify-center bg-sticker-white">
               <span className="fold bg-sticker-white-fold" />
               <span className="text-[0.1447em] font-medium leading-none text-wordmark">
                 ecommerce
+              </span>
+            </span>
+          </span>
+          <span
+            aria-hidden
+            className="hero-sticker-api sticker-shadow absolute hidden"
+          >
+            <span className="sticker sticker-tr flex h-full w-full items-center justify-center bg-sticker-pink">
+              <span className="fold bg-sticker-white-fold" />
+              <span className="text-[0.125em] font-normal leading-none text-wordmark">
+                APIs
               </span>
             </span>
           </span>
@@ -85,24 +98,24 @@ export function Hero() {
 
       <div className="hero-previews grid grid-cols-3 gap-[clamp(10px,2.4vw,34px)]">
         <div className="hero-preview-track">
-        {heroPreviews.map((p) => (
-          <Link
-            key={p.id}
-            href={`/proyectos/${p.id}`}
-            aria-label={p.label}
-            className={`hero-preview-${p.id} group relative block aspect-square overflow-hidden rounded-[clamp(10px,1.6vw,24px)] bg-gray-card`}
-          >
-            <picture>
-              <Image
-                src={p.src}
-                alt={p.alt}
-                fill
-                sizes="(max-width: 640px) 31vw, (max-width: 1440px) 30vw, 430px"
-                className="object-cover transition-transform duration-700 ease-[var(--ease-ui)] group-hover:scale-[1.04]"
-              />
-            </picture>
-          </Link>
-        ))}
+          {heroPreviews.map((p) => (
+            <Link
+              key={p.id}
+              href={`/proyectos/${p.id}`}
+              aria-label={p.label}
+              className={`hero-preview-${p.id} group relative block aspect-square overflow-hidden rounded-[clamp(10px,1.6vw,24px)] bg-gray-card`}
+            >
+              <picture>
+                <Image
+                  src={p.src}
+                  alt={p.alt}
+                  fill
+                  sizes="(max-width: 640px) 31vw, (max-width: 1440px) 30vw, 430px"
+                  className="object-cover transition-transform duration-700 ease-[var(--ease-ui)] group-hover:scale-[1.04]"
+                />
+              </picture>
+            </Link>
+          ))}
         </div>
       </div>
 
@@ -119,13 +132,18 @@ export function Hero() {
                 src={p.src}
                 alt={p.alt}
                 fill
-                sizes="88vw"
+                sizes="77vw"
                 className="hero-carousel-image"
               />
             </Link>
           ))}
         </div>
       </div>
+
+      <p className="hero-mobile-intro hidden">
+        Construyendo productos web desde los primeros wireframes hasta
+        producción.
+      </p>
     </section>
   );
 }

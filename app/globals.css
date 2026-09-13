@@ -147,10 +147,6 @@ a {
   clip-path: polygon(0 0, 100% 0, 0 100%);
 }
 
-.hero-preview-track {
-  display: contents;
-}
-
 /* Composición mobile proporcional al frame de Figma. Los stickers se anclan
    al wordmark; los 72px superiores reservan espacio para el header fijo. */
 @media (max-width: 767px) {
@@ -159,12 +155,29 @@ a {
   .hero-shell {
     padding-inline: 0;
     padding-bottom: 0;
+    /* Alto de la cabecera fija. Su medida natural es 72px (header) + 36vw (aire)
+       + 40.7vw (wordmark: 2 líneas × 0.6923 × 29.4vw) + 16vw de colchón; se topa
+       a media pantalla para que el abanico siempre tenga su mitad de abajo. */
+    --hero-head: min(calc(72px + 93vw), 50svh);
   }
 
+  /* Wordmark y abanico comparten un mismo frame fijo: los dos son sticky y —lo
+     importante— miden exactamente lo mismo (`100svh`), así se sueltan en el
+     mismo punto del scroll y el frame entero se va como un bloque. Con alturas
+     distintas cada uno se despegaba en un scroll distinto y el abanico subía
+     por debajo del título ya fijo.
+     La cabecera es una capa transparente encima del abanico: `pointer-events`
+     en `none` para no bloquear los enlaces de las cards. */
   .hero-main {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    height: 100svh;
     min-height: 0;
-    padding-top: calc(72px + 36vw);
-    padding-bottom: 16vw;
+    /* El wordmark se ancla arriba, a `--hero-head` del borde superior. */
+    padding-top: calc(var(--hero-head) - 40.7vw);
+    padding-bottom: 0;
+    pointer-events: none;
   }
 
   .hero-wordmark {
@@ -233,8 +246,7 @@ a {
     rotate: 16.37deg;
   }
 
-  .hero-intro,
-  .hero-previews {
+  .hero-intro {
     display: none;
   }
 
@@ -248,6 +260,10 @@ a {
     line-height: 0.95;
     letter-spacing: -0.04em;
   }
+
+  /* Los overrides móviles del abanico NO viven aquí: sus reglas base se
+     declaran más abajo y una media query no suma especificidad, así que la
+     base ganaría. Van juntas al final, después del bloque `.hero-fan-*`. */
 }
 
 /* El header es una banda fija: los destinos de ancla no deben quedar debajo. */
@@ -299,6 +315,14 @@ footer[id] {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;
+  }
+
+  /* Sin recorrido anclado no hay nada que fijar: la cabecera vuelve al flujo.
+     Los resets del abanico van al final del archivo, después de sus reglas
+     base, para que la cascada no los descarte. */
+  .hero-main {
+    position: static;
+    height: auto;
   }
 
   *, *::before, *::after {
@@ -605,4 +629,236 @@ body:has(.site-intro) .hero-wordmark > .sticker-shadow > .sticker {
   font-size: 10px;
   font-variant-numeric: tabular-nums;
   text-align: right;
+}
+
+/* El abanico se ancla a pantalla completa y se abre durante `--fan-pin`.
+   Ese recorrido es literalmente la duración del reveal: `useSectionProgress`
+   mapea 0 → 1 sobre `height - 100svh`, así que subir `--fan-pin` lo alenta y
+   bajarlo lo acelera, sin tocar el componente. */
+.hero-fan-track {
+  --fan-pin: 110svh;
+  /* Medidas del abanico en unidades absolutas (no en % del contenedor) para
+     poder despejar su alto y compensar el hueco del escenario. */
+  --fan-w: min(1120px, 88vw);
+  --fan-ratio: 3.2;
+  --fan-h: calc(var(--fan-w) / var(--fan-ratio));
+  position: relative;
+  /* El escenario mide una pantalla y centra el abanico, así que arrastra
+     `50svh - alto/2` de aire muerto encima. Se descuenta aquí para que el
+     abanico siga arrancando justo debajo de la portada, como antes del pin. */
+  margin-top: calc(var(--fan-h) / 2 - 50svh);
+  height: calc(100svh + var(--fan-pin));
+}
+
+.hero-fan-stage {
+  position: sticky;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100svh;
+  /* Ese margen negativo hace que el escenario invada el final de la portada.
+     Está casi vacío, así que no debe interceptar el puntero: solo sus hijos. */
+  pointer-events: none;
+}
+
+.hero-fan-stage > * {
+  pointer-events: auto;
+}
+
+/* Abanico de proyectos: apiladas al centro, se abren en arco con el scroll.
+   Las transformaciones las escribe motion inline; aquí solo va la caja. */
+.hero-card-fan {
+  /* Cinco cards abiertas ocupan `--fan-card-w * (1 + 4 * 0.68)` del contenedor,
+     así que el ancho de card es lo único que hay que mover por breakpoint. */
+  --fan-card-w: 25%;
+  position: relative;
+  isolation: isolate;
+  width: var(--fan-w);
+  aspect-ratio: var(--fan-ratio);
+  margin: 0 auto;
+  pointer-events: auto;
+}
+
+.hero-fan-card {
+  container-type: inline-size;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--fan-card-w);
+  aspect-ratio: 1.068;
+  border-radius: 9.6%;
+  transform-origin: 50% 70%;
+  box-shadow:
+    0 2px 4px rgb(31 27 22 / 6%),
+    0 12px 28px rgb(31 27 22 / 11%);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* `position: relative` no es decorativo: las imágenes de mockup van con `fill`
+   (o sea `position: absolute`), así que sin esto su bloque contenedor sería la
+   card y el `overflow` del link nunca las recortaría — las esquinas salían
+   cuadradas por encima del radio. */
+.hero-fan-link {
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.hero-fan-link:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 5px;
+}
+
+.hero-fan-saint {
+  background: #077d5b;
+}
+
+.hero-fan-rankeo {
+  background: #000;
+  color: #fff;
+}
+
+.hero-fan-piri {
+  background: #f9f5ef;
+}
+
+/* Cards de mockup: la imagen va a sangre y el fondo solo cubre mientras carga. */
+.hero-fan-shot {
+  background: #191715;
+}
+
+.hero-fan-logo {
+  position: relative;
+  display: block;
+}
+
+.hero-fan-logo-saint {
+  width: 52%;
+  height: 52%;
+}
+
+.hero-fan-logo-piri {
+  width: 70%;
+  height: 77%;
+}
+
+/* Mini leaderboard dentro de la card de Rankeo. Todo en `cqw` para que la
+   composición escale con la card en vez de con el viewport. */
+.hero-fan-board {
+  display: flex;
+  flex-direction: column;
+  gap: 6cqw;
+  width: 100%;
+  padding: 8cqw;
+}
+
+.hero-fan-board-brand {
+  font-size: 11cqw;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.hero-fan-board-brand > span {
+  color: #caff00;
+}
+
+.hero-fan-board-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 2.4cqw;
+}
+
+.hero-fan-board-row {
+  display: grid;
+  grid-template-columns: 4cqw 1fr auto;
+  align-items: center;
+  gap: 3.2cqw;
+  padding: 3cqw 3.4cqw;
+  border-radius: 2.4cqw;
+  background: rgb(255 255 255 / 8%);
+  font-size: 6.8cqw;
+  line-height: 1;
+}
+
+.hero-fan-board-row:first-child {
+  background: #caff00;
+  color: #000;
+}
+
+.hero-fan-board-pos,
+.hero-fan-board-pts {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+}
+
+.hero-fan-board-pts {
+  font-size: 5.8cqw;
+}
+
+.hero-fan-board-row:first-child :is(.hero-fan-board-pos, .hero-fan-board-pts) {
+  opacity: 0.72;
+}
+
+.hero-fan-board-player {
+  overflow: hidden;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Overrides del abanico. Van aquí, al final, y no junto al resto del bloque
+   móvil: las media queries no suman especificidad, así que declaradas antes
+   las pisaban las reglas base de arriba. */
+@media (max-width: 767px) {
+  /* Recorrido anclado un poco más corto: en móvil cada scroll cubre más
+     pantalla, así que el `--fan-pin` de desktop se sentiría eterno.
+     `.hero-shell` pierde el padding lateral aquí, así que el abanico puede
+     medirse contra el viewport completo. */
+  .hero-fan-track {
+    --fan-pin: 90svh;
+    --fan-w: 96vw;
+    --fan-ratio: 2.7;
+    /* La cabecera (`.hero-main`) ya quedó fija encima y ocupa una pantalla
+       completa: se descuenta entera para que el track arranque en el tope de
+       la página y el abanico nazca en su sitio. */
+    margin-top: -100svh;
+  }
+
+  /* El abanico y la intro se acomodan en la mitad inferior, debajo del
+     wordmark fijo, en vez de centrarse contra toda la pantalla. */
+  .hero-fan-stage {
+    justify-content: flex-end;
+    padding-bottom: 6svh;
+  }
+
+  /* Mismas cinco cards que en desktop: se juntan más (SPREAD_X_MOBILE) para
+     poder mantenerlas anchas. */
+  .hero-card-fan {
+    --fan-card-w: 31%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* El abanico ya sale abierto, así que el recorrido anclado sobra: sin esto
+     quedarían dos pantallas de scroll vacío sobre una imagen estática. */
+  .hero-fan-track {
+    height: auto;
+    margin-top: 0;
+  }
+
+  .hero-fan-stage {
+    position: static;
+    height: auto;
+    padding-bottom: 0;
+    pointer-events: auto;
+  }
 }

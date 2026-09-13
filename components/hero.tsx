@@ -1,15 +1,13 @@
-import Image from "next/image";
-import Link from "next/link";
-
-import { heroPreviews } from "@/content/site";
+import { HeroCardFan } from "./hero-card-fan";
 
 /**
  * Portada tipográfica: el wordmark es la pieza central y los stickers flotan
  * encima. Las posiciones van en `em` sobre el contenedor, cuyo `font-size` es
  * el mismo del wordmark, para que la composición escale en bloque.
  *
- * La portada se limita a `100svh` menos un margen, y el grid de proyectos arranca
- * justo debajo: así asoma al abrir sin tocar el wordmark. El wordmark va anclado
+ * La portada se limita a `100svh` menos un margen, y el abanico de proyectos
+ * arranca justo debajo: así asoma al abrir sin tocar el wordmark y su apertura
+ * queda ligada al primer tramo de scroll. El wordmark va anclado
  * arriba (margen explícito, no `justify-between`) para que su posición no dependa
  * del alto del bloque ni de cuánto contenido venga después.
  */
@@ -75,7 +73,7 @@ export function Hero() {
               </span>
             </span>
           </span>
-          <span
+          {/* <span
             aria-hidden
             className="hero-sticker-api sticker-shadow absolute hidden"
           >
@@ -85,7 +83,7 @@ export function Hero() {
                 APIs
               </span>
             </span>
-          </span>
+          </span> */}
         </div>
 
         <p
@@ -96,33 +94,14 @@ export function Hero() {
         </p>
       </div>
 
-      <div className="hero-previews grid grid-cols-3 gap-[clamp(10px,2.4vw,34px)]">
-        <div className="hero-preview-track">
-          {heroPreviews.map((p) => (
-            <Link
-              key={p.id}
-              href={`/proyectos/${p.id}`}
-              aria-label={p.label}
-              className={`hero-preview-${p.id} group relative block aspect-square overflow-hidden rounded-[clamp(10px,1.6vw,24px)] bg-gray-card`}
-            >
-              <picture>
-                <Image
-                  src={p.src}
-                  alt={p.alt}
-                  fill
-                  sizes="(max-width: 640px) 31vw, (max-width: 1440px) 30vw, 430px"
-                  className="object-cover transition-transform duration-700 ease-[var(--ease-ui)] group-hover:scale-[1.04]"
-                />
-              </picture>
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      <p className="hero-mobile-intro hidden">
-        Construyendo productos web desde los primeros wireframes hasta
-        producción.
-      </p>
+      {/* La intro móvil viaja dentro del abanico: en móvil el escenario fijo
+          sostiene wordmark, cards e intro en un mismo frame. */}
+      <HeroCardFan>
+        <p className="hero-mobile-intro hidden">
+          Construyendo productos web desde los primeros wireframes hasta
+          producción.
+        </p>
+      </HeroCardFan>
     </section>
   );
 }

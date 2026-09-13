@@ -59,7 +59,7 @@ export const aboutContent = {
   ],
   cta: { label: "Hablemos", href: "#contacto" },
   portrait: {
-    src: "/img/perfil/about-tiago.png",
+    src: "/img/perfil/about-tiago.webp",
     alt: "Tiago trabajando con su laptop",
   },
 };

@@ -4,7 +4,11 @@ export type Social = { n: string; label: string; href: string };
 
 export const socials: Social[] = [
   { n: "01", label: "GITHUB", href: "https://github.com/Tiagogoco" },
-  { n: "02", label: "LINKEDIN", href: "https://www.linkedin.com/in/tiago-gomez-dev/" },
+  {
+    n: "02",
+    label: "LINKEDIN",
+    href: "https://www.linkedin.com/in/tiago-gomez-dev/",
+  },
   { n: "03", label: "INSTAGRAM", href: "https://www.instagram.com/tiagogoco/" },
 ];
 
@@ -18,9 +22,18 @@ export const introLines: string[] = [
 
 export const aboutContent = {
   eyebrow: "( sobre mí )",
-  title: "SOBRE MÍ",
-  lead: "Construyo productos digitales de principio a fin: de una idea clara a una experiencia que funciona.",
-  body: "Soy Tiago, desarrollador y product designer en Puebla. Me gusta trabajar cerca del problema: entender el negocio, diseñar el sistema y escribir el código que lo lleva a producción. Desde 2025 he construido ecommerce, SaaS y herramientas con usuarios reales.",
+  headline:
+    "Soy Tiago, desarrollador y product designer en Puebla. Construyo productos digitales de principio a fin: de una idea clara a una experiencia que funciona.",
+  /** Notas al pie del retrato, en versalitas. */
+  notes: [
+    "Me gusta trabajar cerca del problema: entender el negocio, diseñar el sistema y escribir el código que lo lleva a producción.",
+    "Estudio ITI en la BUAP desde 2022 y soy autodidacta desde el primer día. Desde 2025 mantengo tres productos en producción, con usuarios reales.",
+  ],
+  cta: { label: "Hablemos", href: "#contacto" },
+  portrait: {
+    src: "/img/perfil/about-tiago.png",
+    alt: "Tiago trabajando con su laptop",
+  },
 };
 
 /** Encabezado de la sección de proyectos. El conteo se deriva de `projects`. */

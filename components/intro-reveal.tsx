@@ -20,6 +20,7 @@ export function IntroReveal() {
   return (
     <section
       id="intro"
+      data-skin="light"
       ref={ref}
       className="relative h-[380vh] bg-page max-md:h-[240vh]"
     >

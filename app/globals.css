@@ -82,6 +82,101 @@ a {
   -webkit-text-fill-color: #ffffff;
 }
 
+/* Portada oscura: un bloque negro con las esquinas de abajo redondeadas que se
+   sobrepone a la sección siguiente. El color NO va en `.hero-shell` sino en un
+   pseudo-elemento que se sale de su `max-w-[1440px]` para pintar de borde a
+   borde; así el bloque es full-bleed sin tocar el ancho del contenido. */
+.hero-shell {
+  --hero-radius: clamp(24px, 3.2vw, 52px);
+  position: relative;
+  z-index: 1;
+  color: #fff;
+  /* Sin padding inferior: `.hero-main` y el escenario del abanico son sticky
+     dentro de contenedores distintos (el shell y el track). Cualquier relleno
+     aquí alarga solo el del shell, así que la cabecera se soltaría más tarde
+     que el abanico y los dos se desapilarían al terminar la animación. */
+  padding-bottom: 0;
+}
+
+/* Wordmark y abanico comparten un mismo frame fijo: los dos son sticky y miden
+   exactamente `100svh`, así se sueltan en el mismo punto del scroll y el frame
+   entero se va como un bloque. La cabecera queda de capa transparente encima
+   del abanico, de ahí `pointer-events: none`. */
+.hero-main {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  height: 100svh;
+  min-height: 0;
+  padding-top: clamp(72px, 8svh, 96px);
+  padding-bottom: 0;
+  pointer-events: none;
+}
+
+/* La intro vive en el escenario, debajo del abanico. */
+.hero-intro {
+  margin-top: clamp(20px, 2.6svh, 40px);
+  color: rgb(255 255 255 / 72%);
+}
+
+.hero-shell::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset-block: 0;
+  /* Rompe el contenedor centrado: ancho de viewport completo. `overflow-x: clip`
+     en html/body absorbe el desborde que mete la barra de scroll. */
+  left: 50%;
+  width: 100vw;
+  margin-left: -50vw;
+  background: #000;
+  border-end-start-radius: var(--hero-radius);
+  border-end-end-radius: var(--hero-radius);
+}
+
+/* Sobre negro el wordmark va en blanco; los stickers conservan su papel de
+   color con tinta oscura, así que se quedan como están. */
+.hero-wordmark h1 {
+  color: #fff;
+}
+
+.hero-mobile-intro {
+  color: rgb(255 255 255 / 72%);
+}
+
+/* La sección siguiente se mete debajo de las esquinas redondeadas: sin esto el
+   radio recortaría contra el fondo de página y no habría sobreposición. */
+#proyectos {
+  margin-top: calc(-1 * clamp(24px, 3.2vw, 52px));
+}
+
+/* Cierre oscuro, espejo de la portada: mismo negro y mismo radio, pero en las
+   esquinas de arriba, y sube sobre la sección anterior para que la curva se
+   recorte contra ella y no contra el fondo de página. */
+.site-footer {
+  --hero-radius: clamp(24px, 3.2vw, 52px);
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--hero-radius));
+  background: #000;
+  color: #fff;
+  border-start-start-radius: var(--hero-radius);
+  border-start-end-radius: var(--hero-radius);
+}
+
+/* El pill del footer viene en `#111` sobre `#000`: se perdía. Va invertido y
+   sin capa, porque el fondo ya es la tinta. Sin `@layer`, así gana a las
+   utilidades de Tailwind sin `!important`. */
+.site-footer-pill {
+  background: #fff;
+  color: #000;
+}
+
+.site-footer-pill:hover {
+  background: var(--color-blue);
+  color: #fff;
+}
+
 /* Stickers del hero. El doblez es real: la punta se recorta del papel (por ahí
    se ve el fondo) y el triángulo es el reverso asomando. Todo va en `em` para
    que escale con el wordmark. La sombra vive en un wrapper aparte porque
@@ -161,23 +256,11 @@ a {
     --hero-head: min(calc(72px + 93vw), 50svh);
   }
 
-  /* Wordmark y abanico comparten un mismo frame fijo: los dos son sticky y —lo
-     importante— miden exactamente lo mismo (`100svh`), así se sueltan en el
-     mismo punto del scroll y el frame entero se va como un bloque. Con alturas
-     distintas cada uno se despegaba en un scroll distinto y el abanico subía
-     por debajo del título ya fijo.
-     La cabecera es una capa transparente encima del abanico: `pointer-events`
-     en `none` para no bloquear los enlaces de las cards. */
+  /* El wordmark se ancla arriba, a `--hero-head` del borde superior. El resto
+     del mecanismo fijo (sticky, 100svh, pointer-events) ya viene de la regla
+     base; aquí solo cambia dónde cae el wordmark dentro del frame. */
   .hero-main {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-    height: 100svh;
-    min-height: 0;
-    /* El wordmark se ancla arriba, a `--hero-head` del borde superior. */
     padding-top: calc(var(--hero-head) - 40.7vw);
-    padding-bottom: 0;
-    pointer-events: none;
   }
 
   .hero-wordmark {
@@ -254,7 +337,7 @@ a {
     display: block;
     width: 83%;
     margin: 9.5vw auto 0;
-    color: var(--color-wordmark);
+    color: #fff;
     font-size: 5.65vw;
     font-weight: 400;
     line-height: 0.95;
@@ -637,16 +720,17 @@ body:has(.site-intro) .hero-wordmark > .sticker-shadow > .sticker {
    bajarlo lo acelera, sin tocar el componente. */
 .hero-fan-track {
   --fan-pin: 110svh;
-  /* Medidas del abanico en unidades absolutas (no en % del contenedor) para
-     poder despejar su alto y compensar el hueco del escenario. */
-  --fan-w: min(1120px, 88vw);
-  --fan-ratio: 3.2;
+  /* El abanico se topa también contra el alto de pantalla (`svh`), no solo
+     contra el ancho: así en laptops bajitas encoge solo y cabe junto al
+     wordmark en el mismo frame, en vez de reclamar su propia pantalla. */
+  --fan-w: min(60vw, 78svh, 960px);
+  --fan-ratio: 3.05;
   --fan-h: calc(var(--fan-w) / var(--fan-ratio));
   position: relative;
-  /* El escenario mide una pantalla y centra el abanico, así que arrastra
-     `50svh - alto/2` de aire muerto encima. Se descuenta aquí para que el
-     abanico siga arrancando justo debajo de la portada, como antes del pin. */
-  margin-top: calc(var(--fan-h) / 2 - 50svh);
+  /* La cabecera ya quedó fija encima y ocupa una pantalla completa: se
+     descuenta entera para que el track arranque en el tope del hero y el
+     abanico nazca en su sitio, sin desplazarse nunca en Y. */
+  margin-top: -100svh;
   height: calc(100svh + var(--fan-pin));
 }
 
@@ -655,9 +739,12 @@ body:has(.site-intro) .hero-wordmark > .sticker-shadow > .sticker {
   top: 0;
   display: flex;
   flex-direction: column;
+  /* El abanico se acomoda en la parte baja del frame, debajo del wordmark
+     fijo, en vez de centrarse contra toda la pantalla. */
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   height: 100svh;
+  padding-bottom: 5svh;
   /* Ese margen negativo hace que el escenario invada el final de la portada.
      Está casi vacío, así que no debe interceptar el puntero: solo sus hijos. */
   pointer-events: none;
@@ -827,17 +914,6 @@ body:has(.site-intro) .hero-wordmark > .sticker-shadow > .sticker {
     --fan-pin: 90svh;
     --fan-w: 96vw;
     --fan-ratio: 2.7;
-    /* La cabecera (`.hero-main`) ya quedó fija encima y ocupa una pantalla
-       completa: se descuenta entera para que el track arranque en el tope de
-       la página y el abanico nazca en su sitio. */
-    margin-top: -100svh;
-  }
-
-  /* El abanico y la intro se acomodan en la mitad inferior, debajo del
-     wordmark fijo, en vez de centrarse contra toda la pantalla. */
-  .hero-fan-stage {
-    justify-content: flex-end;
-    padding-bottom: 6svh;
   }
 
   /* Mismas cinco cards que en desktop: se juntan más (SPREAD_X_MOBILE) para

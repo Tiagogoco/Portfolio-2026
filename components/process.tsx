@@ -6,6 +6,7 @@ export function Process() {
   return (
     <section
       id="sobre-mi"
+      data-skin="light"
       className="relative bg-page px-[clamp(24px,5vw,72px)] py-[clamp(64px,8vh,110px)]"
     >
       <div className="mx-auto w-full max-w-[1440px]">

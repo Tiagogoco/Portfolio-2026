@@ -5,29 +5,38 @@ import Link from "next/link";
 import { CopyEmailButton } from './copy-email-button';
 
 /**
- * Fondo de cada sección, para que la banda del header sea opaca sin cortar el color
- * de lo que hay debajo. La spec §3 lo dejaba sin fondo, pero con la página compacta
- * el contenido se leía por debajo al pasar.
+ * La banda del header es opaca (si no, con la página compacta el contenido se
+ * lee por debajo al pasar), así que tiene que tomar el color de la sección que
+ * queda debajo. Cada sección declara el suyo con `data-skin`, en vez de que el
+ * header cargue una lista de ids: así el color vive donde vive la sección y
+ * agregar o reordenar secciones no obliga a tocar este archivo.
  */
-const SECTIONS = [
-  { id: "top", bg: "#FBFAF8", dark: false },
-  { id: "intro", bg: "#FBFAF8", dark: false },
-  { id: "proyectos", bg: "#FBFAF8", dark: false },
-  { id: "sobre-mi", bg: "#FBFAF8", dark: false },
-  { id: "contacto", bg: "#000000", dark: true },
-];
+const SKINS = {
+  dark: { bg: "#000000", dark: true },
+  light: { bg: "#FBFAF8", dark: false },
+} as const;
+
+type SkinName = keyof typeof SKINS;
 
 /** Línea de sondeo: el borde inferior de la banda. */
 const PROBE = 46;
 
 export function SiteHeader({ standalone = false }: { standalone?: boolean }) {
   const [visible, setVisible] = useState(false);
-  const [{ bg, dark }, setSkin] = useState({ bg: "#FBFAF8", dark: false });
+  /* Arranca en `null`, no en claro: el SSR no sabe qué sección queda debajo y
+     pintar un default para corregirlo después daba un fundido de claro a negro
+     sobre la portada. Mientras no haya medida, la banda va sin transición. */
+  const [skin, setSkin] = useState<(typeof SKINS)[SkinName] | null>(null);
 
   useEffect(() => {
-    const nodes = SECTIONS.map((s) => ({
-      ...s,
-      el: document.getElementById(s.id),
+    /* El `z-index` se lee una sola vez: no cambia, y consultarlo en cada frame
+       forzaría un recálculo de estilo por vuelta. */
+    const nodes = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-skin]"),
+    ).map((el) => ({
+      el,
+      skin: SKINS[(el.dataset.skin as SkinName) ?? "light"],
+      z: Number(getComputedStyle(el).zIndex) || 0,
     }));
     const intro = document.getElementById("intro");
     let raf = 0;
@@ -39,16 +48,20 @@ export function SiteHeader({ standalone = false }: { standalone?: boolean }) {
       const nextVisible = standalone || !intro || (!!ir && ir.top <= window.innerHeight * 0.35);
       setVisible((v) => (v === nextVisible ? v : nextVisible));
 
-      const bajo = nodes.find((s) => {
-        const r = s.el?.getBoundingClientRect();
-        return r && r.top <= PROBE && r.bottom > PROBE;
-      });
+      /* Hay una franja donde dos secciones se traslapan: el hero y el footer
+         invaden a su vecina con sus esquinas redondeadas. Ahí gana la que se
+         pinta encima, o sea la de mayor `z-index` — no sirve quedarse con la
+         primera del documento, porque el hero invade hacia abajo y el footer
+         hacia arriba. A igualdad, la última, como en el orden de pintado. */
+      let bajo: (typeof nodes)[number] | undefined;
+      for (const node of nodes) {
+        const r = node.el.getBoundingClientRect();
+        if (r.top > PROBE || r.bottom <= PROBE) continue;
+        if (!bajo || node.z >= bajo.z) bajo = node;
+      }
       if (bajo) {
-        setSkin((prev) =>
-          prev.bg === bajo.bg && prev.dark === bajo.dark
-            ? prev
-            : { bg: bajo.bg, dark: bajo.dark },
-        );
+        const next = bajo.skin;
+        setSkin((prev) => (prev === next ? prev : next));
       }
     };
 
@@ -56,6 +69,7 @@ export function SiteHeader({ standalone = false }: { standalone?: boolean }) {
     return () => cancelAnimationFrame(raf);
   }, [standalone]);
 
+  const { bg, dark } = skin ?? SKINS.light;
   const ink = dark ? "#ffffff" : "#1F1B16";
   const soft = dark ? "rgba(255,255,255,0.7)" : "#6d675e";
   const pillBg = dark ? "#ffffff" : "#111111";
@@ -75,8 +89,12 @@ export function SiteHeader({ standalone = false }: { standalone?: boolean }) {
           opacity: visible ? 1 : 0,
           transform: `translateY(${visible ? "0px" : "-24px"})`,
           pointerEvents: visible ? "auto" : "none",
-          transition:
-            "opacity 420ms ease, transform 480ms cubic-bezier(.2,.7,.2,1), color 380ms ease, background-color 380ms ease",
+          /* La transición se activa en el mismo frame en que llega el primer
+             color medido: al no existir antes, ese cambio no se anima y la
+             banda aparece ya con el color correcto. */
+          transition: skin
+            ? "opacity 420ms ease, transform 480ms cubic-bezier(.2,.7,.2,1), color 380ms ease, background-color 380ms ease"
+            : "none",
         }}
       >
         <Link

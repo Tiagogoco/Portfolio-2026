@@ -13,7 +13,12 @@ export function SiteFooter() {
   const markX = useTransform(enter, (v) => `${(30 * (1 - v)).toFixed(1)}px`);
 
   return (
-    <footer id="contacto" ref={ref} className="relative min-h-[52svh] overflow-hidden bg-page text-ink md:min-h-[68svh]">
+    <footer
+      id="contacto"
+      data-skin="dark"
+      ref={ref}
+      className="site-footer relative min-h-[52svh] overflow-hidden md:min-h-[68svh]"
+    >
 
       <div className="mx-auto flex min-h-[52svh] max-w-[1440px] flex-col justify-end px-[clamp(24px,5vw,72px)] pb-[clamp(34px,6vh,90px)] pt-[clamp(48px,9vh,190px)] md:min-h-[68svh] md:flex-row md:items-center md:justify-between md:gap-12">
         <motion.h2
@@ -25,7 +30,7 @@ export function SiteFooter() {
         </motion.h2>
 
         <div className="mx-auto mt-[clamp(72px,10vh,120px)] flex flex-col items-center md:mx-0 md:mt-0 md:items-end">
-          <CopyEmailButton pill className="px-6 py-4 text-[11px] md:px-7 md:py-5 md:text-[12px]" />
+          <CopyEmailButton pill className="site-footer-pill px-6 py-4 text-[11px] md:px-7 md:py-5 md:text-[12px]" />
 
           <nav aria-label="Redes sociales" className="mt-6 flex flex-wrap justify-center gap-x-7 gap-y-3 md:justify-end">
             {socials.map((social) => (

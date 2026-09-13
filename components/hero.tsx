@@ -15,12 +15,16 @@ export function Hero() {
   return (
     <section
       id="top"
-      className="hero-shell relative mx-auto max-w-[1440px] px-[clamp(24px,5vw,72px)] pb-[clamp(48px,8vh,110px)]"
+      data-skin="dark"
+      className="hero-shell relative mx-auto max-w-[1440px] px-[clamp(24px,5vw,72px)]"
     >
-      <div className="hero-main flex min-h-[calc(100svh_-_clamp(56px,9vh,120px))] flex-col pb-[clamp(20px,3vh,40px)] pt-[clamp(92px,13vh,150px)]">
+      <div className="hero-main flex flex-col">
+        {/* El tope por `svh` en el `font-size` es lo que permite el frame
+            único: en pantallas bajitas el wordmark encoge solo y le deja sitio
+            al abanico debajo, en vez de empujarlo a su propia pantalla. */}
         <div
-          className="hero-wordmark relative isolate mx-auto mt-[clamp(40px,8vh,90px)] w-[4.621em] pt-[0.9em]"
-          style={{ fontSize: "clamp(56px, 17.4vw, 250px)" }}
+          className="hero-wordmark relative isolate mx-auto w-[4.621em] pt-[0.9em]"
+          style={{ fontSize: "min(12.5vw, 19svh, 225px)" }}
         >
           <h1
             className="m-0 font-black lowercase text-wordmark"
@@ -85,18 +89,18 @@ export function Hero() {
             </span>
           </span> */}
         </div>
+      </div>
 
+      {/* Las dos intros viajan dentro del abanico, no en la cabecera: quedan
+          debajo de las cards y así el wordmark se puede pegar al abanico y
+          crecer con el espacio que dejaron. */}
+      <HeroCardFan>
         <p
-          className="hero-intro m-0 mt-auto max-w-[24ch] pt-[clamp(24px,4vh,56px)] tracking-[-0.01em] text-body"
+          className="hero-intro m-0 max-w-[24ch] text-center tracking-[-0.01em]"
           style={{ fontSize: "clamp(18px, 2.3vw, 32px)", lineHeight: 1.5 }}
         >
           Del primer wireframe al deploy en producción.
         </p>
-      </div>
-
-      {/* La intro móvil viaja dentro del abanico: en móvil el escenario fijo
-          sostiene wordmark, cards e intro en un mismo frame. */}
-      <HeroCardFan>
         <p className="hero-mobile-intro hidden">
           Construyendo productos web desde los primeros wireframes hasta
           producción.

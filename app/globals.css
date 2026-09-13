@@ -261,8 +261,8 @@ a {
 /* Composición mobile proporcional al frame de Figma. Los stickers se anclan
    al wordmark; los 72px superiores reservan espacio para el header fijo. */
 @media (max-width: 767px) {
-  /* El contenido se alinea a la izquierda, así que el shell necesita margen
-     lateral propio (antes iba a sangre porque el wordmark iba centrado). */
+  /* Margen lateral propio: el wordmark ya no va a sangre, respira como en el
+     boceto. Los 90vw útiles son los que fijan su cuerpo más abajo. */
   .hero-shell {
     padding-inline: 5vw;
     padding-bottom: 0;
@@ -282,7 +282,7 @@ a {
     padding-top: 0;
     padding-bottom: 0.24em;
     font-size: 26.4vw !important;
-    text-align: left;
+    text-align: center;
   }
 
   .hero-wordmark h1 {

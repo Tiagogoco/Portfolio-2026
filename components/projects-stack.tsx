@@ -96,11 +96,16 @@ function DesktopProjectCard({ project: p }: { project: Project }) {
 function CardMedia({ project: p, showGlobe = false }: { project: Project; showGlobe?: boolean }) {
   return (
     <div className="relative">
-      <Link href={`/proyectos/${p.id}`} scroll={false} aria-label={`Abrir proyecto ${p.title}`} className="block focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+      <Link href={`/proyectos/${p.id}`} scroll={false} aria-label={`Abrir proyecto ${p.title}`} className="project-cover relative block overflow-hidden rounded-[4px] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink md:rounded-[16px]">
         <Shot project={p} />
+        <span className="project-cover-shade" aria-hidden="true" />
+        <span className="project-cover-cta" aria-hidden="true">
+          <span>Ver proyecto</span>
+          <span className="project-cover-arrow">↗</span>
+        </span>
       </Link>
-      <div className="pointer-events-none absolute inset-x-5 top-5 flex items-start justify-between gap-3">
-        <Link href={`/proyectos/${p.id}`} scroll={false} className="pointer-events-auto inline-flex min-h-10 items-center rounded-full bg-page px-4 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-ink shadow-[0_2px_10px_rgba(31,27,22,0.12)] transition-transform hover:scale-[1.04]">
+      <div className="pointer-events-none absolute inset-x-5 top-5 flex items-start justify-between gap-3 md:justify-end">
+        <Link href={`/proyectos/${p.id}`} scroll={false} className="md:hidden pointer-events-auto inline-flex min-h-10 items-center rounded-full bg-page px-4 font-mono text-[11px] font-bold uppercase tracking-[0.1em] text-ink shadow-[0_2px_10px_rgba(31,27,22,0.12)] transition-transform hover:scale-[1.04]">
           ver <span aria-hidden className="ml-2 text-[14px]">↗</span>
         </Link>
         <div className="flex items-center gap-3">
@@ -156,12 +161,12 @@ function Shot({ project: p }: { project: Project }) {
           preload="metadata"
           poster={p.cardShot.src}
           onError={() => setVideoFailed(true)}
-          className="size-full object-cover transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]"
+          className="project-cover-media size-full object-cover"
         >
           <source src={video} type="video/mp4" />
         </video>
       ) : (
-        <Image src={p.cardShot.src} alt={p.cardShot.alt} fill sizes="(max-width: 768px) 92vw, 760px" className="object-cover transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]" />
+        <Image src={p.cardShot.src} alt={p.cardShot.alt} fill sizes="(max-width: 768px) 92vw, 760px" className="project-cover-media object-cover" />
       )}
     </div>
   );

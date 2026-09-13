@@ -390,6 +390,105 @@ footer[id] {
   }
 }
 
+/* La portada completa abre el caso; el CTA forma parte del mismo enlace. */
+.project-cover-media {
+  transition: transform 750ms var(--ease-ui);
+}
+
+.project-cover-shade,
+.project-cover-cta {
+  display: none;
+  pointer-events: none;
+}
+
+@media (min-width: 768px) {
+  .project-cover-shade {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: rgb(10 18 30 / 22%);
+    opacity: 0;
+    transition: opacity 350ms var(--ease-ui);
+  }
+
+  .project-cover-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 24px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    padding: 8px 8px 8px 24px;
+    border: 1px solid rgb(255 255 255 / 20%);
+    border-radius: 12px;
+    background: #000;
+    color: white;
+    box-shadow: 0 12px 36px rgb(0 0 0 / 20%);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, calc(-50% + 12px)) rotate(-3deg);
+    transition: opacity 250ms var(--ease-ui), transform 400ms var(--ease-ui);
+  }
+
+  .project-cover-arrow {
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 7px;
+    background: rgb(255 255 255 / 16%);
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .project-cover:focus-visible .project-cover-media {
+    transform: scale(1.055);
+  }
+
+  .project-cover:focus-visible .project-cover-shade,
+  .project-cover:focus-visible .project-cover-cta {
+    opacity: 1;
+  }
+
+  .project-cover:focus-visible .project-cover-cta {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@media (min-width: 768px) and (hover: hover) and (pointer: fine) {
+  .project-cover:hover .project-cover-media {
+    transform: scale(1.055);
+  }
+
+  .project-cover:hover .project-cover-shade,
+  .project-cover:hover .project-cover-cta {
+    opacity: 1;
+  }
+
+  .project-cover:hover .project-cover-cta {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-cover .project-cover-media,
+  .project-cover .project-cover-shade,
+  .project-cover .project-cover-cta {
+    transition: none;
+  }
+
+  .project-cover:is(:hover, :focus-visible) .project-cover-media {
+    transform: none;
+  }
+
+  .project-cover .project-cover-cta {
+    transform: translate(-50%, -50%);
+  }
+}
+
 /* Entrada del nombre y las etiquetas sin alterar su composición responsive. */
 @media (prefers-reduced-motion: no-preference) {
   .hero-wordmark h1 {

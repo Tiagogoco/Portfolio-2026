@@ -12,6 +12,34 @@ export const socials: Social[] = [
   { n: "03", label: "INSTAGRAM", href: "https://www.instagram.com/tiagogoco/" },
 ];
 
+/**
+ * Grid de previews al pie del hero. Los `id` son los mismos de `projects`,
+ * así que cada tarjeta enlaza a `/proyectos/[id]`.
+ */
+export const heroPreviews = [
+  {
+    id: "rankeo",
+    src: "/img/proyectos/hero-rankeo.webp",
+    mobileSrc: "/img/proyectos/mobile-rankeo.webp",
+    label: "Ver el caso de Rankeo",
+    alt: "Rankeo en móvil: torneos, ligas y rankings de padel en Puebla",
+  },
+  {
+    id: "piri",
+    src: "/img/proyectos/hero-piri.webp",
+    mobileSrc: "/img/proyectos/mobile-piri.webp",
+    label: "Ver el caso de Piri",
+    alt: "Piri en escritorio: buscador de antigüedades y coleccionables",
+  },
+  {
+    id: "saint",
+    src: "/img/proyectos/hero-saint.webp",
+    mobileSrc: "/img/proyectos/mobile-saint.webp",
+    label: "Ver el caso de Saint Padel",
+    alt: "Saint Padel en móvil: catálogo de palas por tipo de juego",
+  },
+] as const;
+
 /** Párrafos de la intro. Cada palabra se revela por separado (§5.2). */
 export const introLines: string[] = [
   "Soy Tiago, desarrollador de productos web.",

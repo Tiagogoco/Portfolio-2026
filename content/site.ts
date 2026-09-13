@@ -49,7 +49,7 @@ export const introLines: string[] = [
 ];
 
 export const aboutContent = {
-  eyebrow: "( sobre mí )",
+  eyebrow: "sobre mí",
   headline:
     "Soy Tiago, desarrollador y product designer en Puebla. Construyo productos digitales de principio a fin: de una idea clara a una experiencia que funciona.",
   /** Notas al pie del retrato, en versalitas. */
@@ -66,7 +66,7 @@ export const aboutContent = {
 
 /** Encabezado de la sección de proyectos. El conteo se deriva de `projects`. */
 export const proyectosHeader = {
-  eyebrow: "( selección )",
+  eyebrow: "selección",
   title: "TRABAJO EN PRODUCCIÓN",
   lede: "Tres productos construidos desde el modelo de negocio hasta el primer cobro.",
 };

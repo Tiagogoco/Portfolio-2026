@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { CopyEmailButton } from './copy-email-button';
 
 /**
@@ -78,34 +79,34 @@ export function SiteHeader({ standalone = false }: { standalone?: boolean }) {
             "opacity 420ms ease, transform 480ms cubic-bezier(.2,.7,.2,1), color 380ms ease, background-color 380ms ease",
         }}
       >
-        <a
+        <Link
           href={homeLink}
           className="shrink-0 text-[15px] font-extrabold tracking-[-0.055em] md:text-[17px]"
           style={{ color: ink }}
         >
           TIAGOGOCO
-        </a>
+        </Link>
 
         <nav className="absolute left-1/2 flex -translate-x-1/2 items-center gap-[clamp(24px,3.4vw,56px)] max-md:hidden">
-          <a
+          <Link
             href={projectsLink}
             className="transition-opacity hover:opacity-55"
             style={{ color: ink }}
           >
             PROYECTOS
-          </a>
-          <a
+          </Link>
+          <Link
             href={aboutLink}
             className="transition-opacity hover:opacity-55"
             style={{ color: ink }}
           >
             SOBRE MI
-          </a>
+          </Link>
         </nav>
 
         <nav aria-label="Navegación móvil" className="ml-auto flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.12em] md:hidden">
-          <a href={aboutLink} className="transition-opacity hover:opacity-55">SOBRE MÍ</a>
-          <a href={contactLink} className="transition-opacity hover:opacity-55">CONTACTO</a>
+          <Link href={aboutLink} className="transition-opacity hover:opacity-55">SOBRE MÍ</Link>
+          <Link href={contactLink} className="transition-opacity hover:opacity-55">CONTACTO</Link>
         </nav>
 
         <CopyEmailButton

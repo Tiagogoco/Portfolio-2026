@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Archivo, Instrument_Serif, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+import { CursorFollower } from '@/components/cursor-follower';
 
 const archivo = Archivo({
   variable: '--font-archivo',
@@ -59,7 +60,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       lang="es"
       className={`${archivo.variable} ${jetbrains.variable} ${instrument.variable}`}
     >
-      <body>{children}</body>
+      <body>
+        {children}
+        <CursorFollower />
+      </body>
     </html>
   );
 }

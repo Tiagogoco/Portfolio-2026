@@ -25,11 +25,13 @@ export function Hero() {
         {/* El tope por `svh` en el `font-size` mantiene la portada en una sola
             pantalla: en monitores bajitos el wordmark encoge solo en vez de
             empujar la frase y los accesos fuera del frame. */}
-        {/* El `pb` reserva lo que el sticker de `ecommerce` cuelga por debajo
-            del wordmark (está en absoluto, así que no mide): sin él se metería
-            encima de la fila de accesos. */}
+        {/* `w-fit` en vez de un ancho en `em`: el contenedor se ciñe al texto
+            real, así los stickers (que van en % sobre él) caen siempre sobre
+            las letras sin depender de las métricas de la fuente. El `pb`
+            reserva lo que `ecommerce` cuelga por abajo, que al ser absoluto no
+            mide y si no se metería encima de los accesos. */}
         <div
-          className="hero-wordmark relative isolate w-[4.621em] pb-[0.33em]"
+          className="hero-wordmark relative isolate w-fit pb-[0.16em]"
           style={{ fontSize: "min(15vw, 21svh, 280px)" }}
         >
           <h1
@@ -40,13 +42,15 @@ export function Hero() {
               letterSpacing: "-0.1em",
             }}
           >
-            <span>tiago</span>
-            <span>goco</span>
+            {/* En bloque: `tiagogoco` es una sola palabra, sin esto no hay
+                dónde partir y el wordmark sale en una línea desbordada. */}
+            <span className="block">tiago</span>
+            <span className="block">goco</span>
           </h1>
 
           <span
             aria-hidden
-            className="hero-sticker-web sticker-shadow absolute left-[0.0198em] top-[0.6314em] h-[0.3279em] w-[0.9597em] rotate-[7.5deg]"
+            className="hero-sticker-web sticker-shadow absolute left-[-16%] top-[-18.1%] h-[20.9%] w-[35%] rotate-[7.5deg]"
           >
             <span className="sticker sticker-tl flex h-full w-full items-center justify-center bg-sticker-blue">
               <span className="fold bg-sticker-blue-fold" />
@@ -59,7 +63,7 @@ export function Hero() {
 
           <span
             aria-hidden
-            className="hero-sticker-saas sticker-shadow absolute left-[3.4651em] top-[0.8729em] h-[0.25em] w-[0.83em] rotate-[-7deg]"
+            className="hero-sticker-saas sticker-shadow absolute left-[81%] top-[-10.9%] h-[20.9%] w-[34%] rotate-[-7deg]"
           >
             <span
               className="sticker sticker-tr flex h-full w-full items-center justify-center bg-sticker-yellow"
@@ -74,7 +78,7 @@ export function Hero() {
 
           <span
             aria-hidden
-            className="hero-sticker-commerce sticker-shadow absolute left-[3.5126em] top-[1.52em] -z-10 h-[0.3255em] w-[0.9548em] rotate-[5deg]"
+            className="hero-sticker-commerce sticker-shadow absolute left-[21%] top-[78%] h-[20%] w-[34%] rotate-[5deg]"
           >
             <span className="sticker sticker-br flex h-full w-full items-center justify-center bg-sticker-white">
               <span className="fold bg-sticker-white-fold" />

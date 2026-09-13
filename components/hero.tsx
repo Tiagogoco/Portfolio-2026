@@ -119,27 +119,6 @@ export function Hero() {
         </div>
       </div>
 
-      <div className="hero-carousel" aria-label="Proyectos destacados">
-        <div className="hero-carousel-track">
-          {[...heroPreviews, heroPreviews[0]].map((p, index) => (
-            <Link
-              key={`${p.id}-carousel-${index}`}
-              href={`/proyectos/${p.id}`}
-              aria-label={p.label}
-              className={`hero-carousel-slide hero-carousel-${p.id}`}
-            >
-              <Image
-                src={p.src}
-                alt={p.alt}
-                fill
-                sizes="77vw"
-                className="hero-carousel-image"
-              />
-            </Link>
-          ))}
-        </div>
-      </div>
-
       <p className="hero-mobile-intro hidden">
         Construyendo productos web desde los primeros wireframes hasta
         producción.

@@ -2,15 +2,15 @@ import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { ImageResponse } from 'next/og';
 
-export const size = { width: 64, height: 64 };
+export const size = { width: 180, height: 180 };
 export const contentType = 'image/png';
 
-/** Sin la fuente cargada el `fontWeight` se ignora y la "t" sale fina, no como
-    la del logotipo. */
 const archivo = readFile(join(process.cwd(), 'assets/fonts/Archivo-ExtraBold.ttf'));
 
-/** Favicon generado a partir de la propia marca del sitio, no de la de un cliente. */
-export default async function Icon() {
+/** iOS escala este icono para la pantalla de inicio y para las tarjetas de
+    sugerencias de Safari. Sin él, Safari estira el favicon de 64 px y se ve
+    pixelado. Sin radio ni margen: iOS recorta la esquina por su cuenta. */
+export default async function AppleIcon() {
   return new ImageResponse(
     (
       <div
@@ -22,7 +22,7 @@ export default async function Icon() {
           justifyContent: 'center',
           background: '#000000',
           color: '#0071F2',
-          fontSize: 44,
+          fontSize: 124,
           fontWeight: 800,
           fontFamily: 'Archivo',
           letterSpacing: '-0.06em',

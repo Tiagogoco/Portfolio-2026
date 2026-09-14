@@ -127,11 +127,23 @@ export const projects: Project[] = [
       'Muchos clubs de pádel en México siguen utilizando herramientas manuales para gestionar lo central en el modelo de negocio de un club: las ligas y torneos.',
     solucion:
       'Rankeo ofrece una gestión automática, optimizada para los administradores y una experiencia profesional para los jugadores. Actualmente estoy trabajando en evolucionar Rankeo a una aplicación self service, con la visión de ser una plataforma referente de gestión de eventos de pádel.',
-    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Tailwind', 'Vercel'],
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Supabase', 'Stripe', 'Tailwind', 'Vercel'],
     decisiones: [
-      { n: '01', title: 'Pendiente: decisión de datos', note: 'Modelo de ligas, niveles y jornadas.' },
-      { n: '02', title: 'Pendiente: permisos por rol', note: 'Club, organizador, jugador.' },
-      { n: '03', title: 'Pendiente: brackets y ranking', note: 'Cómo se calculan y se exportan.' },
+      {
+        n: '01',
+        title: 'El nivel es la unidad de la liga',
+        note: 'Cada jornada cierra con un snapshot de ranking por nivel, y el ascenso o descenso queda guardado como un movimiento entre niveles en vez de recalcular la tabla entera. Un empate en el primer o el último puesto bloquea el cierre hasta que alguien lo resuelve.',
+      },
+      {
+        n: '02',
+        title: 'La autorización se repite en tres capas',
+        note: 'Ruta, layout y políticas RLS de Postgres validan lo mismo por separado. Es redundancia a propósito: un descuido en la capa de rutas no alcanza para leer los datos de otro club.',
+      },
+      {
+        n: '03',
+        title: 'Los brackets son funciones puras',
+        note: 'Eliminación simple y doble, round robin y grupos con playoff se generan sin tocar la base ni los horarios, así que cada formato se prueba solo. El ranking y el horario de cada jornada se exportan a PNG y PDF para reenviarlos al grupo de WhatsApp de los jugadores.',
+      },
     ],
     aprendizajes: [
       'El mayor aprendizaje de Rankeo no fue desarrollándolo. Cuando tuve la primera versión aprendí a vender mi producto, a buscar retroalimentación de mis clientes y hacer mejoras iterativas en el producto.',
@@ -170,11 +182,23 @@ export const projects: Project[] = [
     problemaLabel: 'planteamiento',
     problema: 'PIRI no solo es un e-commerce, es la identidad de marca de un negocio que vivía solamente en Mercado Libre.',
     solucion: 'E-commerce propio vinculado a Mercado Libre vía API, sincronizando miles de productos. PIRI está creciendo con múltiples ventas, incluyendo internacionales, y tiene excelentes reseñas de experiencia de usuario.',
-    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Stripe', 'Tailwind', 'Vercel'],
+    stack: ['Next.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Stripe', 'Mercado Libre API', 'Skydropx', 'Tailwind', 'Vercel'],
     decisiones: [
-      { n: '01', title: 'Pendiente: piezas únicas', note: 'Inventario de una unidad y reserva en checkout.' },
-      { n: '02', title: 'Pendiente: sincronización diaria', note: 'De dónde llegan los artículos y qué pasa cuando fallan.' },
-      { n: '03', title: 'Pendiente: envíos y cupones', note: 'Reglas por peso, zona y campaña.' },
+      {
+        n: '01',
+        title: 'La reserva nace antes del pago',
+        note: 'Cada antigüedad es stock de una unidad, así que la orden se crea pendiente al abrir el checkout y expira a los treinta minutos. Quien llegue dentro de esa ventana recibe un aviso de pieza ocupada, no una segunda venta del mismo objeto.',
+      },
+      {
+        n: '02',
+        title: 'Mercado Libre manda, el sitio escucha',
+        note: 'Un cron reconcilia el catálogo completo cada seis horas y los webhooks atienden el cambio individual. Todo entra por upsert contra el id de publicación, así que repetir una sincronización nunca duplica una pieza.',
+      },
+      {
+        n: '03',
+        title: 'Envío y cupón se resuelven en el servidor',
+        note: 'La tarifa se cotiza con el peso y las dimensiones reales de la pieza, con tarifa manual de respaldo si el proveedor no responde. El cupón se revalida en el checkout y solo consume cupo cuando el pago se confirma, no cuando el cliente lo escribe.',
+      },
     ],
     aprendizajes: [
       'Al ser socio de este negocio, me he involucrado mucho con el proyecto, aprendiendo todos los días a mejorar la conversión a través del diseño y escogiendo la mejor arquitectura en base a la necesidad inicial.',

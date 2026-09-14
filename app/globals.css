@@ -405,36 +405,6 @@ footer[id] {
   }
 }
 
-@keyframes commit-sweep {
-  0% {
-    transform: translateX(-30%);
-    opacity: 0;
-  }
-  12% {
-    opacity: 0.5;
-  }
-  88% {
-    opacity: 0.5;
-  }
-  100% {
-    transform: translateX(130%);
-    opacity: 0;
-  }
-}
-
-@keyframes commit-blink {
-  0%,
-  60% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 0.25;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
 @keyframes copy-confirm {
   from {
     opacity: 0;

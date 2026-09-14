@@ -1,12 +1,10 @@
 'use client';
 
 import { Hero } from './hero';
-// import { IntroReveal } from './intro-reveal';
 import { Process } from './process';
 import { ProjectsStack } from './projects-stack';
 import { SiteFooter } from './site-footer';
 import { SiteHeader } from './site-header';
-// import { StackLoop } from './stack-loop';
 // import { Whoami } from './whoami';
 
 /**
@@ -19,10 +17,8 @@ export function Site() {
       <SiteHeader />
       <main>
         <Hero />
-        {/* <IntroReveal /> */}
         <ProjectsStack />
         <Process />
-        {/* <StackLoop /> */}
         {/* <Whoami /> */}
       </main>
       <SiteFooter />

@@ -40,14 +40,6 @@ export const heroPreviews = [
   },
 ] as const;
 
-/** Párrafos de la intro. Cada palabra se revela por separado (§5.2). */
-export const introLines: string[] = [
-  "Soy Tiago, desarrollador de productos web.",
-  "Estudio ingeniería en teconologías de la información y soy autodidacta",
-  "Construyo productos web desde el diseño hasta los cobros en producción.",
-  "Tres en línea desde 2025, con usuarios usándolos hoy.",
-];
-
 export const aboutContent = {
   eyebrow: "sobre mí",
   headline:

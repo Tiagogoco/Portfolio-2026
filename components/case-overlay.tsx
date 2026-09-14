@@ -154,6 +154,16 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                 <Story label="solución" text={p.solucion} accent={p.accent} />
               </div>
 
+              {p.id === 'rankeo' && (
+                <MediaFrame
+                  src={p.cardShot.src}
+                  alt="Panel de administración de Rankeo"
+                  video="/video/rankeo-admin.mp4"
+                  playbackRate={1.2}
+                  className="mt-[clamp(40px,6vw,72px)] aspect-[3024/1892]"
+                />
+              )}
+
               <section className="mt-[clamp(80px,12vw,170px)]">
                 <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-mute">( decisiones técnicas )</div>
                 <div className="mt-6 grid gap-7 md:grid-cols-3 md:gap-8">

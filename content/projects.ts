@@ -136,8 +136,8 @@ export const projects: Project[] = [
       },
       {
         n: '02',
-        title: 'La autorización se repite en tres capas',
-        note: 'Ruta, layout y políticas RLS de Postgres validan lo mismo por separado. Es redundancia a propósito: un descuido en la capa de rutas no alcanza para leer los datos de otro club.',
+        title: 'Cada club cobra con su propio Stripe',
+        note: 'Las inscripciones se pagan en línea y el dinero entra directo a la cuenta del club, sin cuenta intermedia ni saldo que repartir después. Las llaves viven por club y solo se usan del lado del servidor.',
       },
       {
         n: '03',

@@ -168,7 +168,7 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                   alt="Panel de administración de Rankeo"
                   video="/video/rankeo-admin.mp4"
                   playbackRate={1.2}
-                  className="mt-[clamp(40px,6vw,72px)] aspect-[3024/1892]"
+                  className="mt-[clamp(40px,6vw,72px)] aspect-[1920/1202]"
                 />
               )}
 

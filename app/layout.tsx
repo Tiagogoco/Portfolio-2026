@@ -26,7 +26,10 @@ const instrument = Instrument_Serif({
   display: 'swap',
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://tiagogo.co';
+/** Dominio canónico: tiagogoco.com redirige a www, así que el absoluto lleva www.
+    Si esta URL no es la real, `metadataBase` firma los og:image hacia un dominio
+    que no resuelve y las previews de WhatsApp o Safari caen al favicon. */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.tiagogoco.com';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

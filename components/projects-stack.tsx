@@ -16,10 +16,10 @@ export function ProjectsStack() {
     <section
       id="proyectos"
       data-skin="light"
-      className="relative bg-page pb-[14vh] max-md:px-6 max-md:pb-16"
+      className="relative bg-page max-md:px-6 max-md:pb-16"
     >
       <ProjectsHeader />
-      <div className="mx-auto max-w-[1180px]">
+      <div className="mx-auto max-w-[1180px] md:flex md:flex-col md:gap-[clamp(110px,10vw,135px)]">
         {projects.map((p, i) => (
           <ProjectCard key={p.id} project={p} index={i} />
         ))}
@@ -43,7 +43,7 @@ function ProjectCard({
   return (
     <article
       ref={ref}
-      className="relative mb-[10px] md:mb-0 md:py-[clamp(48px,7vw,104px)]"
+      className="relative mb-[10px] md:mb-0"
       style={{ zIndex: index + 1 }}
     >
       <div
@@ -107,7 +107,7 @@ function MobileProjectCard({ project: p }: { project: Project }) {
 function DesktopProjectCard({ project: p }: { project: Project }) {
   return (
     <div className="hidden md:block">
-      <div className="mt-8">
+      <div>
         <CardMedia project={p} showGlobe />
         <div className="mt-6 flex items-start justify-between gap-8">
           <div className="min-w-0">
@@ -204,7 +204,7 @@ function ProjectsHeader() {
   return (
     <header
       ref={ref}
-      className="mx-auto mt-[100px] w-full max-w-[1180px] px-10 pb-[8vh] pt-[13vh] max-md:mt-[65px] max-md:px-0 max-md:pb-12 max-md:pt-16"
+      className="mx-auto mt-[100px] w-full max-w-[1180px] px-10 pb-[clamp(48px,4vw,64px)] pt-[13vh] max-md:mt-[65px] max-md:px-0 max-md:pb-12 max-md:pt-16"
     >
       <Reveal p={enter} i={0}>
         <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute">

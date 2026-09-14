@@ -51,9 +51,7 @@
   --ease-modal: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Radio de los bloques negros (portada y cierre). Va en `:root` porque lo usan
-   tres reglas: las dos curvas y el `margin-top` negativo de `#proyectos`, que
-   tiene que valer exactamente lo mismo o la curva recorta contra la página. */
+/* Radio del cierre y medida de superposición entre secciones. */
 :root {
   --hero-radius: clamp(56px, 8vw, 128px);
 }
@@ -89,7 +87,7 @@ a {
   -webkit-text-fill-color: #ffffff;
 }
 
-/* Portada oscura: un bloque negro con las esquinas de abajo redondeadas que se
+/* Portada oscura: un bloque negro con esquinas rectas que se
    sobrepone a la sección siguiente. El color NO va en `.hero-shell` sino en un
    pseudo-elemento que se sale de su `max-w-[1440px]` para pintar de borde a
    borde; así el bloque es full-bleed sin tocar el ancho del contenido. */
@@ -167,8 +165,6 @@ a {
   width: 100vw;
   margin-left: -50vw;
   background: #000;
-  border-end-start-radius: var(--hero-radius);
-  border-end-end-radius: var(--hero-radius);
 }
 
 /* Sobre negro el wordmark va en blanco; los stickers conservan su papel de
@@ -177,14 +173,13 @@ a {
   color: #fff;
 }
 
-/* La sección siguiente se mete debajo de las esquinas redondeadas: sin esto el
-   radio recortaría contra el fondo de página y no habría sobreposición. */
+/* Conserva la posición de proyectos respecto a la portada. */
 #proyectos {
   margin-top: calc(-1 * var(--hero-radius));
 }
 
-/* Cierre oscuro, espejo de la portada: mismo negro y mismo radio, pero en las
-   esquinas de arriba, y sube sobre la sección anterior para que la curva se
+/* Cierre oscuro con esquinas superiores redondeadas; sube sobre la sección
+   anterior para que la curva se
    recorte contra ella y no contra el fondo de página. */
 .site-footer {
   position: relative;
@@ -282,6 +277,11 @@ a {
   .hero-shell {
     padding-inline: 5vw;
     padding-bottom: 0;
+  }
+
+  .hero-shell::before {
+    border-end-start-radius: var(--hero-radius);
+    border-end-end-radius: var(--hero-radius);
   }
 
   .hero-main {

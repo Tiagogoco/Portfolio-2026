@@ -130,7 +130,6 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
               <MediaFrame
                 src={p.cardShot.src}
                 alt={p.cardShot.alt}
-                accent={p.id === 'rankeo' ? '#CAFF00' : p.accent}
                 video={p.id === 'rankeo' ? '/video/rankeo-landing.mp4' : p.id === 'saint' ? '/video/saint-padel-landing.mp4' : p.id === 'piri' ? '/video/piri-desktop.mp4' : undefined}
                 playbackRate={p.id === 'piri' ? 1.25 : p.id === 'rankeo' || p.id === 'saint' ? 1.2 : undefined}
                 siteHref={p.href}
@@ -142,7 +141,6 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                 <MediaFrame
                   src={p.cardShot.src}
                   alt="Segundo recorrido de la experiencia de PIRI"
-                  accent={p.accent}
                   video="/video/piri-desktop-2.mp4"
                   playbackRate={1.25}
                   className="mt-5 aspect-[2988/1796]"
@@ -206,9 +204,9 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
   );
 }
 
-function MediaFrame({ src, alt, accent, video, playbackRate, siteHref, siteHrefExternal, className = '', natural = false, w, h }: { src: string; alt: string; accent: string; video?: string; playbackRate?: number; siteHref?: string; siteHrefExternal?: boolean; className?: string; natural?: boolean; w?: number; h?: number }) {
+function MediaFrame({ src, alt, video, playbackRate, siteHref, siteHrefExternal, className = '', natural = false, w, h }: { src: string; alt: string; video?: string; playbackRate?: number; siteHref?: string; siteHrefExternal?: boolean; className?: string; natural?: boolean; w?: number; h?: number }) {
   return (
-    <div className={`relative overflow-hidden bg-black ${className}`} style={{ border: `clamp(8px, 1.2vw, 16px) solid ${accent}` }}>
+    <div className={`relative overflow-hidden bg-black ${className}`}>
       {video ? (
         <video
           key={video}

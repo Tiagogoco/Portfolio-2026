@@ -7,7 +7,13 @@ export function Process() {
     <section
       id="sobre-mi"
       data-skin="light"
-      className="relative bg-page px-[clamp(24px,5vw,72px)] py-[clamp(64px,8vh,110px)]"
+      className="relative bg-page px-[clamp(24px,5vw,72px)] pt-[clamp(64px,8vh,110px)]"
+      /* El footer sube `--hero-radius` para que su curva recorte contra esta
+         sección; sin sumarlo al `padding`, la esquina se comería el texto. */
+      style={{
+        paddingBottom:
+          'calc(clamp(64px, 8vh, 110px) + var(--hero-radius))',
+      }}
     >
       <div className="mx-auto w-full max-w-[1440px]">
         <div className="font-mono text-[clamp(10px,1vw,13px)] uppercase tracking-[0.22em] text-ink-mute">
@@ -43,15 +49,6 @@ export function Process() {
                 {note}
               </p>
             ))}
-
-            <a
-              href={aboutContent.cta.href}
-              className="mt-[clamp(14px,2.4vh,32px)] flex items-center justify-between border-b border-ink pb-[clamp(10px,1.4vh,16px)] font-bold uppercase tracking-[0.04em] text-ink transition-opacity hover:opacity-55"
-              style={{ fontSize: 'clamp(14px, 1.15vw, 18px)' }}
-            >
-              {aboutContent.cta.label}
-              <span aria-hidden>→</span>
-            </a>
           </div>
         </div>
       </div>

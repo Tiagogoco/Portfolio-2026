@@ -57,7 +57,6 @@ export const aboutContent = {
     "Me gusta trabajar cerca del problema: entender el negocio, diseñar el sistema y escribir el código que lo lleva a producción.",
     "Estudio ITI en la BUAP desde 2022 y soy autodidacta desde el primer día. Desde 2025 mantengo tres productos en producción, con usuarios reales.",
   ],
-  cta: { label: "Hablemos", href: "#contacto" },
   portrait: {
     src: "/img/perfil/about-tiago.webp",
     alt: "Tiago trabajando con su laptop",

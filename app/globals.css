@@ -51,6 +51,13 @@
   --ease-modal: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
+/* Radio de los bloques negros (portada y cierre). Va en `:root` porque lo usan
+   tres reglas: las dos curvas y el `margin-top` negativo de `#proyectos`, que
+   tiene que valer exactamente lo mismo o la curva recorta contra la página. */
+:root {
+  --hero-radius: clamp(56px, 8vw, 128px);
+}
+
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
@@ -87,7 +94,6 @@ a {
    pseudo-elemento que se sale de su `max-w-[1440px]` para pintar de borde a
    borde; así el bloque es full-bleed sin tocar el ancho del contenido. */
 .hero-shell {
-  --hero-radius: clamp(24px, 3.2vw, 52px);
   position: relative;
   z-index: 1;
   color: #fff;
@@ -101,6 +107,15 @@ a {
   min-height: 100svh;
   padding-top: clamp(72px, 8svh, 96px);
   padding-bottom: clamp(40px, 8svh, 90px);
+}
+
+/* El bloque va centrado, así que el wordmark queda en el tercio alto. Este hueco
+   lo empuja hacia el centro óptico; en `svh` para que en pantallas bajitas el
+   empuje encoja solo y la frase no se salga del frame. */
+@media (min-width: 768px) {
+  .hero-wordmark {
+    margin-top: clamp(40px, 12svh, 150px);
+  }
 }
 
 /* Los +60px bajan los botones sin mover el wordmark: el mismo hueco se le resta
@@ -165,14 +180,13 @@ a {
 /* La sección siguiente se mete debajo de las esquinas redondeadas: sin esto el
    radio recortaría contra el fondo de página y no habría sobreposición. */
 #proyectos {
-  margin-top: calc(-1 * clamp(24px, 3.2vw, 52px));
+  margin-top: calc(-1 * var(--hero-radius));
 }
 
 /* Cierre oscuro, espejo de la portada: mismo negro y mismo radio, pero en las
    esquinas de arriba, y sube sobre la sección anterior para que la curva se
    recorte contra ella y no contra el fondo de página. */
 .site-footer {
-  --hero-radius: clamp(24px, 3.2vw, 52px);
   position: relative;
   z-index: 1;
   margin-top: calc(-1 * var(--hero-radius));

@@ -204,7 +204,7 @@ function ProjectsHeader() {
   return (
     <header
       ref={ref}
-      className="mx-auto w-full max-w-[1180px] px-10 pb-[8vh] pt-[13vh] max-md:px-0 max-md:pb-12 max-md:pt-16"
+      className="mx-auto mt-[100px] w-full max-w-[1180px] px-10 pb-[8vh] pt-[13vh] max-md:mt-[65px] max-md:px-0 max-md:pb-12 max-md:pt-16"
     >
       <Reveal p={enter} i={0}>
         <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute">
@@ -218,16 +218,6 @@ function ProjectsHeader() {
         >
           {proyectosHeader.title}
         </h2>
-      </Reveal>
-      <Reveal p={enter} i={2}>
-        <div className="mt-8 flex flex-col justify-between gap-5 pt-5 md:flex-row md:items-start">
-          <p className="m-0 max-w-[480px] text-[clamp(17px,1.7vw,23px)] leading-[1.18] tracking-[-0.025em] text-body">
-            {proyectosHeader.lede}
-          </p>
-          <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-mute">
-            {String(projects.length).padStart(2, "0")} piezas / en producción
-          </span>
-        </div>
       </Reveal>
     </header>
   );

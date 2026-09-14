@@ -109,7 +109,7 @@ export function Hero() {
           />
         </div>
 
-        <p className="hero-intro m-0 max-w-[22ch]">
+        <p className="hero-intro m-0 max-w-[22ch] mt-50">
           Construyendo productos digitales desde los primeros wireframes hasta
           producción.
         </p>

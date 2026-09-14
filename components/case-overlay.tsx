@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useId, useRef, type RefObject } from 'react';
 import Image from 'next/image';
-import { projects } from '@/content/projects';
+import { projects, rol } from '@/content/projects';
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -118,8 +118,18 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                 </p>
               </div>
 
+              {/* Ficha del caso: rol arriba y con la regla gruesa, porque es lo que
+                  se busca primero; el stack queda como detalle debajo. El ancho
+                  fijo de los rótulos alinea ambas listas en la misma columna. */}
               <div className="mt-[clamp(46px,7vw,84px)] flex items-start gap-8 border-t-2 border-ink pt-4 max-md:flex-col max-md:gap-5">
-                <span className="shrink-0 font-extrabold text-[clamp(21px,2vw,28px)] uppercase tracking-[-0.055em]">Stack</span>
+                <span className="shrink-0 font-extrabold text-[clamp(21px,2vw,28px)] uppercase tracking-[-0.055em] md:w-[4.6em]">Rol</span>
+                <ul className="m-0 flex min-w-0 flex-1 list-none flex-wrap gap-x-8 gap-y-3 p-0 font-bold text-[clamp(13px,1.3vw,17px)] uppercase tracking-[-0.025em] max-md:gap-x-5">
+                  {rol.map((r) => <li key={r}>{r}</li>)}
+                </ul>
+              </div>
+
+              <div className="mt-5 flex items-start gap-8 max-md:flex-col max-md:gap-5">
+                <span className="shrink-0 font-extrabold text-[clamp(21px,2vw,28px)] uppercase tracking-[-0.055em] md:w-[4.6em]">Stack</span>
                 <ul className="m-0 flex min-w-0 flex-1 list-none flex-wrap gap-x-8 gap-y-3 p-0 font-bold text-[clamp(13px,1.3vw,17px)] uppercase tracking-[-0.025em] max-md:gap-x-5">
                   {p.stack.map((s) => <li key={s}>{s}</li>)}
                 </ul>

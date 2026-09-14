@@ -40,6 +40,9 @@ export type Project = {
   resenas?: Resena[];
 };
 
+/** El rol no vive en `Project` porque es el mismo en los tres casos: los hice solo. */
+export const rol = ['Full stack developer', 'APIs', 'UX', 'UI'];
+
 export const projects: Project[] = [
   {
     id: 'saint',

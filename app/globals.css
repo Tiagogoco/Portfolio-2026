@@ -2,46 +2,46 @@
 
 /* Tokens del sitio — §2 de la spec. */
 @theme {
-  --color-ink: #1F1B16;
+  --color-ink: #1f1b16;
   --color-ink-soft: #6d675e;
   --color-ink-mute: #a09889;
   --color-body: #5a5449;
-  --color-page: #FBFAF8;
+  --color-page: #fbfaf8;
 
-  --color-blue: #1F6FEB;
-  --color-blue-500: #4C8FF5;
-  --color-blue-300: #85B8FA;
-  --color-blue-100: #C6DDFD;
+  --color-blue: #1f6feb;
+  --color-blue-500: #4c8ff5;
+  --color-blue-300: #85b8fa;
+  --color-blue-100: #c6ddfd;
 
-  --color-gray-card: #4A4A48;
+  --color-gray-card: #4a4a48;
   /* Accentos de los proyectos y componentes del resto del sitio. */
-  --color-card-1: #E6EFFD;
-  --color-card-2: #C6DDFD;
-  --color-card-3: #A8CBFB;
-  --color-chip-border-1: #B9D1F4;
-  --color-chip-border-2: #9BC0F3;
-  --color-chip-border-3: #7FAEF0;
+  --color-card-1: #e6effd;
+  --color-card-2: #c6ddfd;
+  --color-card-3: #a8cbfb;
+  --color-chip-border-1: #b9d1f4;
+  --color-chip-border-2: #9bc0f3;
+  --color-chip-border-3: #7faef0;
 
-  --color-saint: #14664A;
+  --color-saint: #14664a;
   --color-rankeo: #2f3b23;
-  --color-piri: #3A2317;
+  --color-piri: #3a2317;
 
-  --color-footer-ink: #F2EFE7;
-  --color-footer-bar: #D9D9D9;
+  --color-footer-ink: #f2efe7;
+  --color-footer-bar: #d9d9d9;
   --color-rule: #e2ddd3;
   --color-rule-soft: #ddd6ca;
-  --color-star: #C79A3A;
-  --color-lottie-slot: #EFEBE4;
+  --color-star: #c79a3a;
+  --color-lottie-slot: #efebe4;
 
   /* Hero: wordmark y stickers, muestreados del frame de Figma. */
-  --color-wordmark: #302F2C;
-  --color-sticker-blue: #B3D1FB;
-  --color-sticker-blue-fold: #6F91BF;
-  --color-sticker-yellow: #FEFDA1;
-  --color-sticker-yellow-fold: #ADAC5E;
-  --color-sticker-pink: #FF9CED;
-  --color-sticker-white: #FFFFFF;
-  --color-sticker-white-fold: #CFC9BE;
+  --color-wordmark: #302f2c;
+  --color-sticker-blue: #b3d1fb;
+  --color-sticker-blue-fold: #6f91bf;
+  --color-sticker-yellow: #fefda1;
+  --color-sticker-yellow-fold: #adac5e;
+  --color-sticker-pink: #ff9ced;
+  --color-sticker-white: #ffffff;
+  --color-sticker-white-fold: #cfc9be;
 
   --font-sans: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, monospace;
@@ -103,8 +103,10 @@ a {
   padding-bottom: clamp(40px, 8svh, 90px);
 }
 
+/* Los +60px bajan los botones sin mover el wordmark: el mismo hueco se le resta
+   a la frase, así el bloque centrado conserva su altura total. */
 .hero-actions {
-  margin-top: clamp(36px, 6svh, 72px);
+  margin-top: calc(clamp(36px, 6svh, 72px) + 60px);
 }
 
 /* Círculos de redes: tinta blanca sobre negro, y al pasar se invierten. */
@@ -118,11 +120,11 @@ a {
   color: #000;
 }
 
-/* Mismo trato que el pill del footer: el `#111` del componente se perdía sobre
-   negro, así que va invertido. Sin `@layer`, para ganarle a las utilidades. */
+/* El pill comparte el gris translúcido del círculo de GitHub para que los dos
+   accesos lean como una sola fila. Sin `@layer`, para ganarle a las utilidades. */
 .hero-email-pill {
-  background: #fff;
-  color: #000;
+  background: rgb(255 255 255 / 10%);
+  color: #fff;
 }
 
 .hero-email-pill:hover {
@@ -131,10 +133,10 @@ a {
 }
 
 .hero-intro {
-  margin-top: clamp(48px, 9svh, 110px);
+  margin-top: max(8px, calc(clamp(48px, 9svh, 110px) - 60px));
   color: rgb(255 255 255 / 62%);
-  font-size: clamp(20px, 2.6vw, 34px);
-  font-weight: 500;
+  font-size: clamp(16px, 2.6vw, 30px);
+  font-weight: 400;
   line-height: 1.12;
   letter-spacing: -0.035em;
 }
@@ -374,36 +376,71 @@ footer[id] {
 }
 
 @keyframes overlay-fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes overlay-open {
-  from { opacity: 0; transform: translateY(26px) scale(0.985); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes commit-sweep {
-  0% { transform: translateX(-30%); opacity: 0; }
-  12% { opacity: 0.5; }
-  88% { opacity: 0.5; }
-  100% { transform: translateX(130%); opacity: 0; }
+  0% {
+    transform: translateX(-30%);
+    opacity: 0;
+  }
+  12% {
+    opacity: 0.5;
+  }
+  88% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateX(130%);
+    opacity: 0;
+  }
 }
 
 @keyframes commit-blink {
-  0%, 60% { opacity: 1; }
-  80% { opacity: 0.25; }
-  100% { opacity: 1; }
+  0%,
+  60% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0.25;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes copy-confirm {
-  from { opacity: 0; transform: scale(0.7) rotate(-12deg); }
-  to { opacity: 1; transform: scale(1) rotate(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.7) rotate(-12deg);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
 }
 
 /* §9 — bajo reduced motion nada depende del scroll para ser legible. */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
+  html {
+    scroll-behavior: auto;
+  }
 
   [data-motion="scroll"] {
     opacity: 1 !important;
@@ -411,7 +448,9 @@ footer[id] {
     filter: none !important;
   }
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -480,7 +519,9 @@ footer[id] {
     white-space: nowrap;
     opacity: 0;
     transform: translate(-50%, calc(-50% + 12px)) rotate(-3deg);
-    transition: opacity 250ms var(--ease-ui), transform 400ms var(--ease-ui);
+    transition:
+      opacity 250ms var(--ease-ui),
+      transform 400ms var(--ease-ui);
   }
 
   .project-cover-arrow {
@@ -614,15 +655,30 @@ footer[id] {
 }
 
 @keyframes hero-sticker-hover {
-  0%, 100% { transform: none; }
-  30% { transform: translateY(-4px) rotate(-4deg); }
-  65% { transform: translateY(-2px) rotate(2deg); }
+  0%,
+  100% {
+    transform: none;
+  }
+  30% {
+    transform: translateY(-4px) rotate(-4deg);
+  }
+  65% {
+    transform: translateY(-2px) rotate(2deg);
+  }
 }
 
 @keyframes hero-sticker-idle {
-  0%, 10%, 100% { transform: none; }
-  3% { transform: translateY(-3px) rotate(-3deg); }
-  6% { transform: translateY(-1px) rotate(2deg); }
+  0%,
+  10%,
+  100% {
+    transform: none;
+  }
+  3% {
+    transform: translateY(-3px) rotate(-3deg);
+  }
+  6% {
+    transform: translateY(-1px) rotate(2deg);
+  }
 }
 
 /* Firma de bienvenida: el porcentaje representa el avance de la introducción. */
@@ -633,7 +689,8 @@ footer[id] {
   display: grid;
   place-items: center;
   background: var(--color-page);
-  animation: site-intro-exit 350ms cubic-bezier(0.65, 0, 0.35, 1) var(--intro-progress-duration) both;
+  animation: site-intro-exit 350ms cubic-bezier(0.65, 0, 0.35, 1)
+    var(--intro-progress-duration) both;
 }
 
 .site-intro-signature {
@@ -688,23 +745,45 @@ body:has(.site-intro) .hero-wordmark > .sticker-shadow > .sticker {
 }
 
 @keyframes site-intro-enter {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @keyframes site-intro-dot {
-  0% { opacity: 0; transform: translateY(-20px) scale(0.6); }
-  65% { opacity: 1; transform: translateY(2px) scale(1.08, 0.92); }
-  100% { opacity: 1; transform: none; }
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.6);
+  }
+  65% {
+    opacity: 1;
+    transform: translateY(2px) scale(1.08, 0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @keyframes site-intro-exit {
-  from { opacity: 1; }
-  to { opacity: 0; visibility: hidden; }
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .site-intro { display: none; }
+  .site-intro {
+    display: none;
+  }
 }
 
 .site-intro-percentage {

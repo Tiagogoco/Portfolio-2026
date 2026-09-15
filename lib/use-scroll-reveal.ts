@@ -25,14 +25,15 @@ export function useScrollReveal(scope: RefObject<HTMLElement | null>) {
       // Medimos antes de escribir estilos; excluimos la variante responsive oculta.
       const targets = Array.from(scope.current.querySelectorAll<HTMLElement>('[data-reveal]'))
         .map((element) => ({ element, rect: element.getBoundingClientRect() }))
-        .filter(({ element, rect }) => rect.width > 0 && !seen.has(element));
+        .filter(({ element, rect }) => rect.width > 0 &&
+          (!seen.has(element) || element.hasAttribute('data-marker-block')));
       const tweens = new Map<HTMLElement, gsap.core.Tween>();
 
       for (const { element, rect } of targets) {
         // Conserva el contenido visible al restaurar scroll o seguir un ancla.
         if (rect.top < window.innerHeight * 0.9) {
           seen.add(element);
-          continue;
+          if (!element.hasAttribute('data-marker-block')) continue;
         }
 
         const kind = element.dataset.reveal;
@@ -45,6 +46,13 @@ export function useScrollReveal(scope: RefObject<HTMLElement | null>) {
             autoSplit: true,
             aria: 'auto',
             onSplit(split) {
+              // deepSlice separa el mark por renglón. Reasignamos los tramos
+              // también al cambiar de ancho o volver a un texto ya revelado.
+              const marks = element.querySelectorAll<HTMLElement>('.scroll-marker');
+              marks.forEach((mark, index) => {
+                mark.style.setProperty('--marker-lines', String(marks.length));
+                mark.style.setProperty('--marker-line', String(index));
+              });
               // Un cambio de ancho recalcula las líneas sin repetir una entrada terminada.
               if (seen.has(element)) return;
               const tween = gsap.from(split[unit], {

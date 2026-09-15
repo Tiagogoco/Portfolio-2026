@@ -782,7 +782,7 @@ body:has(.site-intro) .hero-wordmark > .sticker-shadow > .sticker {
   background-image: linear-gradient(178deg, transparent 7%, #a9d8f5 12%, #a9d8f5 88%, transparent 94%);
   background-repeat: no-repeat;
   background-position: left 85%;
-  background-size: var(--marker-progress, 100%) 65%;
+  background-size: clamp(0%, calc(var(--marker-progress, 100%) * var(--marker-lines, 1) - var(--marker-line, 0) * 100%), 100%) 65%;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }

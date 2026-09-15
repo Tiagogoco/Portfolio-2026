@@ -2,6 +2,7 @@
 
 import { useRef } from 'react';
 import { useScrollReveal } from '@/lib/use-scroll-reveal';
+import { useScrollMarker } from '@/lib/use-scroll-marker';
 import { Hero } from './hero';
 import { Process } from './process';
 import { ProjectsStack } from './projects-stack';
@@ -16,6 +17,7 @@ import { SiteHeader } from './site-header';
 export function Site() {
   const mainRef = useRef<HTMLElement>(null);
   useScrollReveal(mainRef);
+  useScrollMarker(mainRef);
   return (
     <>
       <SiteHeader />

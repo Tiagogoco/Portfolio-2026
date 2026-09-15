@@ -1,3 +1,4 @@
+import { HighlightText } from './highlight-text';
 import Image from 'next/image';
 import { aboutContent } from '@/content/site';
 
@@ -22,10 +23,11 @@ export function Process() {
 
         <h2
           data-reveal="text-lines"
+          data-marker-block
           className="m-0 mt-[clamp(24px,4vh,52px)] font-serif font-normal tracking-[-0.015em] text-ink"
           style={{ fontSize: 'clamp(38px, 5.4vw, 96px)', lineHeight: 1.02, textWrap: 'pretty' }}
         >
-          {aboutContent.headline}
+          <HighlightText text={aboutContent.headline} phrase="una experiencia que funciona" />
         </h2>
 
         <div className="mt-[clamp(48px,8vh,120px)] grid gap-[clamp(32px,5vw,80px)] md:grid-cols-2 md:items-stretch">

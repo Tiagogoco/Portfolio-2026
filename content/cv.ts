@@ -10,6 +10,10 @@ import { EMAIL } from '@/content/site';
  * tengan la misma forma, pero no a que digan lo mismo.
  *
  * Todo lo que se afirma aquí tiene que ser verificable.
+ *
+ * Los `period` salen del primer commit de cada repo, no de memoria:
+ * PIRI `piri.git` 2026-03-29, Rankeo `Tournament-Bracket-Platform.git`
+ * 2026-04-06, Saint Padel `saint-padel-shop.git` 2026-07-21.
  */
 
 export type CvLocale = 'es' | 'en';
@@ -79,7 +83,7 @@ export const cv: Record<CvLocale, CvContent> = {
       {
         org: 'PIRI Antigüedades',
         role: 'Socio · Full Stack y diseño de producto',
-        period: '2025 — Actual',
+        period: 'Marzo 2026 — Actual',
         site: piriSite,
         bullets: [
           'Construí el e-commerce y el branding de un negocio de antigüedades que sostiene 90+ ventas mensuales en Mercado Libre, con pagos vía Stripe, apartado de piezas y cotización de envíos.',
@@ -90,7 +94,7 @@ export const cv: Record<CvLocale, CvContent> = {
       {
         org: 'Rankeo',
         role: 'Producto propio · Full Stack y diseño de producto',
-        period: '2026 — Actual',
+        period: 'Abril 2026 — Actual',
         site: rankeoSite,
         bullets: [
           'Desarrollé la plataforma de torneos y ligas de pádel que usan Urban Padel y Padelex: inscripciones con pago en línea, rankings y cuatro formatos de competencia.',
@@ -101,7 +105,7 @@ export const cv: Record<CvLocale, CvContent> = {
       {
         org: 'Saint Padel',
         role: 'Freelance · Full Stack y diseño de producto',
-        period: '2026 — Actual',
+        period: 'Julio 2026 — Actual',
         site: saintSite,
         bullets: [
           'Diseñé y desarrollé un e-commerce de equipo de pádel por lanzamientos, con inventario y preventas dentro del mismo flujo de compra.',
@@ -149,7 +153,7 @@ export const cv: Record<CvLocale, CvContent> = {
       {
         org: 'PIRI Antigüedades',
         role: 'Partner · Full Stack and Product Design',
-        period: '2025 — Present',
+        period: 'March 2026 — Present',
         site: piriSite,
         bullets: [
           'Built the storefront and the branding for an antiques business that sustains 90+ monthly sales on Mercado Libre, with Stripe payments, item holds and shipping quotes.',
@@ -160,7 +164,7 @@ export const cv: Record<CvLocale, CvContent> = {
       {
         org: 'Rankeo',
         role: 'Own product · Full Stack and Product Design',
-        period: '2026 — Present',
+        period: 'April 2026 — Present',
         site: rankeoSite,
         bullets: [
           'Built the padel tournament and league platform used by Urban Padel and Padelex: online registration and payments, rankings, and four competition formats.',
@@ -171,7 +175,7 @@ export const cv: Record<CvLocale, CvContent> = {
       {
         org: 'Saint Padel',
         role: 'Freelance · Full Stack and Product Design',
-        period: '2026 — Present',
+        period: 'July 2026 — Present',
         site: saintSite,
         bullets: [
           'Designed and built a drop-based e-commerce for padel gear, with inventory and pre-orders inside a single checkout flow.',

@@ -1,0 +1,246 @@
+/* Hoja A4 real: las medidas van en milímetros para que lo que se ve en
+   pantalla sea exactamente lo que sale al imprimir a PDF. El navegador resuelve
+   mm a 96dpi, así que la caja no cambia entre medios. */
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+.cv-page {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  padding: 64px 16px 96px;
+  background: var(--color-page);
+}
+
+.cv-sheet {
+  flex: 0 0 auto;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 15mm 15mm 12mm;
+  background: #fff;
+  box-shadow: 0 20px 60px rgb(31 27 22 / 14%);
+  color: #17140f;
+  font-family: var(--font-sans);
+  font-size: 12.4px;
+  font-variant-ligatures: none;
+  line-height: 1.38;
+}
+
+/* Ojo al tocar los titulares: no llevan `letter-spacing` a propósito. Al
+   exportar a PDF, Chrome coloca glifo por glifo y deja de emitir el espacio,
+   así que con tracking un ATS leía "TiagoGómezCordero" como una sola palabra.
+
+   Por lo mismo va `font-variant-ligatures: none`: la ligadura «fi» sale como
+   una corrida de texto aparte y la extracción partía "Profile" en "Pro"+"file".
+   Sin ligaduras la palabra queda entera en la capa de texto. */
+
+/* Acceso a la impresión. Es la vía de descarga: el diálogo del navegador
+   guarda como PDF con los mismos márgenes de `@page`. */
+.cv-actions {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 20;
+  display: flex;
+  gap: 8px;
+}
+
+.cv-actions button,
+.cv-actions a {
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #000;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+}
+
+.cv-actions button:hover {
+  background: var(--color-blue);
+}
+
+/* El switch es secundario: la acción principal sigue siendo descargar. */
+.cv-actions-switch {
+  border: 1px solid #d7d1c6;
+  background: #fff;
+  color: #17140f;
+  text-decoration: none;
+}
+
+.cv-actions-switch:hover {
+  border-color: #17140f;
+}
+
+/* Encabezado */
+.cv-name {
+  margin: 0;
+  font-size: 33px;
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.cv-headline {
+  margin: 5px 0 9px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.cv-contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 8px;
+  color: #3d372e;
+  font-size: 11.8px;
+}
+
+.cv-contact span[aria-hidden='true'] {
+  color: #a09889;
+}
+
+.cv-sheet a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-color: #b8b1a5;
+}
+
+/* Dos columnas: la barra lateral es el escaneo rápido, la principal la prueba. */
+.cv-body {
+  display: grid;
+  grid-template-columns: 56mm 1fr;
+  gap: 11mm;
+  margin-top: 7mm;
+}
+
+.cv-section + .cv-section {
+  margin-top: 5.5mm;
+}
+
+.cv-section h2 {
+  margin: 0 0 6px;
+  padding-bottom: 5px;
+  border-bottom: 1.5px solid #17140f;
+  font-size: 19px;
+  font-weight: 800;
+}
+
+.cv-section p {
+  margin: 0 0 6px;
+}
+
+.cv-block + .cv-block {
+  margin-top: 6px;
+}
+
+.cv-block-title {
+  font-size: 12.4px;
+  font-weight: 700;
+}
+
+.cv-block-detail {
+  color: #3d372e;
+}
+
+.cv-block-muted {
+  color: #6d675e;
+}
+
+/* Experiencia */
+.cv-role + .cv-role {
+  margin-top: 5mm;
+}
+
+.cv-role h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.cv-role-line {
+  margin: 2px 0 0;
+  font-size: 12.4px;
+  font-weight: 700;
+}
+
+.cv-role-meta {
+  margin: 1px 0 5px;
+  color: #3d372e;
+  font-size: 11.8px;
+}
+
+/* Viñeta nativa a propósito: con un `::before` posicionado, el PDF exportaba el
+   bullet después del texto y desordenaba la lectura de la capa de texto. */
+.cv-role ul {
+  /* `list-style` explícito: el preflight de Tailwind lo apaga para todo el sitio. */
+  margin: 0;
+  padding-left: 15px;
+  list-style: disc outside;
+}
+
+.cv-role li {
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
+
+/* Debajo del ancho de la hoja no tiene sentido obligar a un scroll horizontal:
+   en pantalla el CV se vuelve fluido y de una columna. La impresión no se
+   entera, porque esta consulta es `screen`. */
+@media screen and (max-width: 860px) {
+  .cv-page {
+    padding: 72px 14px 64px;
+  }
+
+  .cv-sheet {
+    width: 100%;
+    min-height: 0;
+    padding: 26px 20px 32px;
+  }
+
+  .cv-body {
+    grid-template-columns: 1fr;
+    gap: 7mm;
+  }
+}
+
+@media print {
+  html,
+  body,
+  .cv-page {
+    background: #fff;
+  }
+
+  .cv-page {
+    display: block;
+    padding: 0;
+  }
+
+  .cv-sheet {
+    width: auto;
+    min-height: 0;
+    box-shadow: none;
+  }
+
+  /* El cursor, la intro y el botón son cromo del sitio, no del documento. */
+  .cv-actions,
+  .cursor-follower,
+  .site-intro {
+    display: none !important;
+  }
+
+  .cv-sheet a {
+    text-decoration: none;
+  }
+
+  /* Ninguna entrada debe partirse entre páginas si el CV crece a dos hojas. */
+  .cv-role,
+  .cv-block {
+    break-inside: avoid;
+  }
+}

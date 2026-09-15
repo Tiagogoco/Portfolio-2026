@@ -1,5 +1,6 @@
 'use client';
 
+import { usePathname } from 'next/navigation';
 import { useEffect, useState, type CSSProperties } from 'react';
 
 const INTRO_DURATION = 2500;
@@ -10,12 +11,15 @@ let seenInMemory = false;
 
 /** Bienvenida breve, una vez por carga de página; no simula progreso de carga. */
 export function SiteIntro() {
+  const pathname = usePathname();
   const [visible, setVisible] = useState(false);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (reduced.matches || seenInMemory) return;
+    /** El CV es un documento que se comparte por enlace: quien lo abre no debe
+        esperar la bienvenida del sitio para poder leerlo. */
+    if (pathname.startsWith('/cv') || reduced.matches || seenInMemory) return;
 
     let timer = 0;
     let interval = 0;
@@ -47,7 +51,7 @@ export function SiteIntro() {
       window.removeEventListener('pointerdown', dismiss);
       reduced.removeEventListener('change', dismiss);
     };
-  }, []);
+  }, [pathname]);
 
   if (!visible) return null;
 

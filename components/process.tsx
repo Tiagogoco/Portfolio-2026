@@ -16,11 +16,12 @@ export function Process() {
       }}
     >
       <div className="mx-auto w-full max-w-[1440px]">
-        <div className="font-mono text-[clamp(10px,1vw,13px)] uppercase tracking-[0.22em] text-ink-mute">
+        <div data-reveal="label" className="font-mono text-[clamp(10px,1vw,13px)] uppercase tracking-[0.22em] text-ink-mute">
           {aboutContent.eyebrow}
         </div>
 
         <h2
+          data-reveal="text-lines"
           className="m-0 mt-[clamp(24px,4vh,52px)] font-serif font-normal tracking-[-0.015em] text-ink"
           style={{ fontSize: 'clamp(38px, 5.4vw, 96px)', lineHeight: 1.02, textWrap: 'pretty' }}
         >
@@ -28,7 +29,7 @@ export function Process() {
         </h2>
 
         <div className="mt-[clamp(48px,8vh,120px)] grid gap-[clamp(32px,5vw,80px)] md:grid-cols-2 md:items-stretch">
-          <figure className="relative m-0 aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-lottie-slot">
+          <figure data-reveal="media" className="relative m-0 aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-lottie-slot">
             <Image
               src={aboutContent.portrait.src}
               alt={aboutContent.portrait.alt}
@@ -42,6 +43,7 @@ export function Process() {
           <div className="flex flex-col justify-end gap-[clamp(18px,2.4vh,28px)]">
             {aboutContent.notes.map((note) => (
               <p
+                data-reveal="copy"
                 key={note}
                 className="m-0 max-w-[46ch] uppercase tracking-[0.015em] text-body"
                 style={{ fontSize: 'clamp(13px, 1.05vw, 16px)', lineHeight: 1.5 }}

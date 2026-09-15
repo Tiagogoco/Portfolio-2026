@@ -1,12 +1,10 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useTransform, type MotionValue } from "motion/react";
 import { projects, type Project } from "@/content/projects";
 import { proyectosHeader } from "@/content/site";
-import { stagger, useEnterProgress } from "@/lib/scroll";
 import { GlobeIcon } from "./globe-icon";
 
 const SURFACES = ["#F2F0EB", "#E9EDF1", "#F4F1EC"];
@@ -35,14 +33,8 @@ function ProjectCard({
   project: Project;
   index: number;
 }) {
-  const ref = useRef<HTMLElement>(null);
-  const enter = useEnterProgress(ref);
-  const reveal = useTransform(enter, (value) => stagger(value, 0, 0, 0.34));
-  const y = useTransform(reveal, (value) => 30 * (1 - value));
-
   return (
     <article
-      ref={ref}
       className="relative mb-[10px] md:mb-0"
       style={{ zIndex: index + 1 }}
     >
@@ -50,14 +42,12 @@ function ProjectCard({
         className="w-full"
         style={{ "--surface": SURFACES[index] } as React.CSSProperties}
       >
-        <motion.div
-          data-motion="project-card"
+        <div
           className="w-full pt-5 md:mx-auto md:max-w-[1020px] md:bg-transparent md:p-0 md:shadow-none"
-          style={{ opacity: reveal, y }}
         >
           <MobileProjectCard project={p} />
           <DesktopProjectCard project={p} />
-        </motion.div>
+        </div>
       </div>
     </article>
   );
@@ -77,13 +67,14 @@ function MobileProjectCard({ project: p }: { project: Project }) {
         >
           <Link
             href={`/proyectos/${p.id}`}
+            data-reveal="text-words"
             scroll={false}
             className="transition-opacity hover:opacity-65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
           >
             {p.title}
           </Link>
         </h3>
-        <p className="m-0 mt-5 max-w-[430px] text-[18px] leading-[1.28] tracking-[-0.025em] text-body">
+        <p data-reveal="copy" className="m-0 mt-5 max-w-[430px] text-[18px] leading-[1.28] tracking-[-0.025em] text-body">
           {p.teaser}
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
@@ -114,6 +105,7 @@ function DesktopProjectCard({ project: p }: { project: Project }) {
             <h3 className="m-0 font-extrabold text-[clamp(28px,2.6vw,40px)] uppercase leading-[0.82] tracking-[-0.07em]">
               <Link
                 href={`/proyectos/${p.id}`}
+                data-reveal="text-words"
                 scroll={false}
                 className="transition-opacity hover:opacity-65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
               >
@@ -121,6 +113,7 @@ function DesktopProjectCard({ project: p }: { project: Project }) {
               </Link>
             </h3>
             <p
+              data-reveal="copy"
               className="m-0 mt-5 max-w-[560px] text-[clamp(17px,1.7vw,23px)] leading-[1.18] tracking-[-0.025em]"
               style={{ color: p.cardTeaserInk }}
             >
@@ -157,7 +150,7 @@ function CardMedia({
   showGlobe?: boolean;
 }) {
   return (
-    <div className="relative">
+    <div data-reveal="media" className="relative">
       <Link
         href={`/proyectos/${p.id}`}
         scroll={false}
@@ -198,46 +191,25 @@ function CardMedia({
 }
 
 function ProjectsHeader() {
-  const ref = useRef<HTMLElement>(null);
-  const enter = useEnterProgress(ref);
-
   return (
     <header
-      ref={ref}
       className="mx-auto mt-[100px] w-full max-w-[1180px] px-10 pb-[clamp(48px,4vw,64px)] pt-[13vh] max-md:mt-[65px] max-md:px-0 max-md:pb-12 max-md:pt-16"
     >
-      <Reveal p={enter} i={0}>
+      <div data-reveal="label">
         <div className="font-mono text-[11px] uppercase tracking-[0.22em] text-ink-mute">
           {proyectosHeader.eyebrow}
         </div>
-      </Reveal>
-      <Reveal p={enter} i={1}>
+      </div>
+      <div>
         <h2
+          data-reveal="text-lines"
           className="m-0 mt-5 max-w-[1000px] font-extrabold text-[clamp(48px,9vw,132px)] lowercase tracking-[-0.07em] text-black md:text-[clamp(52px,6vw,92px)]"
           style={{ lineHeight: 0.82 }}
         >
           {proyectosHeader.title}
         </h2>
-      </Reveal>
+      </div>
     </header>
-  );
-}
-
-function Reveal({
-  p,
-  i,
-  children,
-}: {
-  p: MotionValue<number>;
-  i: number;
-  children: React.ReactNode;
-}) {
-  const e = useTransform(p, (v) => stagger(v, i, 0.12, 0.3));
-  const y = useTransform(e, (v) => 26 * (1 - v));
-  return (
-    <motion.div data-motion="scroll" style={{ opacity: e, y }}>
-      {children}
-    </motion.div>
   );
 }
 

@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+import { useScrollReveal } from '@/lib/use-scroll-reveal';
 import { Hero } from './hero';
 import { Process } from './process';
 import { ProjectsStack } from './projects-stack';
@@ -12,10 +14,12 @@ import { SiteHeader } from './site-header';
  * compartible y hace que atrás/adelante del navegador cierren y reabran el overlay.
  */
 export function Site() {
+  const mainRef = useRef<HTMLElement>(null);
+  useScrollReveal(mainRef);
   return (
     <>
       <SiteHeader />
-      <main>
+      <main ref={mainRef}>
         <Hero />
         <ProjectsStack />
         <Process />

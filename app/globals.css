@@ -378,13 +378,6 @@ footer[id] {
   scroll-margin-top: 76px;
 }
 
-@media (min-width: 768px) {
-  [data-motion="project-card"] {
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
 @keyframes overlay-fade {
   from {
     opacity: 0;
@@ -416,13 +409,19 @@ footer[id] {
   }
 }
 
+/* Conserva ascendentes y descendentes en los titulares de interlineado cerrado. */
+.reveal-line-mask {
+  overflow-clip-margin: 0.18em;
+}
+
 /* §9 — bajo reduced motion nada depende del scroll para ser legible. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  [data-motion="scroll"] {
+  [data-motion="scroll"],
+  [data-reveal] {
     opacity: 1 !important;
     transform: none !important;
     filter: none !important;

@@ -20,6 +20,7 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
   const panelRef = useRef<HTMLDivElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
+  const Heading = standalone ? 'h1' : 'h2';
 
   const p = projects[index];
   const next = projects[(index + 1) % projects.length];
@@ -101,9 +102,9 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                 <div className="flex min-w-0 items-start justify-between gap-4 max-md:flex-col max-md:gap-2">
                   <div className="flex min-w-0 items-start gap-4">
                     <span className="pt-2 font-mono text-[11px] font-bold tracking-[0.12em] text-ink-mute">{p.n}</span>
-                    <h2 id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold text-[clamp(42px,5vw,76px)] uppercase leading-[0.76] tracking-[-0.09em] max-md:text-[clamp(60px,16vw,128px)] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`}>
+                    <Heading id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold text-[clamp(42px,5vw,76px)] uppercase leading-[0.76] tracking-[-0.09em] max-md:text-[clamp(60px,16vw,128px)] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`}>
                       {p.id === 'saint' ? <>SAINT<br />PADEL</> : p.title}
-                    </h2>
+                    </Heading>
                   </div>
                   <button
                     type="button"

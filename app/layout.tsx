@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Archivo, Instrument_Serif, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
+import { SITE_URL, SITE_TITLE, SITE_DESCRIPTION } from '@/lib/seo';
 import { CursorFollower } from '@/components/cursor-follower';
 import { SiteIntro } from '@/components/site-intro';
 
@@ -26,30 +27,24 @@ const instrument = Instrument_Serif({
   display: 'swap',
 });
 
-/** Dominio canónico: tiagogoco.com redirige a www, así que el absoluto lleva www.
-    Si esta URL no es la real, `metadataBase` firma los og:image hacia un dominio
-    que no resuelve y las previews de WhatsApp o Safari caen al favicon. */
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.tiagogoco.com';
-
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: 'Tiago Gómez — Desarrollador y product designer',
-  description:
-    'Creando productos digitales desde la idea hasta producción. Ecommerce, SaaS y plataformas en Next.js, con usuarios reales desde 2025.',
-  keywords: ['desarrollador', 'product designer', 'Next.js', 'Puebla', 'ecommerce', 'SaaS'],
-  authors: [{ name: 'Tiago Gómez' }],
+  title: { default: SITE_TITLE, template: '%s | tiagogoco' },
+  description: SITE_DESCRIPTION,
+  authors: [{ name: 'Tiago Gómez', url: SITE_URL }],
+  creator: 'Tiago Gómez — tiagogoco',
   openGraph: {
     type: 'website',
     locale: 'es_MX',
     url: SITE_URL,
     siteName: 'tiagogoco',
-    title: 'Tiago Gómez — Desarrollador y product designer',
-    description: 'Creando productos digitales desde la idea hasta producción.',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Tiago Gómez — Desarrollador y product designer',
-    description: 'Creando productos digitales desde la idea hasta producción.',
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
   },
 };
 

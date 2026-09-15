@@ -43,7 +43,7 @@ export const heroPreviews = [
 export const aboutContent = {
   eyebrow: "sobre mí",
   headline:
-    "Soy Tiago, desarrollador y product designer en Puebla. Construyo productos digitales de principio a fin: de una idea clara a una experiencia que funciona.",
+    "Soy Tiago Gómez, desarrollador web y product designer en Puebla. Construyo productos digitales de principio a fin: de una idea clara a una experiencia que funciona.",
   /** Notas al pie del retrato, en versalitas. */
   notes: [
     "Me gusta trabajar cerca del problema: entender el negocio, diseñar el sistema y escribir el código que lo lleva a producción.",

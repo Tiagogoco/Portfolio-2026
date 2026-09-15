@@ -26,6 +26,19 @@ export type CvRole = {
   bullets: string[];
 };
 
+/** Trabajo de clase, sin desplegar: va en su propia sección y con su etiqueta,
+ *  nunca mezclado con la experiencia, que es trabajo pagado y en producción. */
+export type CvAcademicProject = {
+  title: string;
+  org: string;
+  /** Que fue en equipo se declara aquí, y las viñetas reclaman sólo la parte
+   *  propia. Al revés —callar el equipo y narrar en primera persona— es lo que
+   *  se cae en la entrevista. */
+  context: string;
+  period: string;
+  bullets: string[];
+};
+
 export type CvContent = {
   headline: string;
   location: string;
@@ -35,10 +48,12 @@ export type CvContent = {
     education: string;
     languages: string;
     experience: string;
+    academic: string;
     download: string;
   };
   profile: string[];
   experience: CvRole[];
+  academic: CvAcademicProject;
   skills: { title: string; items: string }[];
   education: { school: string; degree: string; detail: string; status: string[] };
   languages: { title: string; detail: string }[];
@@ -73,11 +88,12 @@ export const cv: Record<CvLocale, CvContent> = {
       education: 'Formación',
       languages: 'Idiomas',
       experience: 'Experiencia',
+      academic: 'Proyecto académico',
       download: 'Descargar PDF',
     },
     profile: [
-      'Diseño y desarrollo productos web que operan en producción: e-commerce con pagos, APIs y paneles de administración. Trabajo de punta a punta, del diseño en Figma al deploy.',
-      'Busco prácticas profesionales o una posición junior en desarrollo y diseño de producto web.',
+      'Desarrollo productos web que operan en producción: APIs, paneles de administración y tableros analíticos sobre PostgreSQL. Trabajo de punta a punta y aíslo la lógica crítica en módulos con pruebas.',
+      'Busco prácticas profesionales donde sumarme a un equipo de ingeniería.',
     ],
     experience: [
       {
@@ -113,12 +129,23 @@ export const cv: Record<CvLocale, CvContent> = {
         ],
       },
     ],
+    academic: {
+      title: 'Tablero BI · Distribución del gasto público en Puebla',
+      org: 'BUAP',
+      context: 'Proyecto escolar en equipo',
+      period: 'Mayo — Junio 2026',
+      bullets: [
+        'Construí un ETL en Python sobre seis fuentes de datos públicas (EFIPEM, PEF, ITER): normalicé codificaciones mixtas y formatos ancho/largo, y cargué el resultado en un modelo estrella en PostgreSQL.',
+        'Expuse el análisis con FastAPI y un tablero en Streamlit y Plotly: coeficiente de Gini del gasto municipal y correlación de Pearson entre gasto social y rezago en los 217 municipios del estado.',
+      ],
+    },
     skills: [
       { title: 'Frontend', items: 'React, Next.js, TypeScript, Tailwind CSS' },
       {
         title: 'Backend e integraciones',
         items: 'PostgreSQL, Supabase, Prisma, APIs REST, Stripe, Mercado Libre',
       },
+      { title: 'Datos y análisis', items: 'Python, pandas, FastAPI' },
       { title: 'Diseño de producto', items: 'Figma, interfaces, flujos de usuario, branding' },
       { title: 'Herramientas y calidad', items: 'Git, GitHub, Vercel, Vitest' },
     ],
@@ -143,11 +170,12 @@ export const cv: Record<CvLocale, CvContent> = {
       education: 'Education',
       languages: 'Languages',
       experience: 'Experience',
+      academic: 'Academic project',
       download: 'Download PDF',
     },
     profile: [
-      'I design and build web products that run in production: e-commerce with payments, APIs and admin dashboards. I work end to end, from the Figma file to the deploy.',
-      'Looking for a professional internship or a junior role in web development and product design.',
+      'I build web products that run in production: APIs, back offices and analytical dashboards on top of PostgreSQL. I work end to end and isolate the critical logic into tested modules.',
+      'Looking for a professional internship where I can join an engineering team.',
     ],
     experience: [
       {
@@ -183,12 +211,23 @@ export const cv: Record<CvLocale, CvContent> = {
         ],
       },
     ],
+    academic: {
+      title: 'BI dashboard · Public spending across Puebla',
+      org: 'BUAP',
+      context: 'Academic team project',
+      period: 'May — June 2026',
+      bullets: [
+        'Built a Python ETL over six public data sources (EFIPEM, PEF, ITER): I normalized mixed encodings and wide/long shapes, then loaded the result into a star schema in PostgreSQL.',
+        'Served the analysis through FastAPI and a Streamlit and Plotly dashboard: Gini coefficient for municipal spending and Pearson correlation between social spending and deprivation across the 217 municipalities of the state.',
+      ],
+    },
     skills: [
       { title: 'Frontend', items: 'React, Next.js, TypeScript, Tailwind CSS' },
       {
         title: 'Backend and integrations',
         items: 'PostgreSQL, Supabase, Prisma, REST APIs, Stripe, Mercado Libre',
       },
+      { title: 'Data and analysis', items: 'Python, pandas, FastAPI' },
       { title: 'Product design', items: 'Figma, interfaces, user flows, branding' },
       { title: 'Tooling and quality', items: 'Git, GitHub, Vercel, Vitest' },
     ],

@@ -76,25 +76,46 @@ export function CvDocument({ content, locale }: { content: CvContent; locale: Cv
             </section>
           </aside>
 
-          <section className="cv-section">
-            <h2>{content.labels.experience}</h2>
+          <div>
+            <section className="cv-section">
+              <h2>{content.labels.experience}</h2>
 
-            {content.experience.map((role) => (
-              <div className="cv-role" key={role.org}>
-                <h3>{role.org}</h3>
-                <p className="cv-role-line">{role.role}</p>
+              {content.experience.map((role) => (
+                <div className="cv-role" key={role.org}>
+                  <h3>{role.org}</h3>
+                  <p className="cv-role-line">{role.role}</p>
+                  <p className="cv-role-meta">
+                    {role.period} <span aria-hidden="true">|</span>{' '}
+                    <a href={role.site.href}>{role.site.label}</a>
+                  </p>
+                  <ul>
+                    {role.bullets.map((bullet) => (
+                      <li key={bullet}>{bullet}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </section>
+
+            {/* Hermano de Experiencia, no hijo: es trabajo de clase y
+                colgarlo de ahí lo haría pasar por experiencia pagada. */}
+            <section className="cv-section">
+              <h2>{content.labels.academic}</h2>
+              <div className="cv-role">
+                <p className="cv-role-line">{content.academic.title}</p>
                 <p className="cv-role-meta">
-                  {role.period} <span aria-hidden="true">|</span>{' '}
-                  <a href={role.site.href}>{role.site.label}</a>
+                  {content.academic.context} <span aria-hidden="true">|</span>{' '}
+                  {content.academic.org} <span aria-hidden="true">|</span>{' '}
+                  {content.academic.period}
                 </p>
                 <ul>
-                  {role.bullets.map((bullet) => (
+                  {content.academic.bullets.map((bullet) => (
                     <li key={bullet}>{bullet}</li>
                   ))}
                 </ul>
               </div>
-            ))}
-          </section>
+            </section>
+          </div>
         </div>
       </article>
     </main>

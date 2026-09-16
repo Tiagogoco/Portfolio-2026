@@ -64,16 +64,16 @@ export function SiteNavMobile({
         .fromTo(
           panel,
           { xPercent: 100 },
-          { xPercent: 0, duration: 0.55, ease: 'power4.out' },
+          { xPercent: 0, duration: 0.42, ease: 'power4.out' },
         )
-        .from('[data-nav-chrome]', { opacity: 0, duration: 0.4, stagger: 0.06 }, '-=0.26')
+        .from('[data-nav-chrome]', { opacity: 0, duration: 0.3, stagger: 0.045 }, '-=0.2')
         // Los destinos suben desde detrás del recorte de su `<li>`, como el
         // resto de los titulares del sitio.
-        .from('[data-nav-item]', { yPercent: 115, duration: 0.6, stagger: 0.075 }, '<')
+        .from('[data-nav-item]', { yPercent: 115, duration: 0.45, stagger: 0.055 }, '<')
         .from(
           '[data-nav-tail]',
-          { opacity: 0, y: 18, duration: 0.5, stagger: 0.07 },
-          '-=0.34',
+          { opacity: 0, y: 18, duration: 0.38, stagger: 0.05 },
+          '-=0.26',
         );
 
       return () => {
@@ -160,18 +160,18 @@ export function SiteNavMobile({
                   </ul>
                 </nav>
 
-                <div data-nav-tail className="mobile-nav-portrait w-[90%] max-w-[324px] shrink-0">
+                <div data-nav-tail className="mobile-nav-portrait w-[64%] max-w-[230px] shrink-0">
                   <Image
                     src={aboutContent.portrait.src}
                     alt=""
                     width={1024}
                     height={768}
-                    sizes="(max-width: 408px) calc(90vw - 43.2px), 324px"
+                    sizes="(max-width: 407px) calc(64vw - 30.72px), 230px"
                     className="aspect-4/3 w-full rounded-[20px] object-cover ring-1 ring-white/10"
                   />
                 </div>
 
-                <div className="flex w-full max-w-[360px] shrink-0 flex-col gap-3">
+                <div className="flex w-full max-w-[224px] shrink-0 flex-col gap-3">
                   <div data-nav-tail>
                     <CopyEmailButton pill className="mobile-nav-action" style={{ background: 'rgba(255,255,255,0.09)' }} />
                   </div>

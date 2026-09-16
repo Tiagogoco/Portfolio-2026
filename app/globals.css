@@ -786,11 +786,10 @@ body:has(.site-intro) .hero-wordmark > .sticker-shadow > .sticker {
   .scroll-marker { background-size: 100% 65%; }
 }
 
-/* Menú móvil: composición compacta con luz tenue detrás del retrato. */
+/* Menú móvil: composición compacta sobre negro sólido. */
 .mobile-nav-panel {
   padding-top: max(14px, env(safe-area-inset-top));
   padding-bottom: max(24px, env(safe-area-inset-bottom));
-  background-image: radial-gradient(ellipse at 50% 53%, rgba(93, 139, 177, 0.16), transparent 66%);
 }
 
 .mobile-nav-content {
@@ -813,10 +812,10 @@ body:has(.site-intro) .hero-wordmark > .sticker-shadow > .sticker {
 
 .mobile-nav-panel .mobile-nav-action {
   width: 100%;
-  min-height: 56px;
+  min-height: 52px;
   justify-content: space-between;
-  padding: 14px 24px;
-  font-size: 12px;
+  padding: 12px 18px;
+  font-size: 11px;
 }
 
 .mobile-nav-panel button.mobile-nav-action {

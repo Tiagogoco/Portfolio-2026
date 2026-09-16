@@ -790,3 +790,40 @@ body:has(.site-intro) .hero-wordmark > .sticker-shadow > .sticker {
 @media (prefers-reduced-motion: reduce) {
   .scroll-marker { background-size: 100% 65%; }
 }
+
+/* Menú móvil: composición compacta con luz tenue detrás del retrato. */
+.mobile-nav-panel {
+  padding-top: max(14px, env(safe-area-inset-top));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  background-image: radial-gradient(ellipse at 50% 53%, rgba(93, 139, 177, 0.16), transparent 66%);
+}
+
+.mobile-nav-content {
+  --nav-lift: clamp(0px, calc((100svh - 580px) * 0.1), 24px);
+  gap: clamp(22px, 3.5svh, 36px);
+  padding-block: 24px 8px;
+}
+
+.mobile-nav-content > nav,
+.mobile-nav-portrait {
+  position: relative;
+  top: calc(-1 * var(--nav-lift));
+}
+
+.mobile-nav-portrait img {
+  max-height: 28svh;
+  min-height: 140px;
+  object-position: center 45%;
+}
+
+.mobile-nav-panel .mobile-nav-action {
+  width: 100%;
+  min-height: 56px;
+  justify-content: space-between;
+  padding: 14px 24px;
+  font-size: 12px;
+}
+
+.mobile-nav-panel button.mobile-nav-action {
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.12);
+}

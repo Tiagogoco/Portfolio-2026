@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import Link from 'next/link';
 import { socials } from '@/content/site';
 import { useScrollReveal } from '@/lib/use-scroll-reveal';
 import { CopyEmailButton } from './copy-email-button';
@@ -42,6 +43,32 @@ export function SiteFooter() {
               </a>
             ))}
           </nav>
+
+          {/* Fuera del nav de redes a propósito: es una página propia, no un
+              perfil externo, y meterla ahí volvería falso su `aria-label`.
+              La mono de 10px contra la serif de las redes ya lo separa sin
+              necesidad de una regla. */}
+          <p className="mt-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-white/50">
+            <span>Currículum</span>
+            <Link
+              href="/cv"
+              aria-label="Currículum en español"
+              className="transition-colors hover:text-white"
+            >
+              ES
+            </Link>
+            <span aria-hidden="true" className="text-white/30">
+              /
+            </span>
+            <Link
+              href="/cv/en"
+              hrefLang="en"
+              aria-label="Résumé in English"
+              className="transition-colors hover:text-white"
+            >
+              EN
+            </Link>
+          </p>
         </div>
       </div>
     </footer>

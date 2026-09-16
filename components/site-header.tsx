@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { CopyEmailButton } from './copy-email-button';
+import { SiteNavMobile } from './site-nav-mobile';
 
 /**
  * La banda del header es opaca (si no, con la página compacta el contenido se
@@ -122,17 +123,36 @@ export function SiteHeader({ standalone = false }: { standalone?: boolean }) {
           </Link>
         </nav>
 
-        <nav aria-label="Navegación móvil" className="ml-auto flex items-center gap-4 font-mono text-[10px] uppercase tracking-[0.12em] md:hidden">
-          <Link href={aboutLink} className="transition-opacity hover:opacity-55">SOBRE MÍ</Link>
-          <Link href={contactLink} className="transition-opacity hover:opacity-55">CONTACTO</Link>
-        </nav>
-
-        <CopyEmailButton
-          compact
-          pill
-          className="ml-auto max-md:hidden"
-          style={{ background: pillBg, color: pillInk }}
+        {/* En móvil no hay sitio para el nav ni para el pill: los dos se mudan
+            al panel que abre esta hamburguesa. */}
+        <SiteNavMobile
+          ink={ink}
+          home={homeLink}
+          links={[
+            { label: 'Proyectos', href: projectsLink },
+            { label: 'Contacto', href: contactLink },
+            { label: 'Sobre mí', href: aboutLink },
+          ]}
         />
+
+        {/* El CV es una acción, como el correo, no una sección del sitio: por eso
+            va en el bloque derecho y no en el nav del centro. Sin fondo, para que
+            el pill siga siendo la única acción con peso. */}
+        <div className="ml-auto flex items-center gap-[clamp(16px,2vw,28px)] max-md:hidden">
+          <Link
+            href="/cv"
+            className="transition-opacity hover:opacity-55"
+            style={{ color: ink }}
+          >
+            CV
+          </Link>
+
+          <CopyEmailButton
+            compact
+            pill
+            style={{ background: pillBg, color: pillInk }}
+          />
+        </div>
       </div>
     </div>
   );

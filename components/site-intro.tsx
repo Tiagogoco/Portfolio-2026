@@ -1,5 +1,6 @@
 'use client';
 
+import { completeIntro } from '@/lib/intro-ready';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState, type CSSProperties } from 'react';
 
@@ -19,7 +20,10 @@ export function SiteIntro() {
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
     /** El CV es un documento que se comparte por enlace: quien lo abre no debe
         esperar la bienvenida del sitio para poder leerlo. */
-    if (pathname.startsWith('/cv') || reduced.matches || seenInMemory) return;
+    if (pathname.startsWith('/cv') || reduced.matches || seenInMemory) {
+      completeIntro();
+      return;
+    }
 
     let timer = 0;
     let interval = 0;
@@ -27,6 +31,7 @@ export function SiteIntro() {
       window.clearInterval(interval);
       window.clearTimeout(timer);
       setVisible(false);
+      completeIntro();
     };
     const frame = requestAnimationFrame(() => {
       seenInMemory = true;
@@ -44,6 +49,7 @@ export function SiteIntro() {
     window.addEventListener('pointerdown', dismiss);
     reduced.addEventListener('change', dismiss);
     return () => {
+      if (seenInMemory) completeIntro();
       cancelAnimationFrame(frame);
       window.clearTimeout(timer);
       window.clearInterval(interval);

@@ -1,3 +1,7 @@
+'use client';
+
+import { useRef } from "react";
+import { useHeroEntrance } from "@/lib/use-hero-entrance";
 import { socials } from "@/content/site";
 import { CopyEmailButton } from "./copy-email-button";
 
@@ -13,14 +17,16 @@ import { CopyEmailButton } from "./copy-email-button";
  * pantalla y ya.
  */
 export function Hero() {
+  const ref = useRef<HTMLElement>(null);
+  useHeroEntrance(ref);
   return (
     <section
+      ref={ref}
       id="top"
       data-skin="dark"
       className="hero-shell relative mx-auto max-w-[1440px] px-[clamp(24px,5vw,72px)]"
     >
-      {/* Columna centrada: wordmark, accesos y frase comparten eje. La frase
-          conserva su alineación a la izquierda dentro del bloque centrado. */}
+      {/* Columna centrada: wordmark, accesos y frase comparten eje. */}
       <div className="hero-main flex flex-col items-center justify-center">
         {/* El tope por `svh` en el `font-size` mantiene la portada en una sola
             pantalla: en monitores bajitos el wordmark encoge solo en vez de
@@ -109,7 +115,7 @@ export function Hero() {
           />
         </div>
 
-        <p className="hero-intro m-0 max-w-[22ch] mt-50">
+        <p className="hero-intro m-0 max-w-[22ch] mt-50 md:text-center">
           Portfolio de Tiago Gómez. Productos digitales desde los primeros
           wireframes hasta producción.
         </p>

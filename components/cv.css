@@ -1,9 +1,16 @@
-/* Hoja A4 real: las medidas van en milímetros para que lo que se ve en
+/* Hoja Carta real: las medidas van en milímetros para que lo que se ve en
    pantalla sea exactamente lo que sale al imprimir a PDF. El navegador resuelve
-   mm a 96dpi, así que la caja no cambia entre medios. */
+   mm a 96dpi, así que la caja no cambia entre medios.
+
+   Carta y no A4. `@page` no es garantía: iOS ignora el tamaño que pide el CSS
+   y usa el del diálogo del sistema, que por default es Carta. Así que la hoja se
+   calibra contra la más corta de las dos —Carta mide 279.4mm de alto contra los
+   297mm de A4— y `@page` sólo confirma esa elección donde sí se respeta.
+   Calibrado a A4 el CV salía en dos páginas al imprimir desde el teléfono.
+   Al revés funciona: lo que cabe en Carta cabe en A4, con aire de sobra. */
 
 @page {
-  size: A4;
+  size: letter;
   margin: 0;
 }
 
@@ -17,16 +24,16 @@
 
 .cv-sheet {
   flex: 0 0 auto;
-  width: 210mm;
-  min-height: 297mm;
-  padding: 15mm 15mm 12mm;
+  width: 216mm;
+  min-height: 279.4mm;
+  padding: 13mm 12mm 11mm;
   background: #fff;
   box-shadow: 0 20px 60px rgb(31 27 22 / 14%);
   color: #17140f;
   font-family: var(--font-sans);
   font-size: 12.4px;
   font-variant-ligatures: none;
-  line-height: 1.38;
+  line-height: 1.34;
 }
 
 /* Ojo al tocar los titulares: no llevan `letter-spacing` a propósito. Al
@@ -115,28 +122,28 @@
 .cv-body {
   display: grid;
   grid-template-columns: 56mm 1fr;
-  gap: 11mm;
-  margin-top: 7mm;
+  gap: 9mm;
+  margin-top: 5mm;
 }
 
 .cv-section + .cv-section {
-  margin-top: 5.5mm;
+  margin-top: 4.5mm;
 }
 
 .cv-section h2 {
-  margin: 0 0 6px;
-  padding-bottom: 5px;
+  margin: 0 0 5px;
+  padding-bottom: 4px;
   border-bottom: 1.5px solid #17140f;
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 800;
 }
 
 .cv-section p {
-  margin: 0 0 6px;
+  margin: 0 0 5px;
 }
 
 .cv-block + .cv-block {
-  margin-top: 6px;
+  margin-top: 5px;
 }
 
 .cv-block-title {
@@ -154,7 +161,7 @@
 
 /* Experiencia */
 .cv-role + .cv-role {
-  margin-top: 5mm;
+  margin-top: 4mm;
 }
 
 .cv-role h3 {
@@ -185,7 +192,7 @@
 }
 
 .cv-role li {
-  margin-bottom: 4px;
+  margin-bottom: 3px;
   padding-left: 2px;
 }
 

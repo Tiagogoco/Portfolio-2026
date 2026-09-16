@@ -279,11 +279,6 @@ a {
     padding-bottom: 0;
   }
 
-  .hero-shell::before {
-    border-end-start-radius: var(--hero-radius);
-    border-end-end-radius: var(--hero-radius);
-  }
-
   .hero-main {
     padding-top: clamp(92px, 15svh, 132px);
     padding-bottom: clamp(32px, 6svh, 64px);

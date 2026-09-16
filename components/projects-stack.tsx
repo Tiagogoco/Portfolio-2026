@@ -209,6 +209,13 @@ function ProjectsHeader() {
           {proyectosHeader.title}
         </h2>
       </div>
+      <p
+        data-reveal="copy"
+        className="m-0 mt-6 max-w-[46ch] text-body"
+        style={{ fontSize: 'clamp(14px, 1.15vw, 18px)', lineHeight: 1.5 }}
+      >
+        {proyectosHeader.lede}
+      </p>
     </header>
   );
 }

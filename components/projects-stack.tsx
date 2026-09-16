@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
+import { ProjectVideo } from "./project-video";
 import Link from "next/link";
 import { projects, type Project } from "@/content/projects";
 import { proyectosHeader } from "@/content/site";
@@ -221,7 +221,6 @@ function ProjectsHeader() {
 }
 
 function Shot({ project: p }: { project: Project }) {
-  const [videoFailed, setVideoFailed] = useState(false);
   const video =
     p.id === "rankeo"
       ? "/video/rankeo-landing.mp4"
@@ -239,19 +238,14 @@ function Shot({ project: p }: { project: Project }) {
         background: p.cardShotBg,
       }}
     >
-      {video && !videoFailed ? (
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
+      {video ? (
+        <ProjectVideo
+          src={video}
           poster={p.cardShot.src}
-          onError={() => setVideoFailed(true)}
-          className="project-cover-media size-full object-cover"
-        >
-          <source src={video} type="video/mp4" />
-        </video>
+          alt={p.cardShot.alt}
+          sizes="(max-width: 768px) 92vw, 760px"
+          className="project-cover-media"
+        />
       ) : (
         <Image
           src={p.cardShot.src}

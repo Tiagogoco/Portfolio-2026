@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useId, useRef, type RefObject } from 'react';
 import Image from 'next/image';
+import { ProjectVideo } from './project-video';
 import Link from 'next/link';
 import { projects, rol } from '@/content/projects';
 
@@ -235,21 +236,14 @@ function MediaFrame({ src, alt, video, playbackRate, siteHref, siteHrefExternal,
   return (
     <div className={`relative overflow-hidden bg-black ${className}`}>
       {video ? (
-        <video
+        <ProjectVideo
           key={video}
-          aria-label={alt}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          ref={(node) => {
-            if (node && playbackRate) node.playbackRate = playbackRate;
-          }}
-          className="absolute inset-0 size-full object-cover"
-        >
-          <source src={video} type="video/mp4" />
-        </video>
+          src={video}
+          poster={src}
+          alt={alt}
+          playbackRate={playbackRate}
+          sizes="(max-width: 640px) 92vw, (max-width: 1024px) 78vw, 1000px"
+        />
       ) : natural && w && h ? (
         <Image src={src} alt={alt} width={w} height={h} sizes="(max-width: 640px) 92vw, 560px" className="block h-auto w-full transition-transform duration-700 ease-[var(--ease-ui)] hover:scale-[1.025]" />
       ) : (

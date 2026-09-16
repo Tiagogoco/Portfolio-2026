@@ -2,8 +2,8 @@ import { EMAIL } from '@/content/site';
 
 /**
  * Fuente única del CV, en español e inglés. Las rutas `/cv` y `/cv/en` sólo lo
- * pintan, así que actualizar el currículum es editar este archivo y volver a
- * imprimir a PDF desde el navegador.
+ * pintan. Después de editarlo, ejecutar `npm run cv:pdf` con el sitio en local
+ * para actualizar también los dos PDF descargables en public/cv.
  *
  * El inglés no es traducción literal del español: cada versión está redactada
  * en su idioma. Al tocar una, revisar la otra — `CvContent` obliga a que ambas

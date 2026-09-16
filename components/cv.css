@@ -36,8 +36,7 @@
    una corrida de texto aparte y la extracción partía "Profile" en "Pro"+"file".
    Sin ligaduras la palabra queda entera en la capa de texto. */
 
-/* Acceso a la impresión. Es la vía de descarga: el diálogo del navegador
-   guarda como PDF con los mismos márgenes de `@page`. */
+/* Descarga directa del PDF e intercambio de idioma. */
 .cv-actions {
   position: fixed;
   top: 20px;
@@ -61,7 +60,7 @@
   cursor: pointer;
 }
 
-.cv-actions button:hover {
+.cv-actions a:not(.cv-actions-switch):hover {
   background: var(--color-blue);
 }
 

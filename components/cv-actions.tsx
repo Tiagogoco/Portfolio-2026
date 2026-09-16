@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 import type { CvLocale } from '@/content/cv';
 
@@ -17,10 +15,10 @@ export function CvActions({ locale, downloadLabel }: { locale: CvLocale; downloa
         {locale === 'es' ? 'English' : 'Español'}
       </Link>
 
-      {/* La descarga es el propio diálogo de impresión: "Guardar como PDF". */}
-      <button type="button" onClick={() => window.print()}>
+      {/* PDF generado desde este mismo documento: Safari no lo repagina. */}
+      <a href={`/cv/tiago-gomez-cv-${locale}.pdf`} download>
         {downloadLabel}
-      </button>
+      </a>
     </div>
   );
 }

@@ -27,6 +27,23 @@ npm run dev
 
 Abre [localhost:3000](http://localhost:3000) para ver el sitio. Para generar la versión de producción, ejecuta `npm run build`.
 
+## Actualizar el CV
+
+Las rutas `/cv` y `/cv/en` comparten el contenido de `content/cv.ts`.
+El botón de descarga entrega un PDF generado previamente para evitar que
+Safari en iPhone cambie la paginación.
+
+Después de modificar el contenido o los estilos del CV, inicia el sitio y,
+en otra terminal, regenera ambos archivos:
+
+```bash
+npx playwright install chromium
+npm run cv:pdf
+```
+
+Si usas otro puerto, indica `CV_BASE_URL=http://localhost:3001`.
+Revisa los dos PDF en `public/cv/` y súbelos junto con los cambios del CV.
+
 ## Contacto
 
 [Correo](mailto:tiagogocor@gmail.com) · [LinkedIn](https://www.linkedin.com/in/tiago-gomez-dev/) · [GitHub](https://github.com/Tiagogoco)

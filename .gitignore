@@ -41,3 +41,9 @@ yarn-error.log*
 next-env.d.ts
 CLAUDE.md
 AGENTS.md
+
+# local agent tools and personal notes
+/.agents/
+/.claude/
+/skills-lock.json
+/PENDIENTES.md

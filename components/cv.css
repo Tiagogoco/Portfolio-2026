@@ -1,17 +1,9 @@
-/* Hoja Carta real: las medidas van en milímetros para que lo que se ve en
-   pantalla sea exactamente lo que sale al imprimir a PDF. El navegador resuelve
-   mm a 96dpi, así que la caja no cambia entre medios.
-
-   Carta y no A4. `@page` no es garantía: iOS ignora el tamaño que pide el CSS
-   y usa el del diálogo del sistema, que por default es Carta. Así que la hoja se
-   calibra contra la más corta de las dos —Carta mide 279.4mm de alto contra los
-   297mm de A4— y `@page` sólo confirma esa elección donde sí se respeta.
-   Calibrado a A4 el CV salía en dos páginas al imprimir desde el teléfono.
-   Al revés funciona: lo que cabe en Carta cabe en A4, con aire de sobra. */
+/* El papel lo elige el usuario. La impresión se calibra con el ancho útil
+   de A4 y el alto útil de Carta, dejando margen para ambos formatos. */
 
 @page {
-  size: letter;
-  margin: 0;
+  size: auto;
+  margin: 10mm;
 }
 
 .cv-page {
@@ -225,13 +217,35 @@
 
   .cv-page {
     display: block;
+    overflow: visible;
     padding: 0;
   }
 
   .cv-sheet {
     width: auto;
+    max-width: 190mm;
     min-height: 0;
+    margin: 0 auto;
+    padding: 0;
     box-shadow: none;
+    font-size: 12px;
+    line-height: 1.3;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  .cv-body {
+    grid-template-columns: 52mm minmax(0, 1fr);
+    gap: 7mm;
+    margin-top: 4mm;
+  }
+
+  .cv-section + .cv-section {
+    margin-top: 3.5mm;
+  }
+
+  .cv-role + .cv-role {
+    margin-top: 3mm;
   }
 
   /* El cursor, la intro y el botón son cromo del sitio, no del documento. */

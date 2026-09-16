@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useId, useRef, type RefObject } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { projects, rol } from '@/content/projects';
 
 const FOCUSABLE =
@@ -103,7 +104,9 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                   <div className="flex min-w-0 items-start gap-4">
                     <span className="pt-2 font-mono text-[11px] font-bold tracking-[0.12em] text-ink-mute">{p.n}</span>
                     <Heading id={titleId} className={`m-0 min-w-0 max-w-full shrink-0 font-extrabold text-[clamp(42px,5vw,76px)] uppercase leading-[0.76] tracking-[-0.09em] max-md:text-[clamp(60px,16vw,128px)] ${p.id === 'saint' ? 'whitespace-normal' : 'whitespace-nowrap'}`}>
-                      {p.id === 'saint' ? <>SAINT<br />PADEL</> : p.title}
+                      {/* El espacio antes del `<br>` es deliberado: sin él, los
+                          extractores que concatenan nodos leen "SAINTPADEL". */}
+                      {p.id === 'saint' ? <>{'SAINT '}<br />PADEL</> : p.title}
                     </Heading>
                   </div>
                   <button
@@ -174,7 +177,7 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
               )}
 
               <section className="mt-[clamp(80px,12vw,170px)]">
-                <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-mute">( decisiones técnicas )</div>
+                <h2 className="m-0 font-mono text-[11px] font-normal uppercase tracking-[0.2em] text-ink-mute">( decisiones técnicas )</h2>
                 <div className="mt-6 grid gap-7 md:grid-cols-3 md:gap-8">
                   {p.decisiones.map((d) => (
                     <p key={d.n} className="m-0 text-[clamp(17px,1.5vw,22px)] leading-[1.12] tracking-[-0.035em]">
@@ -186,14 +189,14 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
 
               <section className="mt-[clamp(80px,12vw,170px)] grid gap-10 lg:grid-cols-[1.15fr_0.85fr]">
                 <div className="bg-ink px-[clamp(24px,4vw,60px)] py-[clamp(28px,5vw,68px)] text-page">
-                  <h3 className="m-0 font-extrabold text-[clamp(30px,3vw,43px)] uppercase leading-[0.8] tracking-[-0.08em]">Aprendizaje</h3>
+                  <h2 className="m-0 font-extrabold text-[clamp(30px,3vw,43px)] uppercase leading-[0.8] tracking-[-0.08em]">Aprendizaje</h2>
                   <div className="mt-10 flex flex-col gap-5">
                     {p.aprendizajes.map((a) => <p key={a} className="m-0 max-w-[36em] text-[clamp(18px,1.7vw,25px)] leading-[1.08] tracking-[-0.04em]">{a}</p>)}
                   </div>
                 </div>
                 {p.resenas && (
                   <div className="border-t-2 border-ink pt-5">
-                    <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-mute">( reseñas )</div>
+                    <h2 className="m-0 font-mono text-[11px] font-normal uppercase tracking-[0.2em] text-ink-mute">( reseñas )</h2>
                     <div className="mt-6 flex flex-col gap-7">
                       {p.resenas.map((r) => <blockquote key={r.by} className="m-0 text-[clamp(17px,1.5vw,22px)] leading-[1.15] tracking-[-0.035em]">{r.q}<footer className="mt-3 font-mono text-[10px] uppercase tracking-[0.14em] text-ink-mute">{r.by}</footer></blockquote>)}
                     </div>
@@ -204,9 +207,22 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
 
             <footer className="mt-[clamp(100px,15vw,220px)] flex items-end justify-between gap-5 border-t-2 border-ink pt-6">
               <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-ink-mute">siguiente proyecto</span>
-              <button type="button" onClick={() => onSelect((index + 1) % projects.length)} className="border-0 bg-transparent p-0 text-right font-extrabold text-[clamp(38px,7vw,94px)] uppercase leading-[0.8] tracking-[-0.09em] transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
-                {next.short}
-              </button>
+              {/* En la página propia va como `<Link>` para que el HTML tenga un
+                  `href` real y los tres casos queden enlazados entre sí. En el
+                  overlay sigue siendo botón: ahí no se navega, solo cambia el
+                  índice del caso abierto. */}
+              {standalone ? (
+                <Link
+                  href={`/proyectos/${next.id}`}
+                  className="p-0 text-right font-extrabold text-[clamp(38px,7vw,94px)] uppercase leading-[0.8] tracking-[-0.09em] transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+                >
+                  {next.short}
+                </Link>
+              ) : (
+                <button type="button" onClick={() => onSelect((index + 1) % projects.length)} className="border-0 bg-transparent p-0 text-right font-extrabold text-[clamp(38px,7vw,94px)] uppercase leading-[0.8] tracking-[-0.09em] transition-opacity hover:opacity-55 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink">
+                  {next.short}
+                </button>
+              )}
             </footer>
           </div>
         </div>
@@ -255,7 +271,7 @@ function MediaFrame({ src, alt, video, playbackRate, siteHref, siteHrefExternal,
 function Story({ label, text, accent }: { label: string; text: string; accent?: string }) {
   return (
     <div>
-      <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-ink-mute" style={accent ? { color: accent } : undefined}>({label})</div>
+      <h2 className="m-0 font-mono text-[11px] font-normal uppercase tracking-[0.2em] text-ink-mute" style={accent ? { color: accent } : undefined}>({label})</h2>
       <p className="m-0 mt-4 max-w-[30em] text-[clamp(20px,2.2vw,32px)] leading-[1.05] tracking-[-0.045em]">{text}</p>
     </div>
   );

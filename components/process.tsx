@@ -31,7 +31,7 @@ export function Process() {
         </h2>
 
         <div className="mt-[clamp(48px,8vh,120px)] grid gap-[clamp(32px,5vw,80px)] md:grid-cols-2 md:items-stretch">
-          <figure data-reveal="media" className="relative m-0 aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-lottie-slot">
+          <figure className="relative m-0 aspect-[4/3] w-full overflow-hidden rounded-[12px] bg-lottie-slot">
             <Image
               src={aboutContent.portrait.src}
               alt={aboutContent.portrait.alt}
@@ -45,9 +45,8 @@ export function Process() {
           <div className="flex flex-col justify-end gap-[clamp(18px,2.4vh,28px)]">
             {aboutContent.notes.map((note) => (
               <p
-                data-reveal="copy"
                 key={note}
-                className="m-0 max-w-[46ch] uppercase tracking-[0.015em] text-body"
+                className="m-0 max-w-[46ch] tracking-[0.015em] text-body"
                 style={{ fontSize: 'clamp(13px, 1.05vw, 16px)', lineHeight: 1.5 }}
               >
                 {note}

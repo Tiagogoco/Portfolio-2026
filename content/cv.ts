@@ -157,7 +157,11 @@ export const cv: Record<CvLocale, CvContent> = {
     },
     languages: [
       { title: 'Español', detail: 'Nativo' },
-      { title: 'Inglés B2', detail: 'Leo documentación técnica y sostengo conversación' },
+      {
+        title: 'Inglés · Aptis General',
+        detail:
+          'British Council · 11 sep 2026. Nivel C (MCER) en comprensión auditiva y lectura: 48/50 en cada habilidad, 96/100 total. Gramática y vocabulario: 43/50.',
+      },
     ],
   },
 
@@ -239,7 +243,11 @@ export const cv: Record<CvLocale, CvContent> = {
     },
     languages: [
       { title: 'Spanish', detail: 'Native' },
-      { title: 'English B2', detail: 'I read technical documentation and hold conversations' },
+      {
+        title: 'English · Aptis General',
+        detail:
+          'British Council · 11 Sep 2026. CEFR level C in listening and reading: 48/50 in each skill, 96/100 total. Grammar and vocabulary: 43/50.',
+      },
     ],
   },
 };

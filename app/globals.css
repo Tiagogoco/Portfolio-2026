@@ -198,16 +198,26 @@ a {
   color: #fff;
 }
 
+.site-footer[data-fixed-reveal] {
+  /* Recorta la capa fija al espacio real del footer, detrás de Sobre mí. */
+  clip-path: inset(0);
+}
+
+.site-footer[data-fixed-reveal] .contact-reveal-content {
+  position: fixed;
+  inset: auto 0 0;
+}
+
 .contact-reveal-content {
   min-height: max(560px, 78svh);
   padding-top: calc(var(--hero-radius) + clamp(48px, 8vh, 110px));
-  will-change: transform;
 }
 
-@media (prefers-reduced-motion: reduce) {
+@media (max-width: 767px) {
   .contact-reveal-content {
-    transform: none !important;
-    will-change: auto;
+    min-height: 52svh;
+    padding-top: calc(var(--hero-radius) + 24px);
+    padding-bottom: 24px;
   }
 }
 

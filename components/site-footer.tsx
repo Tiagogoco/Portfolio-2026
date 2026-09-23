@@ -1,8 +1,7 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { motion, useScroll, useTransform } from 'motion/react';
 import { gsap } from 'gsap';
 import { SplitText } from 'gsap/SplitText';
 import { useGSAP } from '@gsap/react';
@@ -12,25 +11,47 @@ import { CopyEmailButton } from './copy-email-button';
 
 gsap.registerPlugin(SplitText, useGSAP);
 
-/** Contacto se descubre debajo de Sobre mí, con un recorrido más lento. */
+/** Contacto permanece fijo mientras Sobre mí lo descubre al subir. */
 export function SiteFooter() {
   const ref = useRef<HTMLElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const reducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end end'],
-  });
-  // El marco avanza con la página; su contenido recorre solo el 35%.
-  // El progreso se mide en el footer sin transformar para evitar realimentación.
-  const y = useTransform(scrollYProgress, [0, 1], ['-65%', '0%']);
+
+  useEffect(() => {
+    const footer = ref.current;
+    const content = contentRef.current;
+    if (!footer || !content || reducedMotion) return;
+
+    // Reservamos el alto real del contenido; no hay cálculos durante el scroll.
+    // Si no cabe en la pantalla, vuelve al flujo para poder leerlo completo.
+    const measure = () => {
+      const height = content.offsetHeight;
+      const fits = height <= document.documentElement.clientHeight - 76;
+      footer.toggleAttribute('data-fixed-reveal', fits);
+      footer.style.height = fits ? `${height}px` : '';
+    };
+    const observer = new ResizeObserver(measure);
+    observer.observe(content);
+    window.addEventListener('resize', measure);
+    measure();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', measure);
+      footer.removeAttribute('data-fixed-reveal');
+      footer.style.removeProperty('height');
+    };
+  }, [reducedMotion]);
 
   useGSAP(() => {
     const title = titleRef.current;
     const footer = ref.current;
-    if (reducedMotion || !title || !footer) return;
+    const content = contentRef.current;
+    const cover = document.getElementById('sobre-mi');
+    if (reducedMotion || !title || !footer || !content || !cover) return;
 
     let revealed = false;
+    let triggerY = Infinity;
     let entrance: gsap.core.Tween | undefined;
     SplitText.create(title, {
       type: 'words,chars',
@@ -51,42 +72,36 @@ export function SiteFooter() {
       },
     });
 
-    const cover = document.getElementById('sobre-mi');
-    let height = 0;
-    let titleTop = 0;
-    let overlap = 0;
-    let viewportHeight = 0;
-
-    // Usamos el mismo progreso que Motion, sin leer el layout entre escrituras
-    // de transform. Las medidas solo se actualizan cuando cambia el tamaño.
-    const revealWhenUncovered = (progress: number) => {
-      if (revealed || !entrance || !height) return;
-      const translatedTop = titleTop - height * 0.65 * (1 - progress);
-      const screenTop = viewportHeight - height * progress + translatedTop;
-      if (translatedTop < overlap || screenTop > viewportHeight * 0.9) return;
+    const reveal = () => {
+      if (revealed || !entrance || window.scrollY < triggerY) return;
       revealed = true;
       entrance.play();
+      window.removeEventListener('scroll', reveal);
     };
+    // El título está fijo: calculamos una vez dónde la cubierta lo descubre.
+    // Durante el scroll solo comparamos números, sin medir el DOM por frame.
     const measure = () => {
       if (revealed) return;
-      height = footer.offsetHeight;
-      titleTop = title.offsetTop;
-      overlap = cover ? cover.getBoundingClientRect().bottom - footer.getBoundingClientRect().top : 0;
-      viewportHeight = document.documentElement.clientHeight;
-      revealWhenUncovered(scrollYProgress.get());
+      const top = title.getBoundingClientRect().top;
+      triggerY = footer.hasAttribute('data-fixed-reveal')
+        ? window.scrollY + cover.getBoundingClientRect().bottom - top
+        : window.scrollY + top - document.documentElement.clientHeight * 0.9;
+      reveal();
     };
-    const unsubscribe = scrollYProgress.on('change', revealWhenUncovered);
-    const resize = new ResizeObserver(measure);
-    resize.observe(footer);
-    resize.observe(title);
+    const observer = new ResizeObserver(measure);
+    observer.observe(content);
+    observer.observe(title);
+    window.addEventListener('scroll', reveal, { passive: true });
     window.addEventListener('resize', measure);
-    measure();
+    // Espera a que el efecto de layout del footer active su posición fija.
+    const frame = requestAnimationFrame(measure);
     return () => {
-      unsubscribe();
-      resize.disconnect();
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener('scroll', reveal);
       window.removeEventListener('resize', measure);
     };
-  }, { scope: ref, dependencies: [reducedMotion, scrollYProgress], revertOnUpdate: true });
+  }, { scope: ref, dependencies: [reducedMotion], revertOnUpdate: true });
 
   return (
     <footer
@@ -94,16 +109,18 @@ export function SiteFooter() {
       data-skin="dark"
       ref={ref}
       className="site-footer"
-      onFocusCapture={() => {
+      onFocusCapture={(event) => {
         // Un enlace alcanzado con Tab debe quedar completamente descubierto.
-        if (scrollYProgress.get() < 1) {
-          ref.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
+        if (ref.current?.hasAttribute('data-fixed-reveal')) {
+          ref.current.scrollIntoView({ block: 'start', behavior: 'instant' });
+        } else {
+          event.target.scrollIntoView({ block: 'nearest', behavior: 'instant' });
         }
       }}
     >
 
-      <motion.div
-        style={{ y: reducedMotion ? 0 : y }}
+      <div
+        ref={contentRef}
         className="contact-reveal-content mx-auto flex max-w-[1440px] flex-col justify-center px-[clamp(24px,5vw,72px)] pb-[clamp(48px,8vh,110px)] md:flex-row md:items-center md:justify-between md:gap-12"
       >
         <h2
@@ -113,10 +130,10 @@ export function SiteFooter() {
           HABLEMOS
         </h2>
 
-        <div className="mx-auto mt-[clamp(40px,6vh,72px)] flex flex-col items-center md:mx-0 md:mt-0 md:items-end">
+        <div className="mx-auto mt-7 flex flex-col items-center md:mx-0 md:mt-0 md:items-end">
           <CopyEmailButton pill className="site-footer-pill px-6 py-4 text-[11px] md:px-7 md:py-5 md:text-[12px]" />
 
-          <nav aria-label="Redes sociales" className="mt-6 flex flex-wrap justify-center gap-x-7 gap-y-3 md:justify-end">
+          <nav aria-label="Redes sociales" className="mt-4 flex flex-wrap justify-center gap-x-7 gap-y-3 md:mt-6 md:justify-end">
             {socials.map((social) => (
               <a
                 key={social.label}
@@ -134,7 +151,7 @@ export function SiteFooter() {
               perfil externo, y meterla ahí volvería falso su `aria-label`.
               La mono de 10px contra la serif de las redes ya lo separa sin
               necesidad de una regla. */}
-          <p className="mt-6 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-white/50">
+          <p className="mt-4 flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.16em] text-white/50 md:mt-6">
             <span>Currículum</span>
             <Link
               href="/cv"
@@ -156,7 +173,7 @@ export function SiteFooter() {
             </Link>
           </p>
         </div>
-      </motion.div>
+      </div>
     </footer>
   );
 }

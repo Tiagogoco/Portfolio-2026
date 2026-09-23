@@ -51,20 +51,42 @@ export function SiteFooter() {
       },
     });
 
-    // La posición cambia con Motion: esperamos a que el título salga de la
-    // cubierta, además de entrar en pantalla, antes de animar sus letras.
-    const revealWhenUncovered = () => {
-      const bounds = title.getBoundingClientRect();
-      const coverBottom = document.getElementById('sobre-mi')?.getBoundingClientRect().bottom
-        ?? footer.getBoundingClientRect().top;
-      if (!entrance || bounds.top < coverBottom || bounds.top > window.innerHeight * 0.9) return;
+    const cover = document.getElementById('sobre-mi');
+    let height = 0;
+    let titleTop = 0;
+    let overlap = 0;
+    let viewportHeight = 0;
+
+    // Usamos el mismo progreso que Motion, sin leer el layout entre escrituras
+    // de transform. Las medidas solo se actualizan cuando cambia el tamaño.
+    const revealWhenUncovered = (progress: number) => {
+      if (revealed || !entrance || !height) return;
+      const translatedTop = titleTop - height * 0.65 * (1 - progress);
+      const screenTop = viewportHeight - height * progress + translatedTop;
+      if (translatedTop < overlap || screenTop > viewportHeight * 0.9) return;
       revealed = true;
       entrance.play();
-      gsap.ticker.remove(revealWhenUncovered);
     };
-    gsap.ticker.add(revealWhenUncovered);
-    return () => gsap.ticker.remove(revealWhenUncovered);
-  }, { scope: ref, dependencies: [reducedMotion], revertOnUpdate: true });
+    const measure = () => {
+      if (revealed) return;
+      height = footer.offsetHeight;
+      titleTop = title.offsetTop;
+      overlap = cover ? cover.getBoundingClientRect().bottom - footer.getBoundingClientRect().top : 0;
+      viewportHeight = document.documentElement.clientHeight;
+      revealWhenUncovered(scrollYProgress.get());
+    };
+    const unsubscribe = scrollYProgress.on('change', revealWhenUncovered);
+    const resize = new ResizeObserver(measure);
+    resize.observe(footer);
+    resize.observe(title);
+    window.addEventListener('resize', measure);
+    measure();
+    return () => {
+      unsubscribe();
+      resize.disconnect();
+      window.removeEventListener('resize', measure);
+    };
+  }, { scope: ref, dependencies: [reducedMotion, scrollYProgress], revertOnUpdate: true });
 
   return (
     <footer

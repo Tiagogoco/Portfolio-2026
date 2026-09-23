@@ -201,11 +201,13 @@ a {
 .contact-reveal-content {
   min-height: max(560px, 78svh);
   padding-top: calc(var(--hero-radius) + clamp(48px, 8vh, 110px));
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .contact-reveal-content {
     transform: none !important;
+    will-change: auto;
   }
 }
 

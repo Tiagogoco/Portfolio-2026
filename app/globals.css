@@ -182,17 +182,31 @@ a {
   margin-top: calc(-1 * var(--hero-radius));
 }
 
-/* Cierre oscuro con esquinas superiores redondeadas; sube sobre la sección
-   anterior para que la curva se
-   recorte contra ella y no contra el fondo de página. */
+/* Sobre mí actúa como la cubierta; Contacto se descubre por debajo. */
+.about-contact-cover {
+  z-index: 2;
+  border-radius: 0 0 var(--hero-radius) var(--hero-radius);
+  box-shadow: 0 28px 36px -28px rgb(0 0 0 / 35%);
+}
+
 .site-footer {
   position: relative;
   z-index: 1;
   margin-top: calc(-1 * var(--hero-radius));
+  overflow: clip;
   background: #000;
   color: #fff;
-  border-start-start-radius: var(--hero-radius);
-  border-start-end-radius: var(--hero-radius);
+}
+
+.contact-reveal-content {
+  min-height: max(560px, 78svh);
+  padding-top: calc(var(--hero-radius) + clamp(48px, 8vh, 110px));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .contact-reveal-content {
+    transform: none !important;
+  }
 }
 
 /* El pill del footer viene en `#111` sobre `#000`: se perdía. Va invertido y

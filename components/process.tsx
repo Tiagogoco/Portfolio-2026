@@ -8,13 +8,7 @@ export function Process() {
     <section
       id="sobre-mi"
       data-skin="light"
-      className="relative bg-page px-[clamp(24px,5vw,72px)] pt-[clamp(64px,8vh,110px)]"
-      /* El footer sube `--hero-radius` para que su curva recorte contra esta
-         sección; sin sumarlo al `padding`, la esquina se comería el texto. */
-      style={{
-        paddingBottom:
-          'calc(clamp(64px, 8vh, 110px) + var(--hero-radius))',
-      }}
+      className="about-contact-cover relative bg-page px-[clamp(24px,5vw,72px)] py-[clamp(64px,8vh,110px)]"
     >
       <div className="mx-auto w-full max-w-[1440px]">
         <div data-reveal="label" className="font-mono text-[clamp(10px,1vw,13px)] uppercase tracking-[0.22em] text-ink-mute">

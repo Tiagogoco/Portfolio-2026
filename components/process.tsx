@@ -40,7 +40,7 @@ export function Process() {
             {aboutContent.notes.map((note) => (
               <p
                 key={note}
-                className="m-0 max-w-[46ch] tracking-[0.015em] text-body"
+                className="m-0 max-w-[46ch] font-serif font-normal tracking-[0.015em] text-body"
                 style={{ fontSize: 'clamp(13px, 1.05vw, 16px)', lineHeight: 1.5 }}
               >
                 {note}

@@ -9,6 +9,29 @@ import { GlobeIcon } from "./globe-icon";
 
 const SURFACES = ["#F2F0EB", "#E9EDF1", "#F4F1EC"];
 
+function ProjectTitle({ project: p }: { project: Project }) {
+  return (
+    <h3 className="m-0 text-[clamp(22px,5.4vw,28px)] font-extrabold uppercase leading-none tracking-[-0.07em] md:text-[clamp(28px,2.6vw,40px)]">
+      <Link
+        href={`/proyectos/${p.id}`}
+        scroll={false}
+        className="inline-flex items-center gap-[0.35em] transition-opacity hover:opacity-65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+      >
+        <span className="relative size-[1em] shrink-0 overflow-hidden rounded-[0.22em] bg-page">
+          <Image
+            src={`/img/logos/${p.id}.webp`}
+            alt=""
+            fill
+            sizes="40px"
+            className={`object-contain ${p.id === 'rankeo' ? '' : 'p-[10%]'}`}
+          />
+        </span>
+        <span data-reveal="text-words">{p.title}</span>
+      </Link>
+    </h3>
+  );
+}
+
 export function ProjectsStack() {
   return (
     <section
@@ -35,7 +58,7 @@ function ProjectCard({
 }) {
   return (
     <article
-      className="relative mb-[10px] md:mb-0"
+      className="relative mb-16 last:mb-0 md:mb-0"
       style={{ zIndex: index + 1 }}
     >
       <div
@@ -61,35 +84,10 @@ function MobileProjectCard({ project: p }: { project: Project }) {
       </div>
 
       <div className="mt-7">
-        <h3
-          className="m-0 font-extrabold text-[clamp(22px,5.4vw,28px)] uppercase tracking-[-0.07em]"
-          style={{ lineHeight: 0.82 }}
-        >
-          <Link
-            href={`/proyectos/${p.id}`}
-            data-reveal="text-words"
-            scroll={false}
-            className="transition-opacity hover:opacity-65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
-          >
-            {p.title}
-          </Link>
-        </h3>
+        <ProjectTitle project={p} />
         <p data-reveal="copy" className="m-0 mt-5 max-w-[430px] text-[18px] leading-[1.28] tracking-[-0.025em] text-body">
-          {p.teaser}
+          {p.teaser} ({p.year})
         </p>
-        <div className="mt-5 flex flex-wrap gap-2">
-          {p.teaserTags.slice(0, 2).map((tag) => (
-            <span
-              key={tag}
-              className="rounded-[4px] border border-ink/15 px-3 py-2 font-mono text-[10px] uppercase tracking-[0.12em] text-ink-mute"
-            >
-              {tag}
-            </span>
-          ))}
-          <span className="rounded-[4px] border border-ink/15 px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.12em] text-ink-mute">
-            {p.year}
-          </span>
-        </div>
       </div>
     </div>
   );
@@ -102,39 +100,14 @@ function DesktopProjectCard({ project: p }: { project: Project }) {
         <CardMedia project={p} showGlobe />
         <div className="mt-6 flex items-start justify-between gap-8">
           <div className="min-w-0">
-            <h3 className="m-0 font-extrabold text-[clamp(28px,2.6vw,40px)] uppercase leading-[0.82] tracking-[-0.07em]">
-              <Link
-                href={`/proyectos/${p.id}`}
-                data-reveal="text-words"
-                scroll={false}
-                className="transition-opacity hover:opacity-65 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
-              >
-                {p.title}
-              </Link>
-            </h3>
+            <ProjectTitle project={p} />
             <p
               data-reveal="copy"
               className="m-0 mt-5 max-w-[560px] text-[clamp(17px,1.7vw,23px)] leading-[1.18] tracking-[-0.025em]"
               style={{ color: p.cardTeaserInk }}
             >
-              {p.teaser}
+              {p.teaser} ({p.year})
             </p>
-          </div>
-          <div
-            className="flex shrink-0 flex-wrap justify-end gap-x-5 gap-y-2 pt-1 font-mono text-[10px] uppercase tracking-[0.14em]"
-            style={{ color: p.cardLabelInk }}
-          >
-            {p.teaserTags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-[4px] border border-ink/15 px-3 py-2"
-              >
-                {tag}
-              </span>
-            ))}
-            <span className="rounded-[4px] border border-ink/15 px-3 py-2 font-bold">
-              {p.year}
-            </span>
           </div>
         </div>
       </div>

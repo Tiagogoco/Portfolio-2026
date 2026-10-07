@@ -59,6 +59,8 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  /* El rebote al final de la página continúa visualmente el footer. */
+  background: #000;
 }
 
 body {
@@ -733,6 +735,41 @@ footer[id] {
 .mobile-nav-panel {
   padding-top: max(16px, env(safe-area-inset-top));
   padding-bottom: max(18px, env(safe-area-inset-bottom));
+  animation: mobile-nav-enter 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.mobile-nav-panel[data-closing] {
+  pointer-events: none;
+  animation: mobile-nav-exit 130ms ease-in both;
+}
+
+@keyframes mobile-nav-enter {
+  from {
+    opacity: 0;
+    transform: translate3d(12px, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes mobile-nav-exit {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translate3d(8px, 0, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav-panel,
+  .mobile-nav-panel[data-closing] {
+    animation: none;
+  }
 }
 
 .mobile-nav-content {

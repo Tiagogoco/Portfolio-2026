@@ -130,8 +130,8 @@ export function SiteHeader({ standalone = false }: { standalone?: boolean }) {
           home={homeLink}
           links={[
             { label: 'Proyectos', href: projectsLink },
-            { label: 'Contacto', href: contactLink },
             { label: 'Sobre mí', href: aboutLink },
+            { label: 'Contacto', href: contactLink },
           ]}
         />
 

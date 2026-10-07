@@ -36,12 +36,12 @@ export function Process() {
             />
           </figure>
 
-          <div className="flex flex-col justify-end gap-[clamp(18px,2.4vh,28px)]">
+          <div className="flex flex-col justify-end gap-[clamp(20px,3vh,40px)] md:justify-center">
             {aboutContent.notes.map((note) => (
               <p
                 key={note}
-                className="m-0 max-w-[46ch] font-serif text-[17px] font-normal tracking-[0.015em] text-body md:text-[clamp(13px,1.05vw,16px)]"
-                style={{ lineHeight: 1.5 }}
+                className="m-0 max-w-[44ch] font-serif text-[17px] font-normal tracking-[0.005em] text-body md:text-[28px] lg:text-[clamp(35px,2.4vw,40px)]"
+                style={{ lineHeight: 1.45 }}
               >
                 {note}
               </p>

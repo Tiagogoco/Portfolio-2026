@@ -80,7 +80,7 @@ const saintSite = { label: 'saintpadel.com.mx', href: 'https://saintpadel.com.mx
 
 export const cv: Record<CvLocale, CvContent> = {
   es: {
-    headline: 'Full Stack Developer · Web Product Designer',
+    headline: 'Web Product Designer and Developer',
     location: 'Puebla, México',
     labels: {
       profile: 'Perfil',
@@ -92,8 +92,8 @@ export const cv: Record<CvLocale, CvContent> = {
       download: 'Descargar PDF',
     },
     profile: [
-      'Desarrollo productos web que operan en producción: APIs, paneles de administración y tableros analíticos sobre PostgreSQL. Trabajo de punta a punta y aíslo la lógica crítica en módulos con pruebas.',
-      'Busco prácticas profesionales donde sumarme a un equipo de ingeniería.',
+      'Desarrollo productos web en producción, con usuarios y pagos reales: APIs, paneles de administración y tableros analíticos sobre PostgreSQL. Voy del diseño al despliegue y aíslo la lógica crítica en módulos con pruebas.',
+      'Busco prácticas profesionales en un equipo de ingeniería con revisión de código y pruebas diarias, donde aportar iniciativa y aprender a construir software a mayor escala.',
     ],
     experience: [
       {
@@ -115,7 +115,7 @@ export const cv: Record<CvLocale, CvContent> = {
         bullets: [
           'Desarrollé la plataforma de torneos y ligas de pádel que usan Urban Padel y Padelex: inscripciones con pago en línea, rankings y cuatro formatos de competencia.',
           'Aislé los motores de torneo, liga y programación de partidos como TypeScript puro y determinista, con pruebas en Vitest que contrastan el horario optimizado contra un validador de restricciones.',
-          'Con ella se han operado 2 torneos y 1 liga en Urban Padel; hoy desarrollo los espacios de trabajo que dejarán a cada club administrar la plataforma por su cuenta.',
+          'Urban Padel operó con ella su liga de la temporada junio — julio 2026, además de 2 torneos; hoy la mejoro con el feedback de esa operación y construyo los espacios de trabajo que dejarán a cada club administrar la plataforma por su cuenta.',
         ],
       },
       {
@@ -153,20 +153,19 @@ export const cv: Record<CvLocale, CvContent> = {
       school: 'BUAP',
       degree: 'Ingeniería en Tecnologías de la Información',
       detail: 'Benemérita Universidad Autónoma de Puebla',
-      status: ['Último año', 'Graduación estimada: agosto de 2027'],
+      status: ['Último año', 'Graduación estimada: agosto 2027'],
     },
     languages: [
       { title: 'Español', detail: 'Nativo' },
       {
-        title: 'Inglés · Aptis General',
-        detail:
-          'British Council · 11 sep 2026. Nivel C (MCER) en comprensión auditiva y lectura: 48/50 en cada habilidad, 96/100 total. Gramática y vocabulario: 43/50.',
+        title: 'Inglés — Nivel C',
+        detail: 'Aptis General, British Council (2026) · 96/100 en comprensión auditiva y lectura',
       },
     ],
   },
 
   en: {
-    headline: 'Full Stack Developer · Web Product Designer',
+    headline: 'Web Product Designer and Developer',
     location: 'Puebla, Mexico',
     labels: {
       profile: 'Profile',
@@ -178,8 +177,8 @@ export const cv: Record<CvLocale, CvContent> = {
       download: 'Download PDF',
     },
     profile: [
-      'I build web products that run in production: APIs, back offices and analytical dashboards on top of PostgreSQL. I work end to end and isolate the critical logic into tested modules.',
-      'Looking for a professional internship where I can join an engineering team.',
+      'I build web products running in production with real users and payments: APIs, admin panels and analytics dashboards on PostgreSQL. I work from design to deployment and isolate critical logic into pure, tested modules.',
+      'Looking for an internship on an engineering team where code review and testing are part of daily work, to contribute initiative and learn to build software at a larger scale.',
     ],
     experience: [
       {
@@ -201,7 +200,7 @@ export const cv: Record<CvLocale, CvContent> = {
         bullets: [
           'Built the padel tournament and league platform used by Urban Padel and Padelex: online registration and payments, rankings, and four competition formats.',
           'Isolated the tournament, league and match-scheduling engines as pure deterministic TypeScript, with Vitest tests that check the optimized schedule against a constraint validator.',
-          'Two tournaments and one league have run on it at Urban Padel; I am currently building the workspaces that will let each club administer the platform on its own.',
+          'Urban Padel ran its June — July 2026 season league on it, plus two tournaments; I am now refining it with feedback from that run and building the workspaces that will let each club administer the platform on its own.',
         ],
       },
       {
@@ -244,9 +243,8 @@ export const cv: Record<CvLocale, CvContent> = {
     languages: [
       { title: 'Spanish', detail: 'Native' },
       {
-        title: 'English · Aptis General',
-        detail:
-          'British Council · 11 Sep 2026. CEFR level C in listening and reading: 48/50 in each skill, 96/100 total. Grammar and vocabulary: 43/50.',
+        title: 'English — Level C',
+        detail: 'Aptis General, British Council (2026) · 96/100 in listening and reading',
       },
     ],
   },

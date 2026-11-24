@@ -5,8 +5,8 @@ export type Shot = { src: string; alt: string; w: number; h: number };
 export type CardShot = Shot & { w: number; h: number };
 
 export type Project = {
-  id: 'saint' | 'rankeo' | 'piri';
-  n: '01' | '02' | '03';
+  id: 'saint' | 'rankeo' | 'piri' | 'cardo';
+  n: '01' | '02' | '03' | '04';
   title: string;
   short: string;
   tab: string;
@@ -40,7 +40,7 @@ export type Project = {
   resenas?: Resena[];
 };
 
-/** El rol no vive en `Project` porque es el mismo en los tres casos: los hice solo. */
+/** El rol no vive en `Project` porque es el mismo en todos los casos: los hice solo. */
 export const rol = ['Full stack developer', 'APIs', 'UX', 'UI'];
 
 export const projects: Project[] = [
@@ -221,6 +221,64 @@ export const projects: Project[] = [
         by: 'Guillermo López Varela',
         item: 'Antiguo lote coleccionables Club Puebla FC revistas cuadro',
       },
+    ],
+  },
+  {
+    id: 'cardo',
+    n: '04',
+    title: 'CARDO',
+    short: 'CARDO',
+    tab: 'cardo',
+    kind: 'concept design',
+    year: '2026',
+    href: 'https://cardo-olive.vercel.app/',
+    hrefExterno: true,
+    accent: '#9F4141',
+    accentInk: '#F6F0DC',
+    cardBg: '#8CB9F8',
+    cardChipBorder: '#6AA2F0',
+    cardChipInk: '#0f3f80',
+    cardTeaserInk: '#12233f',
+    cardLabelInk: '#1f4273',
+    cardShotBg: '#9F4141',
+    cardShot: { src: '/img/proyectos/cardo-banner.webp', alt: 'Portada de Cardo: la marca sobre el bloque vino con la ilustración de la mesa', w: 1600, h: 963 },
+    globeBg: '#9F4141',
+    globeInk: '#F6F0DC',
+    globeBgHover: '#843535',
+    teaser:
+      'Concept design para una barra de café de especialidad, con menú editable y estado de apertura en vivo',
+    teaserTags: ['Astro', 'Tailwind', 'Concept design'],
+    lede: 'Concept design para una barra de café de especialidad: una marca propia traducida a tres pantallas, con el menú y el horario como datos y no como maqueta.',
+    problemaLabel: 'concepto',
+    problema:
+      'Las cafeterías pequeñas terminan con el menú en una imagen de Instagram, porque cualquier cambio de precio implica volver a diseñar. El sitio envejece a la semana de publicarse.',
+    solucion:
+      'Un sitio de tres pantallas donde el contenido vivo —productos, precios, modificadores y horario— es un archivo de datos. Cambiar un precio es editar una línea, y el estado de apertura se calcula solo contra el reloj del visitante.',
+    stack: ['Astro', 'TypeScript', 'Tailwind', 'Vercel'],
+    decisiones: [
+      {
+        n: '01',
+        title: 'El menú es un dato, no una maqueta',
+        note: 'Categorías, productos, precios y modificadores viven en una sola estructura y la página se arma a partir de ella. Agregar un producto o subir un precio no toca el diseño, y los modificadores tipo "hazlo frío +$10" se declaran junto al producto en vez de escribirse a mano en cada renglón.',
+      },
+      {
+        n: '02',
+        title: 'El horario decide qué dice la portada',
+        note: 'La portada compara la hora del visitante contra el horario semanal y resuelve el mensaje sola: abierto, o cerrado con la próxima apertura. Los casos borde —cambio de día, domingo cerrado, cierre a media tarde— se calculan en el cliente, así que la página sigue siendo estática y se sirve desde el CDN.',
+      },
+      {
+        n: '03',
+        title: 'La navegación es la pantalla de información',
+        note: 'En lugar de un header con submenús y un footer repetido, el menú abre a pantalla completa y ahí mismo viven ubicación, horario y contacto. Un solo componente cubre desktop y móvil, y la información del local deja de estar duplicada en cada página.',
+      },
+    ],
+    aprendizajes: [
+      'Un concept sin cliente deja ver qué parte del trabajo es diseño y qué parte es modelado: lo difícil no fue la tipografía, fue decidir que el precio pertenece al producto y el horario a la marca.',
+      'Cuando el contenido que cambia vive separado del layout, el sitio se puede entregar a alguien que no programa. Esa es la diferencia entre un portafolio bonito y algo que un negocio puede mantener.',
+    ],
+    shots: [
+      { src: '/img/casos/cardo-1.webp', alt: 'Menú de Cardo con categorías, precios y modificadores', w: 1600, h: 963 },
+      { src: '/img/casos/cardo-2.webp', alt: 'Navegación a pantalla completa con ubicación, horario y contacto', w: 1600, h: 963 },
     ],
   },
 ];

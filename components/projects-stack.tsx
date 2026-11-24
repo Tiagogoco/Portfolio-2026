@@ -7,7 +7,7 @@ import { projects, type Project } from "@/content/projects";
 import { proyectosHeader } from "@/content/site";
 import { GlobeIcon } from "./globe-icon";
 
-const SURFACES = ["#F2F0EB", "#E9EDF1", "#F4F1EC"];
+const SURFACES = ["#F2F0EB", "#E9EDF1", "#F4F1EC", "#F0EEE7"];
 
 function ProjectTitle({ project: p }: { project: Project }) {
   return (

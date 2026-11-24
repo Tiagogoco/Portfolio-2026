@@ -58,8 +58,8 @@ export const aboutContent = {
 /** Encabezado de la sección de proyectos. El conteo se deriva de `projects`. */
 export const proyectosHeader = {
   eyebrow: "selección",
-  title: "TRABAJO EN PRODUCCIÓN",
-  lede: "Tres productos construidos desde el modelo de negocio hasta el primer cobro.",
+  title: "TRABAJO SELECCIONADO",
+  lede: "Tres productos construidos desde el modelo de negocio hasta el primer cobro, y un concept de marca llevado a producto.",
 };
 
 export type Satellite = {

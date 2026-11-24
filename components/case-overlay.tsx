@@ -162,6 +162,16 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                 />
               )}
 
+              {/* Cardo no tiene recorrido en video: las dos pantallas restantes
+                  se reparten entre la portada y el bloque de problema/solución. */}
+              {p.id === 'cardo' && (
+                <MediaFrame
+                  src={p.shots[0].src}
+                  alt={p.shots[0].alt}
+                  className="mt-5 aspect-[1600/963]"
+                />
+              )}
+
               <div className="mt-[clamp(80px,12vw,170px)] grid gap-10 border-t-2 border-ink pt-7 lg:grid-cols-2 lg:gap-20">
                 <Story label={p.problemaLabel ?? 'problema'} text={p.problema} />
                 <Story label="solución" text={p.solucion} accent={p.accent} />
@@ -174,6 +184,14 @@ export function CaseOverlay({ index, onSelect, onClose, opener, standalone = fal
                   video="/video/rankeo-admin.mp4"
                   playbackRate={1.2}
                   className="mt-[clamp(40px,6vw,72px)] aspect-[1920/1202]"
+                />
+              )}
+
+              {p.id === 'cardo' && (
+                <MediaFrame
+                  src={p.shots[1].src}
+                  alt={p.shots[1].alt}
+                  className="mt-[clamp(40px,6vw,72px)] aspect-[1600/963]"
                 />
               )}
 
